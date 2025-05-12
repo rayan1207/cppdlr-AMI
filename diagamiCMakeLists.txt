@@ -1,0 +1,54 @@
+cmake_minimum_required(VERSION 3.1)
+project(diagami CXX)
+
+find_package(Boost 1.71.0)
+if(Boost_FOUND)
+  include_directories(${Boost_INCLUDE_DIRS})
+endif()
+
+#add_executable(${PROJECT_NAME} main.cpp ising.cpp)
+link_directories(${Boost_LIBRARY_DIRS})
+
+
+add_executable(${PROJECT_NAME}_mpi 
+./src/main_diagami.cpp 
+./src/diagami_ami.cpp 
+./src/diagami_bc.cpp 
+./src/sim_diagami.cpp 
+./src/parameters_diagami.cpp
+./src/diagami_V.cpp
+./src/diagami_helper.cpp
+)
+
+
+#set(EXEC_NAME ${PROJECT_NAME}_mpi)
+
+
+# Request the ALPSCore package (with all components)
+# The ALPSCore package must be installed in some
+# standard place (like /usr/local),
+# or somewhere in your PATH. 
+# Otherwise, point ALPSCore_DIR environment variable
+# to the ALPScore installation tree.
+find_package(ALPSCore 2.0 REQUIRED)
+
+
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O3 -march=native -std=c++11 -DUSE_MPI -lstdc++fs")# -msse4.2")# -ffast-math -funsafe-math-optimizations -msse4.2")# -ffast-math")
+
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libami/install/lib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libami/install/include)
+
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libamigraph/install/lib)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../libamigraph/install/include)
+
+
+#set_target_properties(${EXEC_NAME} PROPERTIES INSTALL_RPATH_USE_LINK_PATH TRUE)
+# Use ALPSCore_LIBRARIES variable to link to ALPSCore 
+#target_link_libraries(${PROJECT_NAME} ${ALPSCore_LIBRARIES})
+
+#NOTE: The relative paths in libami and libamigraph compilation don't allow cmake to install. fix later
+target_link_libraries(${PROJECT_NAME}_mpi ${ALPSCore_LIBRARIES} ${CMAKE_CURRENT_SOURCE_DIR}/../libami/install/lib/libami.so
+${CMAKE_CURRENT_SOURCE_DIR}/../libamigraph/install/lib/libamigraph.so m stdc++fs boost_filesystem boost_system)
+
+#install (TARGETS ${EXEC_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
+#install(TARGETS dmft RUNTIME DESTINATION "bin/")

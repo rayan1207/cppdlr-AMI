@@ -1,0 +1,7 @@
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/mini_ami.dir
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/list_install_components.dir
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/install.dir
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/install/local.dir
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/install/strip.dir

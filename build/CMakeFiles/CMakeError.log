@@ -1,0 +1,55 @@
+Determining if the function sgemm_ exists failed with the following output:
+Change Dir: /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_60735/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_60735.dir/build.make CMakeFiles/cmTC_60735.dir/build
+gmake[1]: Entering directory '/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_60735.dir/CheckFunctionExists.cxx.o
+/usr/bin/mpicxx   -DCHECK_FUNCTION_EXISTS=sgemm_ -std=c++23 -o CMakeFiles/cmTC_60735.dir/CheckFunctionExists.cxx.o -c /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CheckFunctionExists/CheckFunctionExists.cxx
+Linking CXX executable cmTC_60735
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_60735.dir/link.txt --verbose=1
+/usr/bin/mpicxx  -DCHECK_FUNCTION_EXISTS=sgemm_ CMakeFiles/cmTC_60735.dir/CheckFunctionExists.cxx.o -o cmTC_60735 
+/usr/bin/ld: CMakeFiles/cmTC_60735.dir/CheckFunctionExists.cxx.o: in function `main':
+CheckFunctionExists.cxx:(.text+0x14): undefined reference to `sgemm_'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_60735.dir/build.make:99: cmTC_60735] Error 1
+gmake[1]: Leaving directory '/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_60735/fast] Error 2
+
+
+
+Determining if the function cheev_ exists failed with the following output:
+Change Dir: /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7df87/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_7df87.dir/build.make CMakeFiles/cmTC_7df87.dir/build
+gmake[1]: Entering directory '/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_7df87.dir/CheckFunctionExists.cxx.o
+/usr/bin/mpicxx   -DCHECK_FUNCTION_EXISTS=cheev_ -std=c++23 -o CMakeFiles/cmTC_7df87.dir/CheckFunctionExists.cxx.o -c /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CheckFunctionExists/CheckFunctionExists.cxx
+Linking CXX executable cmTC_7df87
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7df87.dir/link.txt --verbose=1
+/usr/bin/mpicxx  -DCHECK_FUNCTION_EXISTS=cheev_ CMakeFiles/cmTC_7df87.dir/CheckFunctionExists.cxx.o -o cmTC_7df87  /usr/lib/x86_64-linux-gnu/libblas.so /usr/lib/x86_64-linux-gnu/libf77blas.so /usr/lib/x86_64-linux-gnu/libatlas.so -lm -ldl 
+/usr/bin/ld: CMakeFiles/cmTC_7df87.dir/CheckFunctionExists.cxx.o: in function `main':
+CheckFunctionExists.cxx:(.text+0x14): undefined reference to `cheev_'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_7df87.dir/build.make:102: cmTC_7df87] Error 1
+gmake[1]: Leaving directory '/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_7df87/fast] Error 2
+
+
+
+Determining if the function cheev_ exists failed with the following output:
+Change Dir: /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_1589e/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_1589e.dir/build.make CMakeFiles/cmTC_1589e.dir/build
+gmake[1]: Entering directory '/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_1589e.dir/CheckFunctionExists.cxx.o
+/usr/bin/mpicxx   -DCHECK_FUNCTION_EXISTS=cheev_ -std=c++23 -o CMakeFiles/cmTC_1589e.dir/CheckFunctionExists.cxx.o -c /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CheckFunctionExists/CheckFunctionExists.cxx
+Linking CXX executable cmTC_1589e
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_1589e.dir/link.txt --verbose=1
+/usr/bin/mpicxx  -DCHECK_FUNCTION_EXISTS=cheev_ CMakeFiles/cmTC_1589e.dir/CheckFunctionExists.cxx.o -o cmTC_1589e  /usr/lib/x86_64-linux-gnu/liblapack.so /usr/lib/x86_64-linux-gnu/libblas.so /usr/lib/x86_64-linux-gnu/libf77blas.so /usr/lib/x86_64-linux-gnu/libatlas.so -fortranlibs 
+g++: error: unrecognized command-line option ‘-fortranlibs’
+gmake[1]: *** [CMakeFiles/cmTC_1589e.dir/build.make:103: cmTC_1589e] Error 1
+gmake[1]: Leaving directory '/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_1589e/fast] Error 2
+
+
+
