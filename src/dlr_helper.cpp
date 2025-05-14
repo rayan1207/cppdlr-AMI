@@ -122,7 +122,7 @@ mDLR::mDLR(double _beta, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t 
 	std::cout <<" Generating cartesian momenta grid for flat momenta sampling \n";
 	generate_momenta_cartesian_combo();
 	kN = cartesian_k_combo_list.size();
-	
+	dk = 2*M_PI/(kl-1);
 	std::cout <<" Total number of auxillary epsilon_t required to be computed num(epsilon_t): " << CN <<std::endl;
 	std::cout <<" Total number of cartesian momemta grid t required to be sampled Npoints: " << kN <<std::endl;
 	std::cout << " Populating the auxillary energy lists from cartesian list \n";
@@ -130,7 +130,7 @@ mDLR::mDLR(double _beta, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t 
 	std::cout << "done\n";
 	std::cout<<std::endl;
 	kvals.resize(kl);
-	for(size_t i=0; i<kl; i++){kvals[i] = 2*M_PI * double(i) / double(kl - 1);}
+	for(size_t i=0; i<kl; i++){kvals[i] = dk* double(i);}
 	std::cout << "Operating on the grid\n " ;
 	print1d(kvals);
 	std::cout<<" creating master DLR object \n";
@@ -138,7 +138,8 @@ mDLR::mDLR(double _beta, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t 
 	std::cout<< " the matsubara frequency nodes of master DLR object is \n ";
 	std::cout<< master_if_ops.get_ifnodes() << std::endl;
 	master_pole_num = master_if_ops.get_ifnodes().size();
-	
+	 _kx_list.resize(N);
+     _ky_list.resize(N);
 	
 	master_dlrW_in_square.resize(kl);
 	for (size_t i = 0; i < kl; ++i)
@@ -271,7 +272,7 @@ double hubbard_dispersion(double kx, double ky){
 
 void mDLR::create_DLR_master_if_ops(){
 	double lambda = beta*Emax;
-    auto dlr_rf = build_dlr_rf(lambda, 1e-10 );
+    auto dlr_rf = build_dlr_rf(lambda, 1e-7 );
     master_if_ops = imfreq_ops(lambda, dlr_rf, Fermion);	
 }
 
@@ -374,6 +375,70 @@ void mDLR::generate_momenta_cartesian_combo(){
 	
 }
 
+
+nda::array<dcomplex,1>  mDLR::compute_momenta_kernel( double kx_ext,double ky_ext) {
+	std::cout<<" computing momenta kernel" << std::endl;
+	int internal_dof = N-1;
+	auto momenta_kernel = nda::zeros<nda::dcomplex>(CN);
+	std::vector<double> kx_list (N);
+	std::vector<double> ky_list (N);
+
+	kx_list[N-1]=kx_ext;
+	ky_list[N-1]=ky_ext;
+    double dk = 2*M_PI/(kl - 1);
+	for (int count=0;count <CN;count++){
+		auto const &combo =  cartesian_combo_list[count];
+		for (auto const  &k_combo: cartesian_k_combo_list){
+         ///////////// put the inside into function
+		   for (int i=0; i < internal_dof;i++){
+			 kx_list[i] =  kvals[ k_combo[static_cast<int>(2*i)]];
+			 ky_list[i] =   kvals[ k_combo[static_cast<int>(2*i+1)]];
+			}
+		    auto val = dcomplex(1,0);
+			for (int i =0; i< N;i++){
+				auto const  &square = multiple_dlr_structs[i].dlrW_in_square;
+				auto const &alpha = multiple_dlr_structs[i].ginfo.alpha_;
+				double qx = 0;
+				double qy = 0;
+				for (int j = 0; j < alpha.size(); j++) {
+					qx += static_cast<double>(alpha[j]) * kx_list[j];
+					qy += static_cast<double>(alpha[j]) * ky_list[j];
+					}
+				qx = std::fmod(std::abs(qx), 2*M_PI);
+				qy = std::fmod(std::abs(qy), 2*M_PI);
+				
+				int indice1 = static_cast<int> (qx/dk);
+				int indice2 = static_cast<int> (qy/dk);
+			    // std::cout<< indice1 << indice2;
+				auto const &weight_list  = square[indice1][indice2];
+				
+				val = -1*val* weight_list(combo[i]);
+				
+	            
+			}
+			momenta_kernel(count) += val;	
+        ////////////////////////////////////////////////////////////////////	
+		}
+		
+		
+	}
+	return momenta_kernel;
+}
+        
+ 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+	 
+ 
 
 
 	

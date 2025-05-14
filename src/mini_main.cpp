@@ -10,7 +10,7 @@ int main(){
 	double beta   = 5.0;
     double eps    = 1e-6;
     double e      = 0.5;
-	size_t kl = 21;
+	size_t kl = 9;
 	double Emax = 6;
 	double lambda = beta*Emax;
 	
@@ -42,85 +42,28 @@ int main(){
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
 	std::cout << " It took time: " <<duration.count() << " ms \n";
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	//nda::array<double,1> energy={-4,0.1,-1};
-	//auto weights =multiple_DLR.evaluate_auxillary_weights(energy);
-	//std::cout << "result is : " << nda::dotc(frequency_kernel,weights);
-	
-	
-	
-	double kx_ext = M_PI; double ky_ext = M_PI;
-	
-	int internal_dof =  multiple_DLR.N -1;
-	std::vector<double> kx_list (multiple_DLR.N);
-	std::vector<double> ky_list (multiple_DLR.N);
-	kx_list[multiple_DLR.N-1]=kx_ext;
-	ky_list[multiple_DLR.N-1]=ky_ext;
-	double dk = 2*M_PI/(multiple_DLR.kl-1);
-	auto momenta_kernel = nda::zeros<dcomplex>(multiple_DLR.CN);
-	
-	
-	std::cout<<"Computing the momenta kernel \n";
-	for (int count=0;count <multiple_DLR.CN;count++){
-		auto const &combo =  multiple_DLR.cartesian_combo_list[count];
-		for (auto const  &k_combo: multiple_DLR.cartesian_k_combo_list){
-         /////////////// put the inside into function
-		   for (int i=0; i < internal_dof;i++){
-			 kx_list[i] =   multiple_DLR.kvals[ k_combo[static_cast<int>(2*i)]];
-			 ky_list[i] =   multiple_DLR.kvals[ k_combo[static_cast<int>(2*i+1)]];
-			}
-		    auto val = dcomplex(1,0);
-			for (int i =0; i< 3;i++){
-				auto const &gldr =multiple_DLR.multiple_dlr_structs[i];
-				auto const &square = multiple_DLR.multiple_dlr_structs[i].dlrW_in_square;
-				auto const &alpha = gldr.ginfo.alpha_;
-				double qx = 0;
-				double qy = 0;
-				for (int j = 0; j < alpha.size(); j++) {
-					qx += static_cast<double>(alpha[j]) * kx_list[j];
-					qy += static_cast<double>(alpha[j]) * ky_list[j];
-					}
-				qx = std::fmod(std::abs(qx), 2*M_PI);
-				qy = std::fmod(std::abs(qy), 2*M_PI);
-				
-				int indice1 = static_cast<int> (qx/dk);
-				int indice2 = static_cast<int> (qy/dk);
-			    // std::cout<< indice1 << indice2;
-				auto const &weight_list  = square[indice1][indice2];
-				
-				val = -1*val* weight_list(combo[i]);
-	
-			}
-			momenta_kernel(count) += val;	
-        ////////////////////////////////////////////////////////////////////	
-		}
-		// std::cout << momenta_kernel_component;
-		// momenta_kernel(count) = momenta_kernel_component;
-		
-	}
-	
+
+
+for (auto qx: multiple_DLR.kvals){
+	for (auto qy: multiple_DLR.kvals){
+	std::cout << "Computing qx:   " << qx << " computing qy: "<< qy;
+	nda::array<dcomplex,1> momenta_kernel =multiple_DLR.compute_momenta_kernel(qx,qy);
+	for (int i =0; i< 16; i++){
+    auto result = nda::dotc(frequency_kernel_list[i],momenta_kernel)/(-1*std::pow((double) kl,4));
+    std::cout << i+1<<".  mfreq: " << mfreq_list[i] <<" Sigma: " <<  result <<std::endl;
+  }
+	}	
+}
+
 	auto t2 = std::chrono::high_resolution_clock::now();
 	auto duration1 = std::chrono::duration_cast<std::chrono::seconds>(t2 - t0);
 	std::cout << "Computing the momenta kernel took: " <<duration1.count() << " s \n";
 	
-	//std::cout << "result is : " << nda::dotc(frequency_kernel_list[0],momenta_kernel)/(-1*std::pow((double) kl,4));
-
-	for (int i =0; i< 16; i++){
-		auto result = nda::dotc(frequency_kernel_list[i],momenta_kernel)/(-1*std::pow((double) kl,4));
-		std::cout << i+1<<".  mfreq: " << mfreq_list[i] <<" Sigma: " <<  result <<std::endl;
-	}
-
-
 }
+
+
+
+
 	
 	
 	

@@ -31,7 +31,7 @@
 #include <iostream>
 #include <iomanip>
 #include <cppdlr/cppdlr.hpp>
-
+#include <omp.h>
 
 
 
@@ -51,6 +51,8 @@ struct dlr_obj{
 	
 };
 class mDLR{
+	private:
+    std::vector<double> _kx_list, _ky_list;
 	public:
 	std::vector<dlr_obj> multiple_dlr_structs;
 	double beta; double eps; double Emax; AmiBase::g_prod_t R0;
@@ -58,6 +60,7 @@ class mDLR{
 	size_t CN; ///total number of cartesian, pole_num1* pole_num2* ...pole numN 
 	size_t kl;///total number of momentum k grid;
 	size_t kN;///total number of cartesian momenta, kl_1^2* kl_2^2.....
+	double dk;
 	std::vector<double> kvals;
 	size_t master_pole_num;
 	cppdlr::imfreq_ops master_if_ops;
@@ -81,6 +84,7 @@ class mDLR{
 	nda::array<dcomplex,1> recover_dlro_G_from_master_weights(nda::array<dcomplex,1> &master_weights, std::vector<std::complex<double>> &dlro_if);
 	void transfer_master_DLR_weights_to_dlrR0_elements();
 	void generate_momenta_cartesian_combo();
+	nda::array<dcomplex,1>  compute_momenta_kernel( double kx_ext,double ky_ext);
 };
 
 dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0_element);
