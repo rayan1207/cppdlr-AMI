@@ -21,6 +21,38 @@ std::vector<T> sumVectors(const std::vector<std::vector<T>>& vecs) {
     return result;
 }
 
+template<typename T>
+void triangle_to_square(std::vector<std::vector<T>>& M) {
+    int n = M.size();
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (i > j) {
+                M[j][i] = M[i][j];
+            }
+        }
+    }
+}
+
+
+template<typename T>
+std::vector<std::vector<T>> data_to_full_bz(const std::vector<std::vector<T>>& M) {
+    int n = M.size();
+    int N = 2 * n - 1;
+    int s_ind = n - 1;    
+    int b_ind = N - 1;    
+    std::vector<std::vector<T>> F(N, std::vector<T>(N));
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            if (i > s_ind && j <= s_ind) F[i][j] = M[b_ind - i][j];
+            else if (j > s_ind && i <= s_ind) F[i][j] = M[i][b_ind - j];
+            else if (i > s_ind && j > s_ind) F[i][j] = M[b_ind - i][b_ind - j];
+            else                               F[i][j] = M[i][j];
+        }
+    }
+    return F;
+}
+
+
 AmiBase::g_prod_t construct_example2(){
 
 	AmiBase::g_prod_t g;
@@ -49,10 +81,6 @@ AmiBase::g_prod_t construct_example2(){
 	R0.push_back(g1);
 	R0.push_back(g2);
 	R0.push_back(g3);
-
-
-
-
 	return R0;
 
 }
@@ -99,15 +127,7 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 	print2d(dlro.evec);
 	return dlro;
 }
-
-
-
-
-
-
-
-
-///////part of mdlr 
+///////part of mdlr ///////////////////////////////////////////
 mDLR::mDLR(double _beta, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t _R0):beta(_beta),eps(_eps),Emax(_Emax),kl(_kl), R0(_R0){
 	auto t0 = std::chrono::high_resolution_clock::now();
 	N = R0.size();
@@ -138,9 +158,12 @@ mDLR::mDLR(double _beta, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t 
 	std::cout<< " the matsubara frequency nodes of master DLR object is \n ";
 	std::cout<< master_if_ops.get_ifnodes() << std::endl;
 	master_pole_num = master_if_ops.get_ifnodes().size();
-	 _kx_list.resize(N);
-     _ky_list.resize(N);
-	
+
+    two_pi     = 2.0 * M_PI;
+    inv_two_pi = 1.0 / two_pi;
+    inv_dk     = 1.0 / dk;
+    internal_dof = N-1;
+    kvals_ptr = kvals.data();
 	master_dlrW_in_square.resize(kl);
 	for (size_t i = 0; i < kl; ++i)
 	master_dlrW_in_square[i].resize(kl);
@@ -149,8 +172,10 @@ mDLR::mDLR(double _beta, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t 
 	std::cout <<"Populating the 2-dim master_dlrW_in_square grid with weights from G0 with L: " << kl <<std::endl;
 	populate_master_dlrW_from_G0();
 	std::cout << "Done";
+	std::cout << "Transferring DLR weights to gstructs \n";
 	reshape_dlrW_square_per_kgrid();
 	transfer_master_DLR_weights_to_dlrR0_elements();
+	std::cout <<"Done";
 	auto t1 = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
 	std::cout << " Construction of mDLR took time: " <<duration.count() << " ms \n";
@@ -376,59 +401,112 @@ void mDLR::generate_momenta_cartesian_combo(){
 }
 
 
-nda::array<dcomplex,1>  mDLR::compute_momenta_kernel( double kx_ext,double ky_ext) {
-	std::cout<<" computing momenta kernel" << std::endl;
-	int internal_dof = N-1;
-	auto momenta_kernel = nda::zeros<nda::dcomplex>(CN);
-	std::vector<double> kx_list (N);
-	std::vector<double> ky_list (N);
 
-	kx_list[N-1]=kx_ext;
-	ky_list[N-1]=ky_ext;
-    double dk = 2*M_PI/(kl - 1);
-	for (int count=0;count <CN;count++){
-		auto const &combo =  cartesian_combo_list[count];
-		for (auto const  &k_combo: cartesian_k_combo_list){
-         ///////////// put the inside into function
-		   for (int i=0; i < internal_dof;i++){
-			 kx_list[i] =  kvals[ k_combo[static_cast<int>(2*i)]];
-			 ky_list[i] =   kvals[ k_combo[static_cast<int>(2*i+1)]];
-			}
-		    auto val = dcomplex(1,0);
-			for (int i =0; i< N;i++){
-				auto const  &square = multiple_dlr_structs[i].dlrW_in_square;
-				auto const &alpha = multiple_dlr_structs[i].ginfo.alpha_;
-				double qx = 0;
-				double qy = 0;
-				for (int j = 0; j < alpha.size(); j++) {
-					qx += static_cast<double>(alpha[j]) * kx_list[j];
-					qy += static_cast<double>(alpha[j]) * ky_list[j];
-					}
-				qx = std::fmod(std::abs(qx), 2*M_PI);
-				qy = std::fmod(std::abs(qy), 2*M_PI);
-				
-				int indice1 = static_cast<int> (qx/dk);
-				int indice2 = static_cast<int> (qy/dk);
-			    // std::cout<< indice1 << indice2;
-				auto const &weight_list  = square[indice1][indice2];
-				
-				val = -1*val* weight_list(combo[i]);
-				
-	            
-			}
-			momenta_kernel(count) += val;	
-        ////////////////////////////////////////////////////////////////////	
-		}
-		
-		
-	}
-	return momenta_kernel;
+
+inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,const int* combo_ptr,const int* kcombo_ptr)
+{
+    
+
+
+    nda::dcomplex val{1.0, 0.0};
+
+    for (int i = 0; i < N; ++i) {
+
+        const auto& info      = multiple_dlr_structs[i].ginfo;
+        const int* alpha   = info.alpha_.data();
+        int   asz      = info.alpha_.size();
+        double qx = alpha[asz - 1] * kx_ext;
+        double qy = alpha[asz - 1] * ky_ext;
+        for (int j = 0; j < internal_dof; ++j) {
+            double a = static_cast<double>(alpha[j]);
+            qx += a * kvals_ptr[ kcombo_ptr[2*j    ] ];
+            qy += a * kvals_ptr[ kcombo_ptr[2*j + 1] ];
+        }
+
+
+        qx -= std::floor(qx * inv_two_pi) * two_pi;
+        qy -= std::floor(qy * inv_two_pi) * two_pi;
+
+        int idx1 = static_cast<int>(qx * inv_dk);
+        int idx2 = static_cast<int>(qy * inv_dk);
+
+     
+        const auto& wlist =
+          multiple_dlr_structs[i].dlrW_in_square[idx1][idx2];
+        val = -val * wlist[ combo_ptr[i] ];
+    }
+
+    return val;
 }
         
- 
+ nda::array<nda::dcomplex,1> mDLR::compute_momenta_kernel_qext(double kx_ext,double ky_ext)
+{
+    const int C = CN;
+  
+    nda::array<nda::dcomplex,1> kernel = nda::zeros<nda::dcomplex>(C);
+
+    const int K = static_cast<int>(cartesian_k_combo_list.size());
+    
+    for (int c = 0; c < C; ++c) {
+        const int* combo_ptr = cartesian_combo_list[c].data();
+        auto sum = nda::dcomplex(0,0);
+
+        for (int k = 0; k < K; ++k) {
+            const int* kcombo_ptr = cartesian_k_combo_list[k].data();
+            sum += compute_momenta_one_kCN_kernel(
+                       kx_ext, ky_ext,
+                       combo_ptr,
+                       kcombo_ptr);
+        }
+
+        kernel(c) = sum;
+    }
+
+    return kernel;
+}
+
+std::vector<std::vector<nda::array<dcomplex,1>>> mDLR::compute_momenta_kernel_bz(){
+	int n = (kl+1)/2;
+	auto reduced_kgrid = nda::array<double,1> (n);
+	std::vector<std::vector<nda::array<dcomplex,1>>> M(n,std::vector<nda::array<dcomplex,1>>(n));
+	for(size_t i=0; i<n; i++){reduced_kgrid[i] = dk* double(i);}
+	//////// computing momeneta kernel
+	for (int i =0;i< n; i ++){
+		for (int j=0;j<=i;j++){
+			double qx = reduced_kgrid(i);
+			double qy = reduced_kgrid(j);
+			//std::cout<<"(qx ,qy)= ( " << qx <<" , " << qy <<" )"<< std::endl;
+			auto momenta_kernel = mDLR::compute_momenta_kernel_qext(qx,qy);
+			M[i][j] = momenta_kernel;
+		}		
+	}
+	triangle_to_square(M);
+	
+	return data_to_full_bz(M);
 	 
-	 
-	 
+}	
+
+std::vector<std::vector<nda::array<dcomplex,1>>> mDLR::vdot_freq_momenta_kernel_M(
+std::vector<std::vector<nda::array<dcomplex,1>>> mk, 
+std::vector<nda::array<dcomplex,1>> fk){
+	
+	using arr1d = nda::array<dcomplex,1>;
+	std::vector<std::vector<arr1d>> result(kl,std::vector<arr1d>(kl, arr1d(fk.size())));
+	for (int i =0;i<kl;i++){
+		for (int j=0;j<kl;j++){
+			auto const &momenta_kernel = mk[i][j];
+			
+			for (int k; k<fk.size();k++){
+				result[i][j](k) = nda::dotc(fk[k],momenta_kernel)/(-1*std::pow((double) kl,4));
+			}			
+		}	
+	}
+	return result;	
+}
+	
+	
+	
+
 	 
 	 
 	 

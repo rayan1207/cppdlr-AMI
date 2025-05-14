@@ -37,7 +37,12 @@ add_executable(${PROJECT_NAME}
   #src/molecule_solver.cpp
   #src/energy.cpp
 )
-
+target_compile_options(${PROJECT_NAME} PRIVATE
+  -O3
+  -march=native
+  -funroll-loops
+  -ffast-math
+)
 # --------------------
 # Include Directories
 # --------------------

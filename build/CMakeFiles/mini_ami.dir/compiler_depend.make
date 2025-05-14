@@ -284,11 +284,17 @@ CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o: ../src/dlr_helper.cpp \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/c++/13/bits/random.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/pmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h \
+  /usr/include/c++/13/stdlib.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitintrin.h \
   /usr/include/c++/13/bits/random.tcc \
   /usr/include/c++/13/numeric \
   /usr/include/c++/13/bits/stl_numeric.h \
   /usr/include/c++/13/pstl/glue_numeric_defs.h \
-  /usr/include/c++/13/stdlib.h \
   /usr/include/c++/13/experimental/filesystem \
   /usr/include/c++/13/experimental/bits/fs_fwd.h \
   /usr/include/c++/13/bits/chrono.h \
@@ -317,10 +323,95 @@ CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o: ../src/dlr_helper.cpp \
   /usr/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
   /usr/include/eigen3/Eigen/src/Core/util/Macros.h \
   /usr/include/eigen3/Eigen/src/Core/util/ConfigureVectorization.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/xmmintrin.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/tmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/smmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/popcntintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/nmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/immintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/x86gprintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/ia32intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/adxintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/bmiintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/bmi2intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/cetintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/cldemoteintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/clflushoptintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/clwbintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/clzerointrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/cmpccxaddintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/enqcmdintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/fxsrintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/lzcntintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/lwpintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/movdirintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitxintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/pconfigintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/pkuintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/prfchiintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/raointintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/rdseedintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/rtmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/serializeintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/sgxintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/tbmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/tsxldtrkintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/uintrintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/waitpkgintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/wbnoinvdintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xsavecintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveoptintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xsavesintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xtestintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/hresetintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/wmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avxintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avxvnniintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avxifmaintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avxvnniint8intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx2intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512erintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512pfintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512cdintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bwintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512dqintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlbwintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vldqintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512ifmaintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512ifmavlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmiintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmivlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124fmapsintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124vnniwintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vpopcntdqintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmi2intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmi2vlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vnniintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vnnivlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vpopcntdqvlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bitalgintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vp2intersectintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vp2intersectvlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16vlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/shaintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/fmaintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/f16cintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/gfniintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/vaesintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/vpclmulqdqintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bf16vlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bf16intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avxneconvertintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxtileintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxint8intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxbf16intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxcomplexintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/prfchwintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/keylockerintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxfp16intrin.h \
   /usr/include/eigen3/Eigen/src/Core/util/MKL_support.h \
   /usr/include/c++/13/cassert \
   /usr/include/assert.h \
@@ -358,8 +449,12 @@ CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o: ../src/dlr_helper.cpp \
   /usr/include/eigen3/Eigen/src/Core/arch/Default/GenericPacketMathFunctionsFwd.h \
   /usr/include/eigen3/Eigen/src/Core/arch/SSE/PacketMath.h \
   /usr/include/eigen3/Eigen/src/Core/arch/SSE/TypeCasting.h \
-  /usr/include/eigen3/Eigen/src/Core/arch/SSE/MathFunctions.h \
   /usr/include/eigen3/Eigen/src/Core/arch/SSE/Complex.h \
+  /usr/include/eigen3/Eigen/src/Core/arch/AVX/PacketMath.h \
+  /usr/include/eigen3/Eigen/src/Core/arch/AVX/TypeCasting.h \
+  /usr/include/eigen3/Eigen/src/Core/arch/AVX/Complex.h \
+  /usr/include/eigen3/Eigen/src/Core/arch/SSE/MathFunctions.h \
+  /usr/include/eigen3/Eigen/src/Core/arch/AVX/MathFunctions.h \
   /usr/include/eigen3/Eigen/src/Core/arch/Default/Settings.h \
   /usr/include/eigen3/Eigen/src/Core/arch/Default/GenericPacketMathFunctions.h \
   /usr/include/eigen3/Eigen/src/Core/functors/TernaryFunctors.h \
@@ -3256,11 +3351,17 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
   /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
   /usr/include/c++/13/bits/random.h \
   /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/pmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h \
+  /usr/include/c++/13/stdlib.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitintrin.h \
   /usr/include/c++/13/bits/random.tcc \
   /usr/include/c++/13/numeric \
   /usr/include/c++/13/bits/stl_numeric.h \
   /usr/include/c++/13/pstl/glue_numeric_defs.h \
-  /usr/include/c++/13/stdlib.h \
   /usr/include/c++/13/experimental/filesystem \
   /usr/include/c++/13/experimental/bits/fs_fwd.h \
   /usr/include/c++/13/bits/chrono.h \
@@ -3289,10 +3390,95 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
   /usr/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
   /usr/include/eigen3/Eigen/src/Core/util/Macros.h \
   /usr/include/eigen3/Eigen/src/Core/util/ConfigureVectorization.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/xmmintrin.h \
-  /usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/tmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/smmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/popcntintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/nmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/immintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/x86gprintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/ia32intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/adxintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/bmiintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/bmi2intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/cetintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/cldemoteintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/clflushoptintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/clwbintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/clzerointrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/cmpccxaddintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/enqcmdintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/fxsrintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/lzcntintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/lwpintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/movdirintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitxintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/pconfigintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/pkuintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/prfchiintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/raointintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/rdseedintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/rtmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/serializeintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/sgxintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/tbmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/tsxldtrkintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/uintrintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/waitpkgintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/wbnoinvdintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xsavecintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveoptintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xsavesintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/xtestintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/hresetintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/wmmintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avxintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avxvnniintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avxifmaintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avxvnniint8intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx2intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512erintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512pfintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512cdintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bwintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512dqintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlbwintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vldqintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512ifmaintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512ifmavlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmiintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmivlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124fmapsintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124vnniwintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vpopcntdqintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmi2intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmi2vlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vnniintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vnnivlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vpopcntdqvlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bitalgintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vp2intersectintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vp2intersectvlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16vlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/shaintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/fmaintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/f16cintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/gfniintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/vaesintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/vpclmulqdqintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bf16vlintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bf16intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/avxneconvertintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxtileintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxint8intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxbf16intrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxcomplexintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/prfchwintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/keylockerintrin.h \
+  /usr/lib/gcc/x86_64-linux-gnu/13/include/amxfp16intrin.h \
   /usr/include/eigen3/Eigen/src/Core/util/MKL_support.h \
   /usr/include/c++/13/cassert \
   /usr/include/assert.h \
@@ -3330,8 +3516,12 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
   /usr/include/eigen3/Eigen/src/Core/arch/Default/GenericPacketMathFunctionsFwd.h \
   /usr/include/eigen3/Eigen/src/Core/arch/SSE/PacketMath.h \
   /usr/include/eigen3/Eigen/src/Core/arch/SSE/TypeCasting.h \
-  /usr/include/eigen3/Eigen/src/Core/arch/SSE/MathFunctions.h \
   /usr/include/eigen3/Eigen/src/Core/arch/SSE/Complex.h \
+  /usr/include/eigen3/Eigen/src/Core/arch/AVX/PacketMath.h \
+  /usr/include/eigen3/Eigen/src/Core/arch/AVX/TypeCasting.h \
+  /usr/include/eigen3/Eigen/src/Core/arch/AVX/Complex.h \
+  /usr/include/eigen3/Eigen/src/Core/arch/SSE/MathFunctions.h \
+  /usr/include/eigen3/Eigen/src/Core/arch/AVX/MathFunctions.h \
   /usr/include/eigen3/Eigen/src/Core/arch/Default/Settings.h \
   /usr/include/eigen3/Eigen/src/Core/arch/Default/GenericPacketMathFunctions.h \
   /usr/include/eigen3/Eigen/src/Core/functors/TernaryFunctors.h \
@@ -6022,8 +6212,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/clef/adapters/vector.hpp:
 
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/clef/adapters/math.hpp:
-
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/basic_array_view.hpp:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/blas/gemv.hpp:
@@ -6094,8 +6282,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/traits.hpp:
 
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/concepts.hpp:
-
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/macros.hpp:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/accessors.hpp:
@@ -6126,8 +6312,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/multiprecision/cpp_int/comparison.hpp:
 
-/usr/include/boost/multiprecision/cpp_int/value_pack.hpp:
-
 /usr/include/boost/multiprecision/cpp_int/checked.hpp:
 
 /usr/include/boost/integer/common_factor_rt.hpp:
@@ -6137,8 +6321,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/multiprecision/rational_adaptor.hpp:
 
 /usr/include/boost/multiprecision/detail/rebind.hpp:
-
-/usr/include/boost/multiprecision/detail/ublas_interop.hpp:
 
 /usr/include/boost/multiprecision/traits/is_restricted_conversion.hpp:
 
@@ -6204,8 +6386,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/math/tools/rational.hpp:
 
-/usr/include/boost/math/special_functions/trunc.hpp:
-
 /usr/include/boost/math/tools/convert_from_string.hpp:
 
 /usr/include/boost/math/constants/constants.hpp:
@@ -6259,8 +6439,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/random/detail/vector_io.hpp:
 
 /usr/include/boost/random/chi_squared_distribution.hpp:
-
-/usr/include/boost/random/exponential_distribution.hpp:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/linalg/matmul.hpp:
 
@@ -6666,125 +6844,151 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/algorithm/query/detail/any.hpp:
 
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/utils.hpp:
+/usr/include/boost/fusion/include/any.hpp:
 
-/usr/include/boost/smart_ptr/enable_shared_from_this.hpp:
+/usr/include/boost/xpressive/detail/utility/any.hpp:
 
-/usr/include/x86_64-linux-gnu/sys/types.h:
+/usr/include/boost/xpressive/detail/utility/chset/range_run.hpp:
 
-/usr/include/boost/smart_ptr/intrusive_ptr.hpp:
+/usr/include/boost/xpressive/detail/utility/chset/basic_chset.hpp:
 
-/usr/include/boost/predef/os/solaris.h:
+/usr/include/boost/xpressive/detail/utility/chset/basic_chset.ipp:
 
-/usr/include/boost/multiprecision/traits/explicit_conversion.hpp:
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/algorithms.hpp:
 
-/usr/include/boost/smart_ptr/detail/spinlock.hpp:
+/usr/include/boost/xpressive/detail/utility/hash_peek_bitset.hpp:
 
-/usr/include/boost/move/detail/config_end.hpp:
+/usr/include/boost/xpressive/detail/core/matcher/alternate_matcher.hpp:
 
-/usr/include/boost/weak_ptr.hpp:
+/usr/include/boost/xpressive/detail/utility/algorithm.hpp:
 
-/usr/include/boost/multi_array/copy_array.hpp:
+/usr/include/boost/xpressive/detail/core/results_cache.hpp:
 
-/usr/include/boost/smart_ptr/detail/local_sp_deleter.hpp:
+/usr/include/boost/xpressive/detail/utility/sequence_stack.hpp:
 
-/usr/include/boost/smart_ptr/detail/sp_thread_sleep.hpp:
+/usr/include/boost/xpressive/sub_match.hpp:
 
-/usr/include/boost/type_traits/is_function.hpp:
+/usr/include/boost/xpressive/detail/utility/literals.hpp:
 
-/usr/include/boost/multiprecision/number.hpp:
+/usr/include/boost/xpressive/traits/cpp_regex_traits.hpp:
 
-/usr/include/boost/smart_ptr/bad_weak_ptr.hpp:
+/usr/include/boost/xpressive/regex_traits.hpp:
 
-/usr/include/c++/13/bits/hash_bytes.h:
+/usr/include/boost/xpressive/detail/core/regex_impl.hpp:
 
-/usr/include/boost/smart_ptr/scoped_array.hpp:
+/usr/include/boost/xpressive/detail/static/width_of.hpp:
 
-/usr/include/boost/multi_array/view.hpp:
+/usr/include/boost/xpressive/match_results.hpp:
 
-/usr/include/boost/fusion/view/joint_view/detail/next_impl.hpp:
+/usr/include/boost/exception/detail/error_info_impl.hpp:
 
-/usr/include/boost/smart_ptr/detail/sp_noexcept.hpp:
+/usr/include/boost/exception/detail/type_info.hpp:
 
-/usr/include/boost/range/detail/extract_optional_type.hpp:
+/usr/include/boost/exception/detail/object_hex_dump.hpp:
 
-/usr/include/boost/multi_index/detail/node_handle.hpp:
+/usr/include/boost/exception/detail/is_output_streamable.hpp:
 
-/usr/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp:
+/usr/include/boost/exception/to_string.hpp:
 
-/usr/include/boost/fusion/view/joint_view/detail/deref_impl.hpp:
+/usr/include/boost/exception/info.hpp:
 
-/usr/include/c++/13/bits/streambuf_iterator.h:
+/usr/include/boost/xpressive/detail/dynamic/sequence.hpp:
 
-/usr/include/boost/enable_shared_from_this.hpp:
+/usr/include/boost/smart_ptr/detail/atomic_count.hpp:
 
-/usr/include/boost/parameter/optional.hpp:
+/usr/include/boost/mpl/map/aux_/contains_impl.hpp:
 
-/usr/include/boost/graph/dijkstra_shortest_paths.hpp:
+/usr/include/boost/detail/atomic_count.hpp:
 
-/usr/include/boost/numeric/ublas/matrix_expression.hpp:
+/usr/include/boost/proto/detail/preprocessed/traits.hpp:
 
-/usr/include/boost/preprocessor/logical/not.hpp:
+/usr/include/boost/proto/detail/traits.hpp:
 
-/usr/include/boost/core/ignore_unused.hpp:
+/usr/include/boost/proto/transform/detail/preprocessed/pass_through_impl.hpp:
+
+/usr/include/boost/random/poisson_distribution.hpp:
+
+/usr/include/boost/proto/detail/ignore_unused.hpp:
+
+/usr/include/boost/proto/detail/static_const.hpp:
+
+/usr/include/boost/random/seed_seq.hpp:
+
+/usr/include/boost/proto/detail/any.hpp:
+
+/usr/include/boost/proto/transform/impl.hpp:
+
+/usr/include/boost/proto/transform/pass_through.hpp:
+
+/usr/include/boost/proto/detail/preprocessed/deduce_domain_n.hpp:
+
+/usr/include/boost/proto/detail/deduce_domain_n.hpp:
 
 /usr/include/boost/proto/detail/deduce_domain.hpp:
 
-/usr/include/boost/typeof/typeof.hpp:
+/usr/include/boost/proto/detail/generate_by_value.hpp:
 
-/usr/include/boost/graph/overloading.hpp:
+/usr/include/boost/proto/detail/preprocessed/args.hpp:
 
-/usr/include/boost/mpl/negate.hpp:
+/usr/include/boost/proto/detail/args.hpp:
 
-/usr/include/boost/xpressive/detail/core/matcher/any_matcher.hpp:
+/usr/include/boost/proto/detail/is_noncopyable.hpp:
 
-/usr/include/boost/mpl/aux_/preprocessed/gcc/less.hpp:
+/usr/include/boost/proto/args.hpp:
 
-/usr/include/boost/parameter/compose.hpp:
+/usr/include/boost/proto/detail/template_arity_helper.hpp:
 
-/usr/include/boost/mpl/aux_/traits_lambda_spec.hpp:
+/usr/include/boost/proto/detail/template_arity.hpp:
 
-/usr/include/boost/smart_ptr/make_shared.hpp:
+/usr/include/boost/proto/traits.hpp:
 
-/usr/include/boost/mpl/aux_/has_begin.hpp:
+/usr/include/boost/multiprecision/cpp_int/multiply.hpp:
 
-/usr/include/boost/random/detail/seed_impl.hpp:
+/usr/include/boost/proto/detail/extends_funop_const.hpp:
 
-/usr/include/boost/mpl/sequence_tag_fwd.hpp:
+/usr/include/boost/xpressive/detail/core/state.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/GenericPacketMath.h:
+/usr/include/boost/xpressive/detail/utility/width.hpp:
 
-/usr/include/boost/fusion/container/vector.hpp:
+/usr/include/boost/xpressive/detail/core/quant_style.hpp:
 
-/usr/include/boost/predef/os/haiku.h:
+/usr/include/boost/xpressive/detail/core/matcher/alternate_end_matcher.hpp:
 
-/usr/include/boost/mpl/aux_/begin_end_impl.hpp:
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/clef/placeholder.hpp:
 
-/usr/include/boost/core/noncopyable.hpp:
+/usr/include/boost/proto/proto_fwd.hpp:
 
-/usr/include/boost/mpl/vector/aux_/preprocessed/typeof_based/vector20.hpp:
+/usr/include/boost/xpressive/regex_primitives.hpp:
 
-/usr/include/boost/mpl/vector/aux_/include_preprocessed.hpp:
+/usr/include/boost/xpressive/xpressive_static.hpp:
 
-/usr/include/boost/mpl/vector/aux_/size.hpp:
+/usr/include/boost/math/special_functions/expm1.hpp:
 
-/usr/include/boost/mpl/advance_fwd.hpp:
+/usr/include/boost/algorithm/string/detail/formatter.hpp:
 
-/usr/include/boost/preprocessor/logical/nor.hpp:
+/usr/include/boost/algorithm/string/formatter.hpp:
 
-/usr/include/boost/mpl/minus.hpp:
+/usr/include/boost/algorithm/string/compare.hpp:
 
-/usr/include/boost/graph/random.hpp:
+/usr/include/boost/algorithm/string/detail/finder.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/arch/Default/BFloat16.h:
+/usr/include/boost/algorithm/string/finder.hpp:
 
-/usr/include/boost/mpl/aux_/preprocessed/gcc/iter_fold_impl.hpp:
+/usr/include/boost/algorithm/string/yes_no_type.hpp:
 
-/usr/include/boost/mpl/vector/aux_/iterator.hpp:
+/usr/include/boost/algorithm/string/sequence_traits.hpp:
 
-/usr/include/boost/xpressive/detail/core/matcher/assert_eol_matcher.hpp:
+/usr/include/boost/algorithm/string/detail/replace_storage.hpp:
 
-/usr/include/eigen3/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h:
+/usr/include/boost/algorithm/string/detail/find_format_store.hpp:
+
+/usr/include/boost/algorithm/string/detail/find_format.hpp:
+
+/usr/include/boost/algorithm/string/concept.hpp:
+
+/usr/include/boost/range/detail/str_types.hpp:
+
+/usr/include/boost/range/as_literal.hpp:
 
 /usr/include/boost/mpl/vector/aux_/vector0.hpp:
 
@@ -6798,19 +7002,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/back_fwd.hpp:
 
-/usr/include/boost/mpl/aux_/preprocessed/gcc/minus.hpp:
-
 /usr/include/boost/mpl/vector/aux_/back.hpp:
 
 /usr/include/boost/mpl/aux_/config/intel.hpp:
 
 /usr/include/boost/mpl/pop_front_fwd.hpp:
-
-/usr/include/boost/typeof/message.hpp:
-
-/usr/include/boost/mpl/less.hpp:
-
-/usr/include/boost/type_traits/has_post_increment.hpp:
 
 /usr/include/boost/mpl/vector/aux_/push_front.hpp:
 
@@ -6825,8 +7021,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/fusion/support/detail/index_sequence.hpp:
 
 /usr/include/boost/config/no_tr1/cmath.hpp:
-
-/usr/include/boost/serialization/is_bitwise_serializable.hpp:
 
 /usr/include/boost/preprocessor/punctuation/comma_if.hpp:
 
@@ -6854,27 +7048,21 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/serialization/type_info_implementation.hpp:
 
+/usr/include/boost/proto/transform/detail/pass_through_impl.hpp:
+
+/usr/include/boost/predef/architecture/x86/64.h:
+
 /usr/include/boost/serialization/tracking_enum.hpp:
 
 /usr/include/boost/mpl/aux_/preprocessed/gcc/greater.hpp:
 
-/usr/include/boost/mpl/size_fwd.hpp:
-
-/usr/include/boost/type_traits/has_nothrow_copy.hpp:
-
 /usr/include/boost/serialization/version.hpp:
-
-/usr/include/boost/mpl/aux_/msvc_eti_base.hpp:
-
-/usr/include/boost/graph/compressed_sparse_row_graph.hpp:
 
 /usr/include/boost/range/detail/range_return.hpp:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/layout/idx_map.hpp:
 
 /usr/include/boost/fusion/view/single_view/detail/size_impl.hpp:
-
-/usr/include/boost/checked_delete.hpp:
 
 /usr/include/boost/mpl/aux_/numeric_cast_utils.hpp:
 
@@ -6884,33 +7072,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/function_types/detail/components_impl/arity10_0.hpp:
 
-/usr/include/boost/mpl/tag.hpp:
+/usr/include/boost/xpressive/detail/dynamic/matchable.hpp:
 
-/usr/include/boost/mpl/iterator_tags.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/IndexedView.h:
-
-/usr/include/boost/proto/transform/env.hpp:
-
-/usr/include/eigen3/Eigen/src/Geometry/arch/Geometry_SIMD.h:
-
-/usr/include/boost/mpl/numeric_cast.hpp:
-
-/usr/include/boost/preprocessor/facilities/is_empty_variadic.hpp:
-
-/usr/include/boost/mpl/is_sequence.hpp:
-
-/usr/include/boost/mpl/aux_/numeric_op.hpp:
-
-/usr/include/boost/multiprecision/cpp_int/limits.hpp:
-
-/usr/include/boost/fusion/sequence/intrinsic.hpp:
-
-/usr/include/boost/serialization/tracking.hpp:
-
-/usr/include/boost/mpl/integral_c.hpp:
-
-/usr/include/boost/parameter/required.hpp:
+/usr/include/boost/serialization/level_enum.hpp:
 
 /usr/include/boost/serialization/level.hpp:
 
@@ -6924,21 +7088,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/types/sigset_t.h:
 
-/usr/include/boost/make_shared.hpp:
-
-/usr/include/boost/multiprecision/cpp_int/multiply.hpp:
-
-/usr/include/boost/proto/detail/extends_funop_const.hpp:
-
-/usr/include/boost/xpressive/detail/core/state.hpp:
+/usr/include/boost/mpl/aux_/has_begin.hpp:
 
 /usr/include/boost/type_traits/is_unscoped_enum.hpp:
 
 /usr/include/boost/type_traits/is_unbounded_array.hpp:
-
-/usr/include/boost/type_traits/is_union.hpp:
-
-/usr/include/boost/numeric/conversion/converter_policies.hpp:
 
 /usr/include/boost/type_traits/is_signed.hpp:
 
@@ -6974,12 +7128,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/type_traits/has_trivial_move_assign.hpp:
 
-/usr/include/boost/xpressive/xpressive_static.hpp:
-
-/usr/include/boost/smart_ptr/shared_ptr.hpp:
-
-/usr/include/boost/type_traits/has_right_shift_assign.hpp:
-
 /usr/include/boost/predef/os/windows.h:
 
 /usr/include/boost/fusion/mpl.hpp:
@@ -7004,13 +7152,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/type_traits/has_new_operator.hpp:
 
+/usr/include/boost/core/noncopyable.hpp:
+
 /usr/include/boost/mpl/aux_/na_fwd.hpp:
-
-/usr/include/boost/shared_array.hpp:
-
-/usr/include/boost/preprocessor/facilities/is_1.hpp:
-
-/usr/include/boost/xpressive/detail/utility/chset/range_run.hpp:
 
 /usr/include/boost/type_traits/has_modulus_assign.hpp:
 
@@ -7018,11 +7162,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/type_traits/has_minus_assign.hpp:
 
-/usr/include/boost/type_traits/has_minus.hpp:
-
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/stl/vector.hpp:
 
 /usr/include/boost/type_traits/has_less_equal.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/amxbf16intrin.h:
 
 /usr/include/boost/type_traits/has_less.hpp:
 
@@ -7038,19 +7182,19 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/predef/platform/mingw64.h:
 
+/usr/include/boost/proto/transform/env.hpp:
+
+/usr/include/eigen3/Eigen/src/Geometry/arch/Geometry_SIMD.h:
+
+/usr/include/eigen3/Eigen/src/Core/IndexedView.h:
+
+/usr/include/boost/mpl/iterator_tags.hpp:
+
 /usr/include/boost/type_traits/has_divides.hpp:
 
 /usr/include/boost/type_traits/is_convertible.hpp:
 
 /usr/include/boost/type_traits/has_plus.hpp:
-
-/usr/include/boost/io/ios_state.hpp:
-
-/usr/include/boost/type_traits/detail/has_prefix_operator.hpp:
-
-/usr/include/boost/preprocessor/repetition/detail/for.hpp:
-
-/usr/include/c++/13/fstream:
 
 /usr/include/boost/type_traits/has_bit_xor.hpp:
 
@@ -7072,15 +7216,15 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/numeric/ublas/traits.hpp:
 
-/usr/include/eigen3/Eigen/src/Jacobi/Jacobi.h:
-
 /usr/include/boost/type_traits/extent.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/amxcomplexintrin.h:
 
 /usr/include/boost/type_traits/disjunction.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/functors/StlFunctors.h:
-
 /usr/include/eigen3/Eigen/src/Core/products/SelfadjointMatrixVector.h:
+
+/usr/include/eigen3/Eigen/src/Core/functors/StlFunctors.h:
 
 /usr/include/boost/type_traits/copy_reference.hpp:
 
@@ -7095,8 +7239,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/mpl/push_back_fwd.hpp:
 
 /usr/include/boost/mpl/aux_/config/nttp.hpp:
-
-/usr/include/boost/scoped_ptr.hpp:
 
 /usr/include/boost/type_traits/remove_extent.hpp:
 
@@ -7118,13 +7260,19 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/predef/os/bsd/open.h:
 
-/usr/include/boost/core/empty_value.hpp:
-
 /usr/include/boost/serialization/array.hpp:
 
 /usr/include/boost/core/allocator_access.hpp:
 
+/usr/include/boost/multi_array/view.hpp:
+
+/usr/include/boost/smart_ptr/scoped_array.hpp:
+
 /usr/include/boost/multi_array/iterator.hpp:
+
+/usr/include/boost/multi_array/copy_array.hpp:
+
+/usr/include/boost/weak_ptr.hpp:
 
 /usr/include/c++/13/bits/ranges_uninitialized.h:
 
@@ -7154,10 +7302,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/aux_/erase_impl.hpp:
 
-/usr/include/boost/preprocessor/list/for_each.hpp:
-
-/usr/include/boost/mpl/protect.hpp:
-
 /usr/include/boost/serialization/nvp.hpp:
 
 /usr/include/eigen3/Eigen/src/Cholesky/LLT.h:
@@ -7172,25 +7316,19 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/lambda.hpp:
 
-/usr/include/boost/range/as_literal.hpp:
-
 /usr/include/boost/fusion/view/zip_view/detail/at_impl.hpp:
 
 /usr/include/boost/mpl/aux_/msvc_never_true.hpp:
 
 /usr/include/boost/predef/library/c.h:
 
-/usr/include/boost/random/variate_generator.hpp:
-
-/usr/include/boost/smart_ptr/detail/operator_bool.hpp:
-
 /usr/include/c++/13/locale:
 
-/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
-
-/usr/include/boost/preprocessor/array/elem.hpp:
-
 /usr/include/boost/mpl/aux_/config/has_xxx.hpp:
+
+/usr/include/boost/multiprecision/detail/ublas_interop.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/xsavecintrin.h:
 
 /usr/include/boost/config/no_tr1/utility.hpp:
 
@@ -7218,16 +7356,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/predef/hardware/simd/x86.h:
 
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/clef/literals.hpp:
-
-/usr/include/boost/type_traits/is_member_pointer.hpp:
-
-/usr/include/boost/mpl/aux_/arithmetic_op.hpp:
-
-/usr/include/boost/mpl/aux_/preprocessor/params.hpp:
-
-/usr/include/c++/13/bits/deque.tcc:
-
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/libamicalc/install/include/linterp.h:
 
 /usr/include/boost/numeric/conversion/detail/converter.hpp:
@@ -7242,13 +7370,7 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/or.hpp:
 
-/usr/include/boost/mpl/aux_/preprocessed/gcc/placeholders.hpp:
-
-/usr/include/x86_64-linux-gnu/sys/syscall.h:
-
-/usr/include/boost/mpl/aux_/na_assert.hpp:
-
-/usr/include/boost/graph/detail/empty_header.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16vlintrin.h:
 
 /usr/include/boost/mpl/aux_/config/use_preprocessed.hpp:
 
@@ -7306,9 +7428,17 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/aux_/preprocessed/gcc/reverse_iter_fold_impl.hpp:
 
-/usr/include/boost/mpl/int.hpp:
+/usr/include/boost/mpl/aux_/preprocessor/params.hpp:
 
-/usr/include/boost/smart_ptr/detail/sp_has_gcc_intrinsics.hpp:
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/clef/literals.hpp:
+
+/usr/include/boost/type_traits/is_member_pointer.hpp:
+
+/usr/include/boost/mpl/aux_/arithmetic_op.hpp:
+
+/usr/include/c++/13/bits/deque.tcc:
+
+/usr/include/boost/mpl/int.hpp:
 
 /usr/include/boost/mpl/aux_/config/ttp.hpp:
 
@@ -7320,12 +7450,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/any.hpp:
 
-/usr/include/boost/math/special_functions/detail/lgamma_small.hpp:
-
-/usr/include/boost/mpl/aux_/config/ctps.hpp:
-
-/usr/include/boost/preprocessor/control.hpp:
-
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/mem/handle.hpp:
 
 /usr/include/boost/mpl/aux_/na.hpp:
@@ -7333,12 +7457,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/mpl/aux_/config/gcc.hpp:
 
 /usr/include/eigen3/Eigen/src/Geometry/Translation.h:
-
-/usr/include/boost/numeric/ublas/matrix_proxy.hpp:
-
-/usr/include/boost/mp11/list.hpp:
-
-/usr/include/boost/config/workaround.hpp:
 
 /usr/include/boost/preprocessor/arithmetic/detail/div_base.hpp:
 
@@ -7348,21 +7466,7 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/lambda_fwd.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/confname.h:
-
-/usr/include/boost/mpl/aux_/na_spec.hpp:
-
-/usr/include/boost/smart_ptr/scoped_ptr.hpp:
-
-/usr/include/boost/type_traits/has_pre_increment.hpp:
-
 /usr/include/boost/mpl/aux_/config/msvc.hpp:
-
-/usr/include/boost/mpl/vector/aux_/begin_end.hpp:
-
-/usr/include/boost/range/algorithm_ext/iota.hpp:
-
-/usr/include/boost/smart_ptr/detail/sp_thread_pause.hpp:
 
 /usr/include/boost/mpl/aux_/static_cast.hpp:
 
@@ -7386,19 +7490,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/preprocessor/seq/for_each.hpp:
 
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/clef/placeholder.hpp:
-
-/usr/include/boost/proto/proto_fwd.hpp:
-
 /usr/include/boost/mpl/aux_/arg_typedef.hpp:
 
 /usr/include/boost/preprocessor/tuple/remove.hpp:
 
 /usr/include/boost/preprocessor/tuple/detail/is_single_return.hpp:
-
-/usr/include/boost/random/seed_seq.hpp:
-
-/usr/include/boost/proto/detail/any.hpp:
 
 /usr/include/boost/preprocessor/facilities/overload.hpp:
 
@@ -7434,12 +7530,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/bits/random.h:
 
-/usr/include/boost/mpl/aux_/largest_int.hpp:
-
-/usr/include/boost/preprocessor/seq/for_each_i.hpp:
-
-/usr/include/eigen3/Eigen/src/Eigenvalues/RealQZ.h:
-
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/mem/malloc.hpp:
 
 /usr/include/boost/concept/detail/concept_def.hpp:
@@ -7448,9 +7538,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/view/transform_view/detail/advance_impl.hpp:
 
-/usr/include/boost/mp11/detail/mp_count.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/bmi2intrin.h:
 
-/usr/include/boost/fusion/iterator/deref.hpp:
+/usr/include/boost/mp11/detail/mp_count.hpp:
 
 /usr/include/boost/type_traits/is_array.hpp:
 
@@ -7496,25 +7586,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/multi_array/subarray.hpp:
 
-/usr/include/boost/concept/assert.hpp:
-
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h:
 
 /usr/include/boost/multi_array/algorithm.hpp:
 
 /usr/include/boost/limits.hpp:
-
-/usr/include/boost/multi_array/types.hpp:
-
-/usr/include/c++/13/bits/stl_algobase.h:
-
-/usr/include/boost/smart_ptr/detail/sp_counted_base_gcc_atomic.hpp:
-
-/usr/include/c++/13/bits/shared_ptr_base.h:
-
-/usr/include/c++/13/bits/new_allocator.h:
-
-/usr/include/boost/throw_exception.hpp:
 
 /usr/include/boost/core/swap.hpp:
 
@@ -7540,19 +7616,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/preprocessor/comparison/greater.hpp:
 
-/usr/include/boost/smart_ptr/detail/sp_convertible.hpp:
+/usr/include/boost/xpressive/regex_error.hpp:
 
-/usr/include/boost/config/platform/linux.hpp:
+/usr/include/boost/property_map/property_map.hpp:
 
-/usr/include/boost/multiprecision/detail/et_ops.hpp:
-
-/usr/include/boost/function_types/detail/encoding/undef.hpp:
-
-/usr/include/boost/xpressive/detail/utility/chset/basic_chset.ipp:
-
-/usr/include/boost/config/detail/select_platform_config.hpp:
-
-/usr/include/boost/graph/adjacency_list.hpp:
+/usr/include/boost/function_types/member_function_pointer.hpp:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/clef/make_lazy.hpp:
 
@@ -7578,6 +7646,10 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/functional.hpp:
 
+/usr/include/boost/core/typeinfo.hpp:
+
+/usr/include/eigen3/Eigen/src/misc/RealSvd2x2.h:
+
 /usr/include/boost/preprocessor/punctuation.hpp:
 
 /usr/include/boost/config/user.hpp:
@@ -7590,11 +7662,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/array.hpp:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/pmmintrin.h:
+
 /usr/include/boost/type_traits/is_void.hpp:
-
-/usr/include/boost/mpl/aux_/config/lambda.hpp:
-
-/usr/include/boost/mpl/vector/aux_/preprocessed/typeof_based/vector10.hpp:
 
 /usr/include/boost/multi_array/range_list.hpp:
 
@@ -7602,25 +7672,203 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/multi_array/extent_range.hpp:
 
-/usr/include/boost/multi_array.hpp:
-
-/usr/include/boost/predef/compiler/microtec.h:
-
 /usr/include/boost/type_traits/function_traits.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/float.h:
 
-/usr/include/c++/13/bits/node_handle.h:
+/usr/include/c++/13/bits/chrono_io.h:
+
+/usr/include/c++/13/chrono:
+
+/usr/include/boost/preprocessor/array.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
+
+/usr/include/eigen3/Eigen/src/Eigenvalues/ComplexEigenSolver.h:
+
+/usr/include/boost/type_traits/has_trivial_move_constructor.hpp:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/stdutil/complex.hpp:
+
+/usr/include/c++/13/charconv:
+
+/usr/include/boost/type_traits/detail/yes_no_type.hpp:
+
+/usr/include/boost/function/function_base.hpp:
+
+/usr/include/boost/xpressive/detail/core/matcher/assert_eol_matcher.hpp:
+
+/usr/include/eigen3/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h:
+
+/usr/include/boost/mpl/vector/aux_/iterator.hpp:
+
+/usr/include/boost/type_traits/has_complement.hpp:
+
+/usr/include/boost/graph/graphviz.hpp:
+
+/usr/include/boost/type_traits/has_trivial_constructor.hpp:
+
+/usr/include/boost/type_traits/is_assignable.hpp:
+
+/usr/include/boost/numeric/ublas/detail/definitions.hpp:
+
+/usr/include/boost/predef/compiler/gcc.h:
+
+/usr/include/boost/mpl/aux_/preprocessor/def_params_tail.hpp:
+
+/usr/include/eigen3/Eigen/src/Geometry/AngleAxis.h:
+
+/usr/include/boost/type_traits/add_lvalue_reference.hpp:
+
+/usr/include/boost/assert/source_location.hpp:
+
+/usr/include/boost/range/algorithm/count_if.hpp:
+
+/usr/include/boost/fusion/view/single_view/detail/next_impl.hpp:
+
+/usr/include/eigen3/Eigen/src/Geometry/RotationBase.h:
+
+/usr/include/eigen3/Eigen/src/Geometry/Homogeneous.h:
+
+/usr/include/boost/move/detail/type_traits.hpp:
+
+/usr/include/boost/mpl/aux_/config/eti.hpp:
+
+/usr/include/eigen3/Eigen/src/Geometry/OrthoMethods.h:
+
+/usr/include/c++/13/vector:
+
+/usr/include/eigen3/Eigen/Geometry:
+
+/usr/include/eigen3/Eigen/SVD:
+
+/usr/include/boost/fusion/sequence/intrinsic/at_key.hpp:
+
+/usr/include/eigen3/Eigen/src/QR/CompleteOrthogonalDecomposition.h:
+
+/usr/include/eigen3/Eigen/src/Core/PartialReduxEvaluator.h:
+
+/usr/include/c++/13/format:
+
+/usr/include/boost/fusion/adapted/boost_tuple/detail/value_at_impl.hpp:
+
+/usr/include/boost/mpl/aux_/config/has_apply.hpp:
+
+/usr/include/eigen3/Eigen/src/QR/ColPivHouseholderQR.h:
+
+/usr/include/boost/detail/algorithm.hpp:
+
+/usr/include/boost/math/special_functions/lanczos.hpp:
+
+/usr/include/boost/type_traits/has_nothrow_assign.hpp:
+
+/usr/include/eigen3/Eigen/src/QR/FullPivHouseholderQR.h:
+
+/usr/include/boost/mpl/map/map0.hpp:
+
+/usr/include/boost/mpl/aux_/integral_wrapper.hpp:
+
+/usr/include/boost/core/addressof.hpp:
+
+/usr/include/eigen3/Eigen/src/Householder/HouseholderSequence.h:
+
+/usr/include/boost/function_types/components.hpp:
+
+/usr/include/boost/smart_ptr/detail/lwm_std_mutex.hpp:
+
+/usr/include/eigen3/Eigen/src/Householder/Householder.h:
+
+/usr/include/boost/mpl/vector/aux_/push_back.hpp:
+
+/usr/include/boost/parameter/aux_/has_nested_template_fn.hpp:
+
+/usr/include/eigen3/Eigen/src/Cholesky/LDLT.h:
+
+/usr/include/boost/fusion/mpl/back.hpp:
+
+/usr/include/eigen3/Eigen/Jacobi:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/stl/string.hpp:
+
+/usr/include/boost/type_traits/remove_volatile.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
+
+/usr/include/eigen3/Eigen/src/LU/arch/InverseSize4.h:
+
+/usr/include/boost/predef/compiler/pgi.h:
+
+/usr/include/boost/concept/detail/has_constraints.hpp:
+
+/usr/include/eigen3/Eigen/src/LU/Determinant.h:
+
+/usr/include/eigen3/Eigen/src/misc/Image.h:
+
+/usr/include/boost/pending/queue.hpp:
+
+/usr/include/boost/fusion/adapted/mpl.hpp:
+
+/usr/include/eigen3/Eigen/LU:
+
+/usr/include/boost/mpl/aux_/preprocessed/gcc/list.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h:
+
+/usr/include/boost/exception/detail/shared_ptr.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/GlobalFunctions.h:
+
+/usr/include/boost/move/detail/std_ns_begin.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/StlIterators.h:
+
+/usr/include/boost/preprocessor/arithmetic.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/Reverse.h:
+
+/usr/include/eigen3/Eigen/src/Core/Replicate.h:
+
+/usr/include/boost/preprocessor/detail/auto_rec.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/Random.h:
+
+/usr/include/boost/fusion/algorithm/query/any.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/VectorwiseOp.h:
+
+/usr/include/eigen3/Eigen/src/Core/BandMatrix.h:
+
+/usr/include/boost/mpl/aux_/config/workaround.hpp:
+
+/usr/include/boost/iterator_adaptors.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/ProductEvaluators.h:
+
+/usr/include/boost/detail/call_traits.hpp:
+
+/usr/include/c++/13/bits/locale_facets_nonio.tcc:
+
+/usr/include/boost/proto/detail/basic_expr.hpp:
+
+/usr/include/boost/xpressive/detail/detail_fwd.hpp:
+
+/usr/include/boost/range/detail/safe_bool.hpp:
+
+/usr/include/x86_64-linux-gnu/asm/unistd_64.h:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/_impl_basic_array_view_common.hpp:
+
+/usr/include/eigen3/Eigen/src/Eigenvalues/EigenSolver.h:
+
+/usr/include/boost/math/tools/toms748_solve.hpp:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
 
 /usr/include/c++/13/bits/hashtable.h:
 
 /usr/include/boost/mpl/vector/aux_/at.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/error_t.h:
-
-/usr/include/boost/type_traits/has_complement.hpp:
-
-/usr/include/boost/graph/graphviz.hpp:
 
 /usr/include/boost/pending/property.hpp:
 
@@ -7630,57 +7878,27 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/predef/library/std/dinkumware.h:
 
-/usr/include/boost/mpl/vector/aux_/item.hpp:
-
-/usr/include/boost/type_traits/is_floating_point.hpp:
-
-/usr/include/boost/proto/transform/detail/preprocessed/pass_through_impl.hpp:
-
-/usr/include/boost/proto/detail/preprocessed/poly_function_funop.hpp:
-
-/usr/include/boost/fusion/view/zip_view/zip_view_iterator_fwd.hpp:
-
-/usr/include/boost/predef/hardware/simd.h:
-
 /usr/include/c++/13/bits/std_function.h:
 
-/usr/include/boost/mpl/aux_/advance_forward.hpp:
-
-/usr/include/c++/13/bits/char_traits.h:
-
-/usr/include/boost/graph/property_maps/null_property_map.hpp:
-
-/usr/include/boost/range/difference_type.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avxintrin.h:
 
 /usr/include/boost/preprocessor/list/fold_left.hpp:
 
 /usr/include/boost/core/noinit_adaptor.hpp:
 
-/usr/include/endian.h:
-
-/usr/include/c++/13/numbers:
-
-/usr/include/boost/random/detail/generator_seed_seq.hpp:
-
-/usr/include/boost/preprocessor/arithmetic/sub.hpp:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h:
-
 /usr/include/boost/mp11/integer_sequence.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/clock_t.h:
+
+/usr/include/boost/algorithm/string/find_format.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
 
 /usr/include/boost/predef/architecture/arm.h:
 
 /usr/include/c++/13/bits/sstream.tcc:
 
-/usr/include/boost/mpl/same_as.hpp:
-
 /usr/include/boost/parameter/aux_/template_keyword.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/byteswap.h:
-
-/usr/include/boost/mpl/placeholders.hpp:
 
 /usr/include/c++/13/cwctype:
 
@@ -7694,33 +7912,69 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/tr1/hypergeometric.tcc:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlbwintrin.h:
+
 /usr/include/boost/cstdint.hpp:
 
 /usr/include/boost/mpl/list/list0.hpp:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
+
+/usr/include/boost/fusion/algorithm/query/find_fwd.hpp:
 
 /usr/include/c++/13/bits/locale_classes.tcc:
 
 /usr/include/boost/mpl/aux_/preprocessed/gcc/times.hpp:
 
+/usr/include/x86_64-linux-gnu/bits/syscall.h:
+
+/usr/include/boost/tti/detail/ddeftype.hpp:
+
+/usr/include/eigen3/Eigen/src/Geometry/Quaternion.h:
+
+/usr/include/boost/integer_traits.hpp:
+
+/usr/include/eigen3/Eigen/src/Geometry/Scaling.h:
+
+/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
+
+/usr/include/boost/mpl/find.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/stdio2.h:
-
-/usr/include/eigen3/Eigen/src/Core/SolverBase.h:
-
-/usr/include/boost/predef/compiler/kai.h:
 
 /usr/include/c++/13/bits/quoted_string.h:
 
 /usr/include/boost/mpl/vector/aux_/O1_size.hpp:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/clwbintrin.h:
+
+/usr/include/boost/predef/architecture/pyramid.h:
+
+/usr/include/boost/math/tools/promotion.hpp:
+
 /usr/include/boost/preprocessor/list/adt.hpp:
+
+/usr/include/x86_64-linux-gnu/asm/unistd.h:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/concepts.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512erintrin.h:
+
+/usr/include/boost/type_traits/has_modulus.hpp:
+
+/usr/include/boost/mpl/aux_/config/compiler.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/stdio.h:
+
+/usr/include/boost/fusion/container/list/detail/deref_impl.hpp:
 
 /usr/include/stdio.h:
 
 /usr/include/c++/13/bits/stl_iterator_base_types.h:
 
-/usr/include/eigen3/Eigen/src/Cholesky/LDLT.h:
+/usr/include/c++/13/bits/enable_special_members.h:
 
-/usr/include/boost/fusion/mpl/back.hpp:
+/usr/include/boost/graph/graph_selectors.hpp:
 
 /usr/include/c++/13/bits/refwrap.h:
 
@@ -7728,35 +7982,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/bits/ranges_algobase.h:
 
-/usr/include/c++/13/vector:
-
-/usr/include/eigen3/Eigen/src/Geometry/OrthoMethods.h:
-
 /usr/include/eigen3/Eigen/src/Core/util/Macros.h:
-
-/usr/include/boost/optional/detail/optional_config.hpp:
-
-/usr/include/boost/container_hash/detail/hash_float.hpp:
 
 /usr/include/boost/fusion/adapted/mpl/detail/empty_impl.hpp:
 
 /usr/include/c++/13/bits/cxxabi_forced.h:
-
-/usr/include/boost/type_traits/is_assignable.hpp:
-
-/usr/include/boost/numeric/ublas/detail/definitions.hpp:
-
-/usr/include/boost/predef/compiler/gcc.h:
-
-/usr/include/boost/mpl/aux_/preprocessor/def_params_tail.hpp:
-
-/usr/include/eigen3/Eigen/src/Geometry/AngleAxis.h:
-
-/usr/include/boost/core/pointer_traits.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
-
-/usr/include/boost/type_traits/has_unary_plus.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/wordsize.h:
 
@@ -7770,13 +8000,15 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/eigen3/Eigen/src/Core/products/GeneralBlockPanelKernel.h:
 
+/usr/include/eigen3/Eigen/QR:
+
+/usr/include/boost/serialization/array_wrapper.hpp:
+
 /usr/include/boost/predef/compiler/clang.h:
 
 /usr/include/boost/mpl/vector/vector20.hpp:
 
 /usr/include/boost/mpl/bool.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h:
 
 /usr/include/boost/random/detail/qrng_base.hpp:
 
@@ -7802,21 +8034,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/complex:
 
-/usr/include/sched.h:
-
-/usr/include/boost/mpl/aux_/reverse_iter_fold_impl.hpp:
-
-/usr/include/boost/mpl/times.hpp:
-
 /usr/include/boost/container/detail/std_fwd.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/StlIterators.h:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avxvnniintrin.h:
 
-/usr/include/boost/preprocessor/arithmetic.hpp:
-
-/usr/include/eigen3/Eigen/src/misc/Image.h:
-
-/usr/include/boost/pending/queue.hpp:
+/usr/include/boost/throw_exception.hpp:
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/gthr-default.h:
 
@@ -7826,13 +8048,23 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/exception:
 
-/usr/include/boost/xpressive/detail/utility/sequence_stack.hpp:
+/usr/include/eigen3/Eigen/src/Core/products/SelfadjointRank2Update.h:
 
-/usr/include/x86_64-linux-gnu/bits/wchar2.h:
+/usr/include/c++/13/stdexcept:
 
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/layout/permutation.hpp:
+/usr/include/c++/13/clocale:
 
-/usr/include/boost/preprocessor/repetition/repeat_from_to.hpp:
+/usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
+
+/usr/include/boost/preprocessor/tuple/push_back.hpp:
+
+/usr/include/x86_64-linux-gnu/sys/syscall.h:
+
+/usr/include/boost/mpl/aux_/na_assert.hpp:
+
+/usr/include/boost/mpl/aux_/preprocessed/gcc/placeholders.hpp:
+
+/usr/include/boost/graph/detail/empty_header.hpp:
 
 /usr/include/boost/parameter/aux_/default.hpp:
 
@@ -7841,26 +8073,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/x86_64-linux-gnu/bits/types/__FILE.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
-
-/usr/include/eigen3/Eigen/src/Core/arch/SSE/Complex.h:
-
-/usr/include/eigen3/Eigen/src/LU/FullPivLU.h:
-
-/usr/include/boost/fusion/container/list/convert.hpp:
-
-/usr/include/boost/mpl/at.hpp:
-
-/usr/include/boost/xpressive/detail/static/transforms/as_set.hpp:
-
-/usr/include/boost/proto/transform/when.hpp:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h:
-
-/usr/include/boost/mpl/long.hpp:
-
-/usr/include/boost/mpl/aux_/preprocessed/gcc/greater_equal.hpp:
-
-/usr/include/boost/algorithm/string/detail/finder.hpp:
 
 /usr/include/boost/type_traits/conditional.hpp:
 
@@ -7878,6 +8090,16 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/eigen3/Eigen/src/Core/Swap.h:
 
+/usr/include/boost/mpl/same_as.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/popcntintrin.h:
+
+/usr/include/boost/concept/assert.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/arch/AVX/PacketMath.h:
+
+/usr/include/eigen3/Eigen/src/Core/Reshaped.h:
+
 /usr/include/c++/13/unordered_map:
 
 /usr/include/c++/13/cwchar:
@@ -7890,14 +8112,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/support/sequence_base.hpp:
 
-/usr/include/boost/mpl/aux_/config/static_constant.hpp:
-
-/usr/include/c++/13/bits/memoryfwd.h:
-
-/usr/include/boost/preprocessor/facilities/check_empty.hpp:
-
-/usr/include/boost/tti/detail/dftclass.hpp:
-
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/format.hpp:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/layout/for_each.hpp:
@@ -7906,49 +8120,27 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/graph/connected_components.hpp:
 
+/usr/include/c++/13/bits/streambuf_iterator.h:
+
+/usr/include/boost/type_traits/has_pre_increment.hpp:
+
+/usr/include/boost/smart_ptr/scoped_ptr.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/flt-eval-method.h:
 
 /usr/include/boost/function_types/detail/synthesize_impl/arity10_1.hpp:
 
-/usr/include/boost/type_traits/is_empty.hpp:
-
-/usr/include/boost/preprocessor/repetition/for.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/util/XprHelper.h:
-
-/usr/include/boost/type_traits/has_modulus.hpp:
-
-/usr/include/boost/mpl/aux_/config/compiler.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/stdio.h:
-
-/usr/include/boost/fusion/container/list/detail/deref_impl.hpp:
-
-/usr/include/x86_64-linux-gnu/asm/unistd.h:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmi2intrin.h:
 
 /usr/include/c++/13/tr1/legendre_function.tcc:
 
-/usr/include/boost/smart_ptr/detail/yield_k.hpp:
-
 /usr/include/c++/13/tr1/ell_integral.tcc:
 
-/usr/include/boost/fusion/sequence/intrinsic/at_key.hpp:
+/usr/include/eigen3/Eigen/src/Core/functors/TernaryFunctors.h:
 
-/usr/include/eigen3/Eigen/src/QR/CompleteOrthogonalDecomposition.h:
+/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
 
-/usr/include/eigen3/Eigen/src/Core/PartialReduxEvaluator.h:
-
-/usr/include/c++/13/format:
-
-/usr/include/boost/fusion/adapted/boost_tuple/detail/value_at_impl.hpp:
-
-/usr/include/boost/assert/source_location.hpp:
-
-/usr/include/boost/type_traits/add_lvalue_reference.hpp:
-
-/usr/include/boost/range/algorithm/count_if.hpp:
-
-/usr/include/boost/fusion/view/single_view/detail/next_impl.hpp:
+/usr/include/boost/preprocessor/punctuation/remove_parens.hpp:
 
 /usr/include/boost/preprocessor/tuple/rem.hpp:
 
@@ -7970,10 +8162,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/sequence/intrinsic/detail/segmented_begin.hpp:
 
-/usr/include/boost/mpl/vector/aux_/push_back.hpp:
-
-/usr/include/boost/parameter/aux_/has_nested_template_fn.hpp:
-
 /usr/include/c++/13/bits/exception_defines.h:
 
 /usr/include/boost/iterator/distance.hpp:
@@ -7986,6 +8174,10 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/iterator/detail/enable_if.hpp:
 
+/usr/include/boost/xpressive/detail/utility/tracking_ptr.hpp:
+
+/usr/include/c++/13/bits/nested_exception.h:
+
 /usr/include/boost/preprocessor/array/insert.hpp:
 
 /usr/include/boost/range/range_fwd.hpp:
@@ -7994,7 +8186,13 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/eigen3/Eigen/src/Core/DiagonalMatrix.h:
 
-/usr/include/boost/mpl/aux_/config/has_apply.hpp:
+/usr/include/boost/type_traits/is_function.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_thread_sleep.hpp:
+
+/usr/include/boost/xpressive/detail/utility/counted_base.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h:
 
 /usr/include/eigen3/Eigen/src/Core/PermutationMatrix.h:
 
@@ -8002,23 +8200,37 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/view/single_view/detail/distance_impl.hpp:
 
+/usr/include/boost/preprocessor/repetition/detail/for.hpp:
+
+/usr/include/c++/13/fstream:
+
+/usr/include/boost/io/ios_state.hpp:
+
+/usr/include/boost/type_traits/detail/has_prefix_operator.hpp:
+
 /usr/include/c++/13/cerrno:
 
 /usr/include/boost/preprocessor/variadic/to_tuple.hpp:
 
-/usr/include/eigen3/Eigen/src/Eigenvalues/RealSchur.h:
+/usr/include/boost/mpl/long_fwd.hpp:
 
-/usr/include/boost/mpl/empty_fwd.hpp:
+/usr/include/boost/preprocessor/logical/and.hpp:
+
+/usr/include/boost/predef/library/std/cxx.h:
+
+/usr/include/eigen3/Eigen/src/Core/CoreIterators.h:
+
+/usr/include/boost/fusion/view/single_view/detail/deref_impl.hpp:
 
 /usr/include/c++/13/bits/stl_construct.h:
+
+/usr/include/boost/smart_ptr/detail/atomic_count_gcc_atomic.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/EigenBase.h:
 
 /usr/include/c++/13/bits/cxxabi_init_exception.h:
 
 /usr/include/boost/preprocessor/control/while.hpp:
-
-/usr/include/boost/preprocessor/detail/auto_rec.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/Replicate.h:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/layout/rect_str.hpp:
 
@@ -8026,19 +8238,7 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/tti/detail/dcomp_mem_fun.hpp:
 
-/usr/include/boost/smart_ptr.hpp:
-
 /usr/include/eigen3/Eigen/src/Core/Array.h:
-
-/usr/include/eigen3/Eigen/src/Core/products/SelfadjointRank2Update.h:
-
-/usr/include/c++/13/stdexcept:
-
-/usr/include/c++/13/clocale:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h:
-
-/usr/include/boost/preprocessor/tuple/push_back.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/__sigset_t.h:
 
@@ -8048,13 +8248,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/find_if.hpp:
 
-/usr/include/boost/concept/detail/has_constraints.hpp:
+/usr/include/boost/mpl/apply.hpp:
 
-/usr/include/eigen3/Eigen/src/LU/Determinant.h:
-
-/usr/include/eigen3/Eigen/src/Core/SelfAdjointView.h:
-
-/usr/include/boost/mpl/set/aux_/iterator.hpp:
+/usr/include/eigen3/Eigen/src/LU/PartialPivLU.h:
 
 /usr/include/math.h:
 
@@ -8076,17 +8272,7 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/preprocessor/list/reverse.hpp:
 
-/usr/include/c++/13/backward/binders.h:
-
-/usr/include/boost/fusion/adapted/mpl.hpp:
-
-/usr/include/eigen3/Eigen/LU:
-
 /usr/include/boost/fusion/sequence/intrinsic/begin.hpp:
-
-/usr/include/eigen3/Eigen/src/Geometry/Homogeneous.h:
-
-/usr/include/boost/move/detail/type_traits.hpp:
 
 /usr/include/boost/mpl/aux_/template_arity.hpp:
 
@@ -8100,7 +8286,19 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/range/irange.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/Reshaped.h:
+/usr/include/eigen3/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h:
+
+/usr/include/boost/type_traits/is_arithmetic.hpp:
+
+/usr/include/alloca.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/amxint8intrin.h:
+
+/usr/include/boost/graph/graph_mutability_traits.hpp:
+
+/usr/include/boost/concept_check.hpp:
+
+/usr/include/boost/preprocessor/list/transform.hpp:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/transform.hpp:
 
@@ -8108,11 +8306,19 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/current_function.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/Solve.h:
-
 /usr/include/boost/graph/numeric_values.hpp:
 
 /usr/include/c++/13/bits/stl_relops.h:
+
+/usr/include/eigen3/Eigen/src/LU/InverseImpl.h:
+
+/usr/include/boost/parameter/aux_/result_of0.hpp:
+
+/usr/include/eigen3/Eigen/src/Geometry/Umeyama.h:
+
+/usr/include/c++/13/bits/alloc_traits.h:
+
+/usr/include/boost/parameter/aux_/preprocessor/nullptr.hpp:
 
 /usr/include/eigen3/Eigen/src/Core/arch/Default/GenericPacketMathFunctionsFwd.h:
 
@@ -8122,15 +8328,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/function_types/property_tags.hpp:
 
-/usr/include/boost/function_types/detail/encoding/aliases_def.hpp:
-
 /usr/include/boost/proto/eval.hpp:
 
 /usr/include/c++/13/sstream:
-
-/usr/include/boost/math/special_functions/expm1.hpp:
-
-/usr/include/boost/algorithm/string/detail/formatter.hpp:
 
 /usr/include/c++/13/bits/shared_ptr.h:
 
@@ -8144,6 +8344,10 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/predef/os/irix.h:
 
+/usr/include/boost/core/empty_value.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveoptintrin.h:
+
 /usr/include/x86_64-linux-gnu/bits/types/struct___jmp_buf_tag.h:
 
 /usr/include/boost/fusion/algorithm/iteration/detail/segmented_fold.hpp:
@@ -8152,15 +8356,35 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h:
 
-/usr/include/boost/smart_ptr/shared_array.hpp:
-
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/libamicalc/install/include/ami_spec.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/util/BlasUtil.h:
-
 /usr/include/c++/13/bits/stl_tempbuf.h:
 
+/usr/include/boost/preprocessor/array/elem.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/iscanonical.h:
+
+/usr/include/boost/smart_ptr/detail/local_sp_deleter.hpp:
+
 /usr/include/c++/13/bits/ios_base.h:
+
+/usr/include/eigen3/Eigen/src/LU/FullPivLU.h:
+
+/usr/include/eigen3/Eigen/src/Core/arch/SSE/Complex.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/cldemoteintrin.h:
+
+/usr/include/boost/random/variate_generator.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/enqcmdintrin.h:
+
+/usr/include/boost/smart_ptr/detail/operator_bool.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/ArrayWrapper.h:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/libamicalc/install/include/ami_calc.hpp:
+
+/usr/include/boost/mpl/aux_/preprocessed/gcc/fold_impl.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
 
 /usr/include/boost/math/special_functions/sqrt1pm1.hpp:
 
@@ -8172,77 +8396,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/bits/stl_iterator_base_funcs.h:
 
-/usr/include/eigen3/Eigen/src/Core/BandMatrix.h:
+/usr/include/boost/mpl/aux_/numeric_op.hpp:
 
-/usr/include/boost/fusion/container/vector/detail/end_impl.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/serializeintrin.h:
 
-/usr/include/c++/13/bits/ptr_traits.h:
-
-/usr/include/c++/13/tr1/bessel_function.tcc:
-
-/usr/include/boost/mpl/aux_/arity_spec.hpp:
-
-/usr/include/boost/preprocessor/list.hpp:
-
-/usr/include/boost/fusion/iterator/detail/segmented_iterator.hpp:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h:
-
-/usr/include/boost/preprocessor/arithmetic/dec.hpp:
-
-/usr/include/c++/13/bits/atomic_wait.h:
-
-/usr/include/boost/mpl/size.hpp:
-
-/usr/include/c++/13/bits/locale_facets.tcc:
-
-/usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h:
-
-/usr/include/eigen3/Eigen/src/Core/functors/TernaryFunctors.h:
-
-/usr/include/boost/preprocessor/punctuation/remove_parens.hpp:
-
-/usr/include/c++/13/bits/basic_string.tcc:
-
-/usr/include/boost/utility/binary.hpp:
-
-/usr/include/boost/mpl/aux_/config/typeof.hpp:
-
-/usr/include/boost/predef/architecture/x86/64.h:
-
-/usr/include/boost/proto/transform/detail/pass_through_impl.hpp:
-
-/usr/include/boost/type_traits/has_trivial_copy.hpp:
-
-/usr/include/boost/preprocessor/variadic/elem.hpp:
-
-/usr/include/boost/mpl/map/aux_/preprocessed/typeof_based/map10.hpp:
-
-/usr/include/c++/13/bits/allocated_ptr.h:
-
-/usr/include/boost/smart_ptr/detail/sp_has_sync_intrinsics.hpp:
-
-/usr/include/boost/fusion/sequence/intrinsic/segments.hpp:
-
-/usr/include/boost/random/detail/config.hpp:
-
-/usr/include/boost/fusion/view/joint_view/joint_view.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/CommaInitializer.h:
-
-/usr/include/boost/preprocessor/repetition/enum_shifted.hpp:
-
-/usr/include/boost/graph/detail/mpi_include.hpp:
-
-/usr/include/boost/core/ref.hpp:
-
-/usr/include/features-time64.h:
-
-/usr/include/boost/random/uniform_01.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
-
-/usr/include/boost/parameter/aux_/use_default.hpp:
+/usr/include/eigen3/Eigen/src/Core/util/ReshapedHelper.h:
 
 /usr/include/boost/type_traits/has_nothrow_destructor.hpp:
 
@@ -8254,27 +8412,121 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/support/is_view.hpp:
 
+/usr/include/eigen3/Eigen/src/Eigenvalues/RealQZ.h:
+
 /usr/include/eigen3/Eigen/src/Core/products/SelfadjointMatrixMatrix.h:
 
+/usr/include/c++/13/bits/ptr_traits.h:
+
+/usr/include/c++/13/tr1/bessel_function.tcc:
+
+/usr/include/boost/mpl/aux_/arity_spec.hpp:
+
+/usr/include/boost/preprocessor/list.hpp:
+
+/usr/include/eigen3/Eigen/src/Eigenvalues/Tridiagonalization.h:
+
+/usr/include/boost/parameter/aux_/pp_impl/match.hpp:
+
+/usr/include/boost/fusion/iterator/detail/segmented_iterator.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h:
+
+/usr/include/c++/13/string:
+
+/usr/include/features.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/vpclmulqdqintrin.h:
+
+/usr/include/boost/preprocessor/arithmetic/dec.hpp:
+
+/usr/include/c++/13/bits/atomic_wait.h:
+
+/usr/include/boost/mpl/size.hpp:
+
+/usr/include/c++/13/bits/locale_facets.tcc:
+
+/usr/include/c++/13/bits/stl_algobase.h:
+
+/usr/include/boost/multi_array/types.hpp:
+
+/usr/include/c++/13/bits/basic_string.tcc:
+
+/usr/include/boost/utility/binary.hpp:
+
+/usr/include/boost/mpl/aux_/config/typeof.hpp:
+
+/usr/include/boost/type_traits/has_trivial_copy.hpp:
+
+/usr/include/boost/preprocessor/variadic/elem.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/arch/AVX/MathFunctions.h:
+
+/usr/include/boost/mpl/map/aux_/preprocessed/typeof_based/map10.hpp:
+
+/usr/include/c++/13/bits/allocated_ptr.h:
+
+/usr/include/eigen3/Eigen/src/Core/CommaInitializer.h:
+
+/usr/include/boost/preprocessor/repetition/enum_shifted.hpp:
+
+/usr/include/boost/graph/detail/mpi_include.hpp:
+
+/usr/include/boost/random/detail/uniform_int_float.hpp:
+
+/usr/include/eigen3/Eigen/src/Geometry/ParametrizedLine.h:
+
+/usr/include/boost/preprocessor/array/data.hpp:
+
+/usr/include/c++/13/bits/range_access.h:
+
+/usr/include/features-time64.h:
+
+/usr/include/boost/random/uniform_01.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/types/locale_t.h:
+
+/usr/include/boost/parameter/aux_/use_default.hpp:
+
+/usr/include/boost/mpl/aux_/comparison_op.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixMatrix.h:
+
+/mnt/c/Users/Rayan/Research/libami/install/include/ami_base.hpp:
+
+/usr/include/boost/mpl/aux_/config/lambda.hpp:
+
+/usr/include/boost/mpl/vector/aux_/preprocessed/typeof_based/vector10.hpp:
+
 /usr/include/boost/preprocessor/tuple/pop_front.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/movdirintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/clzerointrin.h:
 
 /usr/include/boost/type_traits/is_volatile.hpp:
 
 /usr/include/locale.h:
 
+/usr/include/boost/mpl/vector/aux_/item.hpp:
+
+/usr/include/boost/type_traits/is_floating_point.hpp:
+
+/usr/include/boost/proto/detail/preprocessed/poly_function_funop.hpp:
+
+/usr/include/boost/fusion/view/zip_view/zip_view_iterator_fwd.hpp:
+
+/usr/include/boost/predef/hardware/simd.h:
+
+/usr/include/boost/math/special_functions/sin_pi.hpp:
+
+/usr/include/boost/graph/reverse_graph.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/setjmp.h:
-
-/usr/include/boost/scoped_array.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
 /usr/include/boost/parameter/aux_/is_tagged_argument.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/pthreadtypes-arch.h:
-
-/usr/include/boost/range/detail/implementation_help.hpp:
-
-/usr/include/boost/mpl/aux_/lambda_spec.hpp:
 
 /usr/include/boost/parameter/aux_/preprocessor/impl/function_dispatch_layer.hpp:
 
@@ -8282,11 +8534,27 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/bits/move.h:
 
+/usr/include/boost/multiprecision/cpp_int/limits.hpp:
+
+/usr/include/boost/fusion/sequence/intrinsic.hpp:
+
+/usr/include/boost/serialization/tracking.hpp:
+
+/usr/include/boost/mpl/aux_/lambda_spec.hpp:
+
+/usr/include/boost/range/detail/implementation_help.hpp:
+
+/usr/include/boost/math/special_functions/trunc.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avxneconvertintrin.h:
+
+/usr/include/boost/predef/architecture/sys390.h:
+
+/usr/include/boost/mpl/iter_fold.hpp:
+
 /usr/include/c++/13/cstddef:
 
 /usr/include/boost/fusion/container/vector/detail/at_impl.hpp:
-
-/usr/include/boost/mpl/plus.hpp:
 
 /usr/include/c++/13/ext/aligned_buffer.h:
 
@@ -8306,13 +8574,29 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/new:
 
-/usr/include/c++/13/debug/assertions.h:
-
-/usr/include/boost/optional/detail/optional_factory_support.hpp:
-
 /usr/include/boost/multi_index/detail/ord_index_args.hpp:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/libamigraph/install/include/amigraph.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/products/TriangularSolverVector.h:
+
+../src/mini_main.cpp:
+
+/usr/include/boost/fusion/algorithm/transformation/pop_front.hpp:
+
+/usr/include/boost/move/detail/to_raw_pointer.hpp:
+
+/usr/include/stdc-predef.h:
+
+/usr/include/boost/proto/transform/detail/pack.hpp:
+
+/usr/include/boost/fusion/view/transform_view/detail/value_of_impl.hpp:
+
+/usr/include/boost/range/detail/misc_concept.hpp:
+
+/usr/include/boost/fusion/include/transform.hpp:
+
+/usr/include/boost/fusion/sequence/intrinsic/empty.hpp:
 
 /usr/include/boost/type_traits/has_bit_xor_assign.hpp:
 
@@ -8321,12 +8605,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/iterator/filter_iterator.hpp:
 
 /usr/include/boost/type_traits/is_scalar.hpp:
-
-/usr/include/boost/mpl/map/map0.hpp:
-
-/usr/include/boost/mpl/aux_/integral_wrapper.hpp:
-
-/usr/include/eigen3/Eigen/src/QR/FullPivHouseholderQR.h:
 
 /usr/include/boost/type_traits/is_list_constructible.hpp:
 
@@ -8340,11 +8618,13 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/bits/streambuf.tcc:
 
+/usr/include/eigen3/Eigen/src/SVD/UpperBidiagonalization.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/prfchwintrin.h:
+
+/usr/include/c++/13/map:
+
 /usr/include/boost/type_traits/integral_promotion.hpp:
-
-/usr/include/boost/call_traits.hpp:
-
-/usr/include/c++/13/bits/locale_classes.h:
 
 /usr/include/boost/iterator/detail/facade_iterator_category.hpp:
 
@@ -8360,11 +8640,17 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/algorithm/transformation/insert_range.hpp:
 
-/usr/include/boost/fusion/algorithm/query/find_fwd.hpp:
+/usr/include/boost/exception/to_string_stub.hpp:
 
-/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_inline.h:
+/usr/include/c++/13/tr1/beta_function.tcc:
 
 /usr/include/boost/fusion/view/iterator_range/detail/segments_impl.hpp:
+
+/usr/include/boost/random/detail/generator_seed_seq.hpp:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/ctype_base.h:
+
+/usr/include/boost/preprocessor/arithmetic/sub.hpp:
 
 /usr/include/boost/type_traits/has_greater.hpp:
 
@@ -8384,9 +8670,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
-/usr/include/c++/13/atomic:
-
 /usr/include/eigen3/Eigen/src/Core/DenseBase.h:
+
+/usr/include/c++/13/atomic:
 
 /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h:
 
@@ -8394,19 +8680,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/x86_64-linux-gnu/asm/errno.h:
 
-/usr/include/boost/intrusive_ptr.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/util/Meta.h:
-
-/usr/include/c++/13/compare:
-
-/usr/include/boost/smart_ptr/weak_ptr.hpp:
-
 /usr/include/c++/13/string_view:
 
 /usr/include/c++/13/bits/stl_iterator.h:
-
-/usr/include/eigen3/Eigen/src/plugins/IndexedViewMethods.h:
 
 /usr/include/eigen3/Eigen/src/Core/ConditionEstimator.h:
 
@@ -8414,7 +8690,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 ../src/dlr_ami.hpp:
 
-/usr/include/boost/preprocessor/array/pop_back.hpp:
+/usr/include/boost/preprocessor/control/expr_iif.hpp:
+
+/usr/include/eigen3/Eigen/Cholesky:
+
+/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
 
 /usr/include/boost/static_assert.hpp:
 
@@ -8434,9 +8714,19 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/type_traits/is_abstract.hpp:
 
+/usr/include/boost/preprocessor/repetition/enum_binary_params.hpp:
+
+/usr/include/boost/multi_index/detail/node_type.hpp:
+
+/usr/include/c++/13/bits/locale_classes.h:
+
+/usr/include/boost/call_traits.hpp:
+
 /usr/include/boost/noncopyable.hpp:
 
 /usr/include/boost/function_types/detail/encoding/aliases_undef.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512ifmaintrin.h:
 
 /usr/include/boost/fusion/mpl/front.hpp:
 
@@ -8444,11 +8734,45 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/bits/stl_uninitialized.h:
 
+/usr/include/boost/algorithm/string/detail/find_format_all.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/wbnoinvdintrin.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h:
+
+/usr/include/boost/mpl/list/aux_/clear.hpp:
+
+/usr/include/boost/fusion/iterator/iterator_facade.hpp:
+
+/usr/include/boost/mpl/placeholders.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/byteswap.h:
+
+/usr/include/boost/multiprecision/traits/explicit_conversion.hpp:
+
+/usr/include/boost/smart_ptr/detail/spinlock.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/util/Meta.h:
+
+/usr/include/c++/13/compare:
+
+/usr/include/boost/intrusive_ptr.hpp:
+
+/usr/include/boost/move/detail/config_end.hpp:
+
+/usr/include/boost/type_traits/is_union.hpp:
+
+/usr/include/boost/mpl/aux_/na_spec.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/confname.h:
+
+/usr/include/boost/numeric/conversion/converter_policies.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/immintrin.h:
+
 /usr/include/c++/13/cmath:
 
 /usr/include/boost/type_traits/remove_pointer.hpp:
-
-/usr/include/boost/xpressive/detail/utility/width.hpp:
 
 /usr/include/stdlib.h:
 
@@ -8462,10 +8786,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/iomanip:
 
-/usr/include/boost/exception/to_string.hpp:
-
-/usr/include/eigen3/Eigen/Jacobi:
-
 /usr/include/c++/13/experimental/filesystem:
 
 /usr/include/boost/mpl/insert_range.hpp:
@@ -8477,14 +8797,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/preprocessor/comparison/less.hpp:
 
 /usr/include/boost/math/special_functions/math_fwd.hpp:
-
-/usr/include/boost/mpl/aux_/config/eti.hpp:
-
-/usr/include/boost/property_map/property_map.hpp:
-
-/usr/include/boost/function_types/member_function_pointer.hpp:
-
-/usr/include/boost/xpressive/regex_error.hpp:
 
 /usr/include/boost/parameter/aux_/preprocessor/impl/forwarding_overloads.hpp:
 
@@ -8500,13 +8812,19 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/limits/vector.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/types/struct_sched_param.h:
-
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/stl/string.hpp:
-
-/usr/include/boost/type_traits/remove_volatile.hpp:
-
 /usr/include/boost/predef/architecture/ptx.h:
+
+/usr/include/c++/13/numbers:
+
+/usr/include/endian.h:
+
+/usr/include/boost/graph/random.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/arch/Default/BFloat16.h:
+
+/usr/include/boost/mpl/minus.hpp:
+
+/usr/include/boost/mpl/aux_/preprocessed/gcc/iter_fold_impl.hpp:
 
 /usr/include/stdint.h:
 
@@ -8528,6 +8846,12 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/algorithm/transformation/erase_key.hpp:
 
+/usr/include/x86_64-linux-gnu/sys/types.h:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/utils.hpp:
+
+/usr/include/boost/smart_ptr/enable_shared_from_this.hpp:
+
 /usr/include/c++/13/cassert:
 
 /usr/include/x86_64-linux-gnu/bits/stdlib-bsearch.h:
@@ -8536,33 +8860,45 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/iterator_category.hpp:
 
-/usr/include/boost/preprocessor/logical/xor.hpp:
+/usr/include/boost/mpl/numeric_cast.hpp:
 
-/usr/include/boost/mpl/aux_/preprocessed/gcc/advance_backward.hpp:
+/usr/include/boost/preprocessor/facilities/is_empty_variadic.hpp:
 
-/usr/include/boost/preprocessor/slot/detail/shared.hpp:
+/usr/include/boost/mpl/is_sequence.hpp:
 
-/usr/include/boost/multiprecision/detail/min_max.hpp:
-
-/usr/include/boost/mp11/detail/mp_with_index.hpp:
-
-/usr/include/boost/function_types/detail/synthesize_impl/arity20_0.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512ifmavlintrin.h:
 
 /usr/include/boost/mpl/aux_/lambda_support.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/atomic_wide_counter.h:
 
+/usr/include/eigen3/Eigen/src/Core/util/BlasUtil.h:
+
+/usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h:
+
+/usr/include/boost/bind/mem_fn_template.hpp:
+
+/usr/include/boost/mpl/integral_c.hpp:
+
+/usr/include/boost/parameter/required.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/shaintrin.h:
+
+/usr/include/boost/mpl/aux_/iter_push_front.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/wchar.h:
+
+/usr/include/boost/function_types/detail/pp_variate_loop/preprocessed.hpp:
+
+/usr/include/boost/preprocessor/repetition/enum_shifted_params.hpp:
 
 /usr/include/boost/proto/detail/make_expr_.hpp:
 
 /usr/include/boost/blank.hpp:
 
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/libamicalc/install/include/ami_calc.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16intrin.h:
 
-/usr/include/eigen3/Eigen/src/Core/ArrayWrapper.h:
-
-/usr/include/boost/mpl/aux_/preprocessed/gcc/fold_impl.hpp:
+/usr/include/boost/multi_array/base.hpp:
 
 /usr/include/boost/function_types/detail/components_impl/arity20_0.hpp:
 
@@ -8573,6 +8909,22 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/mpl/quote.hpp:
 
 /usr/include/boost/fusion/adapted/boost_tuple/boost_tuple_iterator.hpp:
+
+/usr/include/c++/13/bits/erase_if.h:
+
+/usr/include/x86_64-linux-gnu/gnu/stubs.h:
+
+/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
+
+/usr/include/boost/preprocessor/list/for_each.hpp:
+
+/usr/include/boost/mpl/protect.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmivlintrin.h:
+
+/usr/include/boost/parameter/aux_/yesno.hpp:
+
+/usr/include/eigen3/Eigen/src/plugins/IndexedViewMethods.h:
 
 /usr/include/boost/fusion/container/vector/detail/value_at_impl.hpp:
 
@@ -8638,9 +8990,21 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/predef/compiler/dignus.h:
 
+/usr/include/boost/xpressive/detail/core/list.hpp:
+
+/usr/include/c++/13/tr1/poly_hermite.tcc:
+
+/usr/include/boost/predef/os/cygwin.h:
+
 /usr/include/boost/multiprecision/cpp_int/bitwise.hpp:
 
 /usr/include/boost/fusion/mpl/insert.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fintrin.h:
+
+/usr/include/boost/preprocessor/array/enum.hpp:
+
+/usr/include/boost/preprocessor/repetition/enum_trailing_binary_params.hpp:
 
 /usr/include/boost/mpl/next.hpp:
 
@@ -8656,6 +9020,18 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/select2.h:
 
+/usr/include/boost/iterator/iterator_traits.hpp:
+
+/usr/include/boost/lexical_cast/detail/converter_lexical_streams.hpp:
+
+/usr/include/boost/xpressive/detail/utility/chset/range_run.ipp:
+
+/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/cetintrin.h:
+
+/usr/include/boost/type_traits/is_empty.hpp:
+
 /usr/include/boost/proto/detail/matches_.hpp:
 
 /usr/include/c++/13/system_error:
@@ -8668,6 +9044,24 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/bind.hpp:
 
+/usr/include/c++/13/bits/hash_bytes.h:
+
+/usr/include/boost/type_traits/has_right_shift_assign.hpp:
+
+/usr/include/boost/smart_ptr/shared_ptr.hpp:
+
+/usr/include/c++/13/bits/ranges_algo.h:
+
+/usr/include/eigen3/Eigen/src/Core/GenericPacketMath.h:
+
+/usr/include/boost/random/detail/seed_impl.hpp:
+
+/usr/include/boost/mpl/sequence_tag_fwd.hpp:
+
+/usr/include/boost/fusion/container/vector.hpp:
+
+/usr/include/boost/predef/os/haiku.h:
+
 /usr/include/c++/13/bits/invoke.h:
 
 /usr/include/boost/parameter/aux_/pack/tag_type.hpp:
@@ -8678,27 +9072,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/eigen3/Eigen/src/plugins/BlockMethods.h:
 
-/usr/include/boost/type_traits/is_arithmetic.hpp:
-
-/usr/include/alloca.h:
-
-/usr/include/eigen3/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h:
-
 /usr/include/c++/13/bits/istream.tcc:
 
-/usr/include/boost/xpressive/detail/core/optimize.hpp:
-
-/usr/include/boost/numeric/ublas/matrix.hpp:
-
-/usr/include/boost/fusion/algorithm/iteration/fold_fwd.hpp:
-
 /usr/include/c++/13/optional:
-
-/usr/include/boost/type_traits/is_nothrow_move_assignable.hpp:
-
-/usr/include/c++/13/bits/stl_function.h:
-
-/usr/include/c++/13/bits/vector.tcc:
 
 /usr/include/x86_64-linux-gnu/bits/waitstatus.h:
 
@@ -8708,33 +9084,15 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/iterator/indirect_iterator.hpp:
 
-/usr/include/boost/numeric/ublas/functional.hpp:
-
-/usr/include/c++/13/bits/enable_special_members.h:
-
-/usr/include/boost/multi_index/detail/node_type.hpp:
-
-/usr/include/boost/preprocessor/repetition/enum_binary_params.hpp:
-
-/usr/include/boost/graph/graph_selectors.hpp:
-
 /usr/include/x86_64-linux-gnu/bits/posix2_lim.h:
 
 /usr/include/c++/13/climits:
-
-/usr/include/boost/multiprecision/detail/digits.hpp:
-
-/usr/include/boost/proto/detail/as_expr.hpp:
 
 /usr/include/c++/13/pstl/glue_algorithm_defs.h:
 
 /usr/include/boost/fusion/container/vector/detail/as_vector.hpp:
 
 /usr/include/eigen3/Eigen/src/Core/arch/SSE/MathFunctions.h:
-
-/usr/include/eigen3/Eigen/src/Core/util/MKL_support.h:
-
-/usr/include/boost/fusion/view/transform_view/detail/end_impl.hpp:
 
 /usr/include/eigen3/Eigen/src/Core/Visitor.h:
 
@@ -8754,21 +9112,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/graph/detail/adjacency_list.hpp:
 
-/usr/include/boost/core/checked_delete.hpp:
-
-/usr/include/boost/detail/indirect_traits.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/functors/NullaryFunctors.h:
-
 /usr/include/boost/type_traits/is_reference.hpp:
 
 /usr/include/boost/function/function_template.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h:
-
-/usr/include/eigen3/Eigen/src/QR/ColPivHouseholderQR.h:
-
-/usr/include/boost/detail/algorithm.hpp:
 
 /usr/include/boost/mpl/aux_/config/arrays.hpp:
 
@@ -8782,17 +9130,13 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/x86_64-linux-gnu/c++/13/bits/error_constants.h:
 
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/object.hpp:
+/usr/include/eigen3/Eigen/src/Core/Solve.h:
 
-/usr/include/boost/smart_ptr/detail/local_counted_base.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/waitpkgintrin.h:
 
 /usr/include/x86_64-linux-gnu/bits/math-vector.h:
 
 /usr/include/c++/13/bits/localefwd.h:
-
-/usr/include/x86_64-linux-gnu/bits/fp-fast.h:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
 /usr/include/x86_64-linux-gnu/bits/mathcalls-helper-functions.h:
 
@@ -8814,10 +9158,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/linux/errno.h:
 
-/usr/include/c++/13/utility:
-
-/usr/include/c++/13/bits/std_abs.h:
-
 /usr/include/boost/preprocessor/library.hpp:
 
 /usr/include/c++/13/ctime:
@@ -8834,11 +9174,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/type_traits/has_plus_assign.hpp:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/nmmintrin.h:
+
 /usr/include/boost/fusion/adapted/boost_tuple/detail/convert_impl.hpp:
 
 /usr/include/c++/13/cctype:
-
-/usr/include/boost/mpl/begin_end.hpp:
 
 /usr/include/boost/type_traits/has_not_equal_to.hpp:
 
@@ -8876,13 +9216,23 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/strings.h:
 
-/usr/include/boost/type_traits/is_compound.hpp:
-
 /usr/include/boost/type_traits/is_float.hpp:
 
 /usr/include/c++/13/bits/ranges_util.h:
 
 /usr/include/boost/unordered/detail/implementation.hpp:
+
+/usr/include/boost/type_traits/has_logical_or.hpp:
+
+/usr/include/c++/13/bits/stl_vector.h:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h:
+
+/usr/include/eigen3/Eigen/src/QR/HouseholderQR.h:
+
+/usr/include/boost/mpl/distance.hpp:
+
+/usr/include/boost/mpl/set/aux_/at_impl.hpp:
 
 /usr/include/x86_64-linux-gnu/sys/select.h:
 
@@ -8896,47 +9246,27 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/thread-shared-types.h:
 
-/usr/include/c++/13/bits/locale_facets_nonio.tcc:
-
-/usr/include/boost/detail/call_traits.hpp:
-
-/usr/include/boost/proto/detail/basic_expr.hpp:
-
-/usr/include/boost/xpressive/detail/detail_fwd.hpp:
-
-/usr/include/boost/range/detail/safe_bool.hpp:
-
-/usr/include/boost/type_traits/has_trivial_constructor.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512cdintrin.h:
 
 /usr/include/c++/13/tr1/exp_integral.tcc:
 
 /usr/include/c++/13/math.h:
 
-/usr/include/c++/13/bits/stl_raw_storage_iter.h:
-
-/usr/include/boost/smart_ptr/detail/sp_counted_base.hpp:
-
-/usr/include/boost/xpressive/detail/core/matchers.hpp:
-
-/usr/include/boost/fusion/view/single_view/detail/advance_impl.hpp:
-
 /usr/include/c++/13/random:
-
-/usr/include/boost/smart_ptr/detail/atomic_count.hpp:
 
 /usr/include/boost/type_traits/detail/is_member_function_pointer_cxx_11.hpp:
 
 /usr/include/c++/13/cstdint:
 
+/usr/include/boost/type_traits/has_post_increment.hpp:
+
 /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h:
 
+/usr/include/boost/xpressive/detail/core/sub_match_impl.hpp:
+
+/usr/include/x86_64-linux-gnu/mpich/mpi.h:
+
 /usr/include/boost/parameter/aux_/preprocessor/impl/no_spec_overloads.hpp:
-
-/usr/include/boost/type_traits/has_logical_or.hpp:
-
-/usr/include/c++/13/bits/stl_vector.h:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/time_members.h:
 
 /usr/include/boost/proto/detail/poly_function.hpp:
 
@@ -8946,27 +9276,59 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/ext/alloc_traits.h:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vp2intersectvlintrin.h:
+
 /usr/include/boost/type_index.hpp:
 
 /usr/include/boost/fusion/view/filter_view/detail/key_of_impl.hpp:
 
 /usr/include/boost/parameter/aux_/pack/tag_template_keyword_arg.hpp:
 
-/usr/include/c++/13/ratio:
+/usr/include/boost/preprocessor/repetition/for.hpp:
 
-/usr/include/boost/fusion/view/transform_view/detail/at_impl.hpp:
+/usr/include/eigen3/Eigen/src/Core/util/XprHelper.h:
 
-/usr/include/boost/smart_ptr/detail/spinlock_pool.hpp:
+/usr/include/boost/core/pointer_traits.hpp:
 
-/usr/include/boost/preprocessor/list/to_array.hpp:
+/usr/include/x86_64-linux-gnu/bits/stdint-intn.h:
 
-/usr/include/boost/mpl/aux_/ptr_to_ref.hpp:
+/usr/include/c++/13/bits/concept_check.h:
 
-/usr/include/boost/mpl/aux_/erase_key_impl.hpp:
+/usr/include/eigen3/Eigen/src/Core/Transpose.h:
 
-/usr/include/boost/mpl/bind_fwd.hpp:
+/usr/include/boost/next_prior.hpp:
 
-/usr/include/boost/fusion/algorithm/query/find_if_fwd.hpp:
+/usr/include/boost/fusion/include/fold.hpp:
+
+/usr/include/boost/predef/library/std/stlport.h:
+
+/usr/include/boost/spirit/home/classic/core/assert.hpp:
+
+/usr/include/boost/type_traits/has_nothrow_copy.hpp:
+
+/usr/include/boost/mpl/size_fwd.hpp:
+
+/usr/include/boost/preprocessor/stringize.hpp:
+
+/usr/include/c++/13/algorithm:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h:
+
+/usr/include/boost/mpl/aux_/config/static_constant.hpp:
+
+/usr/include/c++/13/bits/memoryfwd.h:
+
+/usr/include/boost/preprocessor/facilities/check_empty.hpp:
+
+/usr/include/boost/tti/detail/dftclass.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/f16cintrin.h:
+
+/usr/include/boost/utility/base_from_member.hpp:
+
+/usr/include/boost/proto/domain.hpp:
+
+/usr/include/boost/fusion/mpl/empty.hpp:
 
 /usr/include/boost/concept/detail/backward_compatibility.hpp:
 
@@ -8982,21 +9344,23 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/x86_64-linux-gnu/bits/locale.h:
 
+/usr/include/boost/preprocessor/seq/seq.hpp:
+
+/usr/include/boost/multi_index/detail/do_not_copy_elements_tag.hpp:
+
 /usr/include/x86_64-linux-gnu/bits/posix1_lim.h:
-
-/usr/include/boost/core/addressof.hpp:
-
-/usr/include/eigen3/Eigen/src/Householder/HouseholderSequence.h:
-
-/usr/include/boost/function_types/components.hpp:
-
-/usr/include/c++/13/stdlib.h:
 
 /usr/include/boost/type_traits/is_constructible.hpp:
 
 /usr/include/boost/predef/platform/windows_phone.h:
 
 /usr/include/boost/lexical_cast/detail/widest_char.hpp:
+
+/usr/include/c++/13/ratio:
+
+/usr/include/boost/xpressive/detail/utility/ignore_unused.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/util/ConfigureVectorization.h:
 
 /usr/include/boost/multi_array/index_gen.hpp:
 
@@ -9008,21 +9372,19 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/codecvt:
 
+/usr/include/boost/proto/detail/preprocessed/template_arity_helper.hpp:
+
+/usr/include/boost/multi_index/detail/access_specifier.hpp:
+
+/usr/include/c++/13/experimental/bits/fs_dir.h:
+
 /usr/include/boost/range/concepts.hpp:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h:
-
-/usr/include/boost/mpl/long_fwd.hpp:
-
-/usr/include/boost/preprocessor/logical/and.hpp:
-
-/usr/include/boost/predef/library/std/cxx.h:
-
-/usr/include/eigen3/Eigen/src/LU/InverseImpl.h:
 
 /usr/include/boost/numeric/ublas/detail/config.hpp:
 
 /usr/include/c++/13/bits/align.h:
+
+/usr/include/boost/mpl/tag.hpp:
 
 /usr/include/boost/proto/detail/preprocessed/poly_function_traits.hpp:
 
@@ -9031,8 +9393,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/time.h:
 
 /usr/include/c++/13/experimental/bits/fs_ops.h:
-
-/usr/include/boost/graph/iteration_macros_undef.hpp:
 
 /usr/include/boost/preprocessor/control/if.hpp:
 
@@ -9054,6 +9414,20 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/view/single_view/single_view_iterator.hpp:
 
+/usr/include/eigen3/Eigen/src/Geometry/Rotation2D.h:
+
+/usr/include/boost/mpl/aux_/has_key_impl.hpp:
+
+/usr/include/boost/foreach_fwd.hpp:
+
+/usr/include/boost/serialization/strong_typedef.hpp:
+
+/usr/include/x86_64-linux-gnu/mpich/mpicxx.h:
+
+/usr/include/boost/preprocessor/variadic/to_seq.hpp:
+
+/usr/include/boost/function_types/is_member_function_pointer.hpp:
+
 /usr/include/c++/13/bits/functexcept.h:
 
 /usr/include/boost/predef/library/c/_prefix.h:
@@ -9068,15 +9442,301 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/eigen3/Eigen/src/Core/ReturnByValue.h:
 
-/usr/include/boost/preprocessor/stringize.hpp:
+/usr/include/boost/config/detail/select_platform_config.hpp:
 
-/usr/include/c++/13/algorithm:
+/usr/include/boost/graph/adjacency_list.hpp:
 
-/usr/include/boost/math/special_functions/lanczos.hpp:
+/usr/include/boost/type_traits/is_compound.hpp:
 
-/usr/include/boost/type_traits/has_nothrow_assign.hpp:
+/usr/include/boost/mpl/aux_/msvc_eti_base.hpp:
 
-/usr/include/boost/shared_ptr.hpp:
+/usr/include/boost/graph/compressed_sparse_row_graph.hpp:
+
+/usr/include/boost/xpressive/detail/core/optimize.hpp:
+
+/usr/include/boost/numeric/ublas/matrix.hpp:
+
+/usr/include/boost/fusion/algorithm/iteration/fold_fwd.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bf16vlintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/adxintrin.h:
+
+/usr/include/boost/config/platform/linux.hpp:
+
+/usr/include/boost/multiprecision/detail/et_ops.hpp:
+
+/usr/include/boost/function_types/detail/encoding/undef.hpp:
+
+/usr/include/boost/preprocessor/array/pop_back.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/bmiintrin.h:
+
+/usr/include/boost/preprocessor/facilities/apply.hpp:
+
+/usr/include/boost/numeric/conversion/detail/is_subranged.hpp:
+
+/usr/include/boost/math/special_functions/detail/lgamma_small.hpp:
+
+/usr/include/boost/mpl/aux_/config/ctps.hpp:
+
+/usr/include/boost/preprocessor/control.hpp:
+
+/usr/include/boost/type_index/stl_type_index.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/cmpccxaddintrin.h:
+
+/usr/include/eigen3/Eigen/src/Core/CwiseBinaryOp.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/fxsrintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/lzcntintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/lwpintrin.h:
+
+/usr/include/c++/13/bits/atomic_lockfree_defines.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/prfchiintrin.h:
+
+/usr/include/boost/fusion/adapted/mpl/detail/size_impl.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/wchar2.h:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/layout/permutation.hpp:
+
+/usr/include/boost/preprocessor/repetition/repeat_from_to.hpp:
+
+/usr/include/boost/preprocessor/seq/for_each_i.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmiintrin.h:
+
+/usr/include/boost/multi_index/tag.hpp:
+
+/usr/include/boost/numeric/conversion/detail/udt_builtin_mixture.hpp:
+
+/usr/include/boost/fusion/sequence/intrinsic/detail/segmented_end_impl.hpp:
+
+/usr/include/boost/range/difference_type.hpp:
+
+/usr/include/boost/random/exponential_distribution.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/rdseedintrin.h:
+
+/usr/include/c++/13/ext/type_traits.h:
+
+/usr/include/boost/parameter/config.hpp:
+
+/usr/include/boost/fusion/container/vector/detail/end_impl.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/rtmintrin.h:
+
+/usr/include/boost/type_traits/has_right_shift.hpp:
+
+/usr/include/boost/smart_ptr/make_shared_array.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/long-double.h:
+
+/usr/include/boost/multi_index/detail/safe_mode.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/pkuintrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/tbmintrin.h:
+
+/usr/include/c++/13/debug/assertions.h:
+
+/usr/include/boost/optional/detail/optional_factory_support.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/tsxldtrkintrin.h:
+
+/usr/include/boost/function_types/config/cc_names.hpp:
+
+/usr/include/boost/mpl/aux_/overload_names.hpp:
+
+/usr/include/boost/mpl/set/aux_/value_type_impl.hpp:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/layout/slice_static.hpp:
+
+/usr/include/boost/mpl/list/aux_/pop_front.hpp:
+
+/usr/include/eigen3/Eigen/src/SVD/BDCSVD.h:
+
+/usr/include/boost/config/compiler/gcc.hpp:
+
+/usr/include/eigen3/Eigen/src/plugins/ArrayCwiseBinaryOps.h:
+
+/usr/include/boost/parameter/aux_/preprocessor/impl/function_dispatch_tuple.hpp:
+
+/usr/include/boost/range/algorithm/stable_sort.hpp:
+
+/usr/include/c++/13/bits/std_abs.h:
+
+/usr/include/c++/13/utility:
+
+/usr/include/eigen3/Eigen/src/Eigenvalues/RealSchur.h:
+
+/usr/include/boost/multiprecision/cpp_int/value_pack.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/uintrintrin.h:
+
+/usr/include/boost/preprocessor/facilities/expand.hpp:
+
+/usr/include/boost/preprocessor/iteration/detail/bounds/upper1.hpp:
+
+/usr/include/boost/fusion/iterator/deref.hpp:
+
+/usr/include/boost/xpressive/detail/core/sub_match_vector.hpp:
+
+/usr/include/eigen3/Eigen/src/Geometry/Transform.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avxvnniint8intrin.h:
+
+/usr/include/boost/type_traits/has_minus.hpp:
+
+/usr/include/boost/predef/compiler/kai.h:
+
+/usr/include/eigen3/Eigen/src/Core/SolverBase.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveintrin.h:
+
+/usr/include/boost/xpressive/detail/core/matcher/regex_byref_matcher.hpp:
+
+/usr/include/eigen3/Eigen/src/misc/Kernel.h:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/clef/adapters/math.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/xsavesintrin.h:
+
+/usr/include/sched.h:
+
+/usr/include/boost/mpl/list/list20.hpp:
+
+/usr/include/boost/multi_index/detail/hash_index_node.hpp:
+
+/usr/include/boost/mpl/aux_/reverse_iter_fold_impl.hpp:
+
+/usr/include/boost/mpl/times.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx2intrin.h:
+
+/usr/include/boost/type_traits/declval.hpp:
+
+/usr/include/c++/13/initializer_list:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/blas/scal.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/string_fortified.h:
+
+/usr/include/boost/graph/property_maps/null_property_map.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512dqintrin.h:
+
+/usr/include/eigen3/Eigen/src/Core/BooleanRedux.h:
+
+/usr/include/eigen3/Eigen/src/Core/DenseStorage.h:
+
+/usr/include/boost/smart_ptr/shared_array.hpp:
+
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/libamicalc/install/include/ami_spec.hpp:
+
+/usr/include/boost/predef/other/endian.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vldqintrin.h:
+
+/usr/include/boost/parameter/aux_/preprocessor/impl/for_each.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vnniintrin.h:
+
+/usr/include/c++/13/bits/stl_function.h:
+
+/usr/include/boost/type_traits/is_nothrow_move_assignable.hpp:
+
+/usr/include/c++/13/bits/vector.tcc:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitintrin.h:
+
+/usr/include/boost/tti/detail/dmem_fun.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vpopcntdqvlintrin.h:
+
+/usr/include/boost/mpl/has_key.hpp:
+
+/usr/include/eigen3/Eigen/src/Jacobi/Jacobi.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bitalgintrin.h:
+
+/usr/include/boost/fusion/view/transform_view/detail/end_impl.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/util/MKL_support.h:
+
+/usr/include/boost/core/ref.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vp2intersectintrin.h:
+
+/usr/include/boost/mpl/aux_/preprocessor/default_params.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/arch/Default/ConjHelper.h:
+
+/usr/include/boost/preprocessor/tuple/size.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/local_lim.h:
+
+/usr/include/boost/multi_array.hpp:
+
+/usr/include/boost/predef/compiler/microtec.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/fmaintrin.h:
+
+/usr/include/unistd.h:
+
+/usr/include/boost/numeric/conversion/detail/preprocessed/numeric_cast_traits_long_long.hpp:
+
+/usr/include/boost/type_traits/has_unary_plus.hpp:
+
+/usr/include/boost/multiprecision/detail/digits.hpp:
+
+/usr/include/boost/proto/detail/as_expr.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/gfniintrin.h:
+
+/usr/include/boost/preprocessor/facilities/intercept.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/vaesintrin.h:
+
+/usr/include/boost/graph/iteration_macros_undef.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bf16intrin.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/amxtileintrin.h:
+
+/usr/include/c++/13/stdlib.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/keylockerintrin.h:
+
+/usr/include/boost/mpl/aux_/back_impl.hpp:
+
+/usr/include/boost/serialization/is_bitwise_serializable.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/amxfp16intrin.h:
+
+/usr/include/eigen3/Eigen/src/SVD/SVDBase.h:
+
+/usr/include/boost/xpressive/detail/static/transforms/as_set.hpp:
+
+/usr/include/boost/proto/transform/when.hpp:
+
+/usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h:
+
+/usr/include/boost/fusion/container/list/convert.hpp:
+
+/usr/include/boost/mpl/at.hpp:
+
+/usr/include/boost/mpl/long.hpp:
+
+/usr/include/boost/mpl/aux_/preprocessed/gcc/greater_equal.hpp:
+
+/usr/include/c++/13/experimental/bits/fs_fwd.h:
+
+/usr/include/boost/function_types/detail/class_transform.hpp:
 
 /usr/include/x86_64-linux-gnu/mpich/mpi_proto.h:
 
@@ -9094,51 +9754,31 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/multi_index/identity.hpp:
 
-/usr/include/boost/type_traits/declval.hpp:
-
-/usr/include/c++/13/initializer_list:
-
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/blas/scal.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/string_fortified.h:
-
 /usr/include/boost/random/triangle_distribution.hpp:
 
 /usr/include/boost/mpl/set/aux_/clear_impl.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/posix_opt.h:
 
-/usr/include/boost/math/tools/toms748_solve.hpp:
-
-/usr/include/x86_64-linux-gnu/gnu/stubs-64.h:
-
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/_impl_basic_array_view_common.hpp:
-
-/usr/include/eigen3/Eigen/src/Eigenvalues/EigenSolver.h:
-
-/usr/include/eigen3/Eigen/src/Eigenvalues/ComplexEigenSolver.h:
-
 /usr/include/boost/mpl/aux_/lambda_arity_param.hpp:
 
 /usr/include/boost/parameter/deduced.hpp:
 
-/usr/include/boost/preprocessor/tuple/size.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bwintrin.h:
 
-/usr/include/x86_64-linux-gnu/bits/local_lim.h:
+/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
 
-/usr/include/boost/mpl/aux_/preprocessor/default_params.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/arch/Default/ConjHelper.h:
-
-/usr/include/boost/smart_ptr/detail/sp_typeinfo_.hpp:
-
-/usr/include/boost/mpl/aux_/preprocessed/gcc/advance_forward.hpp:
+/usr/include/boost/mpl/aux_/config/preprocessor.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/xopen_lim.h:
 
 /usr/include/boost/mpl/list/aux_/include_preprocessed.hpp:
 
 /usr/include/boost/type_traits/is_pod.hpp:
+
+/usr/include/c++/13/bits/node_handle.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avxifmaintrin.h:
 
 /usr/include/boost/serialization/void_cast_fwd.hpp:
 
@@ -9158,20 +9798,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/parameter/aux_/preprocessor/seq_enum.hpp:
 
-/usr/include/boost/type_traits/has_trivial_move_constructor.hpp:
-
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/stdutil/complex.hpp:
-
-/usr/include/c++/13/charconv:
-
-/usr/include/boost/type_traits/detail/yes_no_type.hpp:
-
-/usr/include/boost/function/function_base.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/struct_mutex.h:
-
-/usr/include/boost/mpl/aux_/config/preprocessor.hpp:
-
 /usr/include/c++/13/pstl/glue_memory_defs.h:
 
 /usr/include/x86_64-linux-gnu/bits/environments.h:
@@ -9188,8 +9814,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/container/vector/detail/config.hpp:
 
-/usr/include/boost/algorithm/string/detail/find_format.hpp:
-
 /usr/include/boost/type_traits/is_default_constructible.hpp:
 
 /usr/include/boost/graph/exception.hpp:
@@ -9204,10 +9828,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/always.hpp:
 
-/usr/include/boost/mpl/deref.hpp:
-
-/usr/include/boost/mpl/order_fwd.hpp:
-
 /usr/include/boost/predef/platform.h:
 
 /usr/include/boost/graph/filtered_graph.hpp:
@@ -9218,29 +9838,33 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/eigen3/Eigen/src/Core/MathFunctions.h:
 
+/usr/include/c++/13/backward/binders.h:
+
+/usr/include/eigen3/Eigen/src/Core/arch/AVX/TypeCasting.h:
+
+/usr/include/boost/predef/library/c/uc.h:
+
 /usr/include/boost/type_traits/is_polymorphic.hpp:
 
 /usr/include/x86_64-linux-gnu/bits/stdlib.h:
 
 /usr/include/eigen3/Eigen/src/Core/MathFunctionsImpl.h:
 
-/usr/include/boost/mpl/prior.hpp:
+/usr/include/boost/mpl/aux_/config/adl.hpp:
 
-/usr/include/boost/mpl/aux_/front_impl.hpp:
+/usr/include/boost/numeric/conversion/detail/numeric_cast_traits.hpp:
 
-/usr/include/eigen3/Eigen/Geometry:
+/usr/include/boost/mpl/aux_/preprocessed/gcc/vector.hpp:
+
+/usr/include/boost/mpl/aux_/is_msvc_eti_arg.hpp:
+
+/usr/include/eigen3/Eigen/src/Core/arch/AVX/Complex.h:
 
 /usr/include/eigen3/Eigen/src/Core/products/Parallelizer.h:
 
 /usr/include/boost/type_traits/has_multiplies.hpp:
 
 /usr/include/c++/13/bits/exception.h:
-
-/usr/include/boost/multi_index/detail/access_specifier.hpp:
-
-/usr/include/c++/13/experimental/bits/fs_dir.h:
-
-/usr/include/boost/proto/detail/preprocessed/template_arity_helper.hpp:
 
 /usr/include/boost/math/constants/calculate_constants.hpp:
 
@@ -9262,12 +9886,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/eigen3/Eigen/src/Core/arch/Default/GenericPacketMathFunctions.h:
 
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/algorithms.hpp:
-
-/usr/include/boost/xpressive/detail/utility/hash_peek_bitset.hpp:
-
-/usr/include/boost/multi_array/base.hpp:
-
 /usr/include/eigen3/Eigen/src/Core/functors/UnaryFunctors.h:
 
 /usr/include/boost/mpl/list/aux_/size.hpp:
@@ -9276,15 +9894,23 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/type_traits/common_type.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/util/ReshapedHelper.h:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512pfintrin.h:
 
-/usr/include/boost/multi_index/detail/do_not_copy_elements_tag.hpp:
+/usr/include/boost/mpl/aux_/preprocessed/gcc/full_lambda.hpp:
 
-/usr/include/boost/preprocessor/seq/seq.hpp:
+/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
 
-/usr/include/boost/move/detail/std_ns_begin.hpp:
+/usr/include/boost/parameter/are_tagged_arguments.hpp:
 
 /usr/include/eigen3/Eigen/src/Core/functors/BinaryFunctors.h:
+
+/usr/include/boost/preprocessor/slot/detail/shared.hpp:
+
+/usr/include/boost/multiprecision/detail/min_max.hpp:
+
+/usr/include/boost/mp11/detail/mp_with_index.hpp:
+
+/usr/include/boost/function_types/detail/synthesize_impl/arity20_0.hpp:
 
 /usr/include/eigen3/Eigen/src/Core/MatrixBase.h:
 
@@ -9300,25 +9926,19 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/support/is_sequence.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/BooleanRedux.h:
+/usr/include/c++/13/span:
 
-/usr/include/eigen3/Eigen/src/Core/DenseStorage.h:
+/usr/include/boost/mpl/count_fwd.hpp:
+
+/usr/include/boost/range/functions.hpp:
+
+/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
+
+/usr/include/boost/mpl/pop_back.hpp:
+
+/usr/include/boost/preprocessor/facilities/detail/is_empty.hpp:
 
 /usr/include/eigen3/Eigen/src/Core/NoAlias.h:
-
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/stdutil/concepts.hpp:
-
-/usr/include/boost/smart_ptr/detail/sp_nullptr_t.hpp:
-
-/usr/include/eigen3/Eigen/src/Geometry/Scaling.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h:
-
-/usr/include/boost/mpl/find.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/syscall.h:
-
-/usr/include/boost/tti/detail/ddeftype.hpp:
 
 /usr/include/boost/xpressive/detail/core/matcher/literal_matcher.hpp:
 
@@ -9328,17 +9948,7 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixVector.h:
 
-/usr/include/boost/proto/detail/template_arity_helper.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/CwiseBinaryOp.h:
-
 /usr/include/boost/mpl/list/aux_/empty.hpp:
-
-/usr/include/boost/mpl/aux_/preprocessed/gcc/full_lambda.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/uio_lim.h:
-
-/usr/include/boost/parameter/are_tagged_arguments.hpp:
 
 /usr/include/c++/13/bits/predefined_ops.h:
 
@@ -9356,6 +9966,14 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mp11/detail/mp_plus.hpp:
 
+/usr/include/c++/13/tr1/gamma.tcc:
+
+/usr/include/boost/predef/architecture/sys370.h:
+
+/usr/include/boost/config/pragma_message.hpp:
+
+/usr/include/c++/13/bits/atomic_base.h:
+
 /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h:
 
 /usr/include/eigen3/Eigen/src/Core/Map.h:
@@ -9363,20 +9981,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/c++/13/streambuf:
 
 /usr/include/boost/utility.hpp:
-
-/usr/include/boost/numeric/ublas/expression_types.hpp:
-
-/usr/include/boost/graph/properties.hpp:
-
-/usr/include/boost/spirit/home/classic/iterator/fixed_size_queue.hpp:
-
-/usr/include/boost/iterator/iterator_traits.hpp:
-
-/usr/include/boost/lexical_cast/detail/converter_lexical_streams.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/EigenBase.h:
-
-/usr/include/boost/smart_ptr/detail/atomic_count_gcc_atomic.hpp:
 
 /usr/include/x86_64-linux-gnu/sys/single_threaded.h:
 
@@ -9386,21 +9990,7 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/bits/random.tcc:
 
-/usr/include/c++/13/bits/erase_if.h:
-
-/usr/include/c++/13/bits/concept_check.h:
-
-/usr/include/eigen3/Eigen/src/Core/Transpose.h:
-
-/usr/include/boost/next_prior.hpp:
-
-/usr/include/boost/fusion/include/fold.hpp:
-
-/usr/include/boost/predef/library/std/stlport.h:
-
-/usr/include/boost/spirit/home/classic/core/assert.hpp:
-
-/usr/include/c++/13/bits/atomic_lockfree_defines.h:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmi2vlintrin.h:
 
 /usr/include/eigen3/Eigen/src/Core/util/Constants.h:
 
@@ -9414,39 +10004,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/predef/os.h:
 
-/usr/include/x86_64-linux-gnu/mpich/mpi.h:
+/usr/include/boost/mpl/set/aux_/iterator.hpp:
 
-/usr/include/boost/xpressive/detail/core/sub_match_impl.hpp:
+/usr/include/eigen3/Eigen/src/Core/SelfAdjointView.h:
 
-/usr/include/boost/numeric/ublas/vector_expression.hpp:
-
-/usr/include/c++/13/debug/debug.h:
-
-/usr/include/boost/parameter/aux_/unwrap_cv_reference.hpp:
-
-/usr/include/boost/mpl/begin_end_fwd.hpp:
-
-/usr/include/boost/exception/exception.hpp:
-
-/usr/include/unistd.h:
-
-/usr/include/boost/numeric/conversion/detail/preprocessed/numeric_cast_traits_long_long.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/unistd.h:
-
-/usr/include/eigen3/Eigen/Cholesky:
-
-/usr/include/boost/preprocessor/control/expr_iif.hpp:
-
-/usr/include/boost/type_traits/make_signed.hpp:
-
-/usr/include/boost/mpl/advance.hpp:
-
-/usr/include/linux/close_range.h:
-
-/usr/include/c++/13/bits/locale_facets.h:
-
-/usr/include/boost/fusion/container/list/detail/equal_to_impl.hpp:
+/usr/include/boost/mpl/vector/aux_/include_preprocessed.hpp:
 
 /usr/include/boost/serialization/array_optimization.hpp:
 
@@ -9464,185 +10026,191 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/syscall.h:
 
-/usr/include/x86_64-linux-gnu/asm/unistd_64.h:
-
-/usr/include/boost/proto/detail/generate_by_value.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/ProductEvaluators.h:
-
-/usr/include/eigen3/Eigen/src/SVD/UpperBidiagonalization.h:
-
-/usr/include/x86_64-linux-gnu/bits/types/timer_t.h:
-
-/mnt/c/Users/Rayan/Research/libami/install/include/ami_base.hpp:
-
-/usr/include/boost/mpl/aux_/comparison_op.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixMatrix.h:
-
-/usr/include/boost/mpl/aux_/config/workaround.hpp:
-
-/usr/include/boost/bind/mem_fn_template.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h:
-
-/usr/include/boost/iterator_adaptors.hpp:
-
-/usr/include/c++/13/bits/ranges_algo.h:
+/usr/include/x86_64-linux-gnu/bits/unistd.h:
 
 /usr/include/boost/type_traits/is_copy_constructible.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
-
 /usr/include/eigen3/Eigen/src/Core/products/SelfadjointProduct.h:
 
-/usr/include/stdc-predef.h:
+/usr/include/x86_64-linux-gnu/bits/unistd_ext.h:
 
-/usr/include/boost/proto/transform/detail/pack.hpp:
+/usr/include/c++/13/bits/locale_facets.h:
 
-/usr/include/boost/fusion/view/transform_view/detail/value_of_impl.hpp:
+/usr/include/boost/fusion/container/list/detail/equal_to_impl.hpp:
 
-/usr/include/boost/range/detail/misc_concept.hpp:
+/usr/include/boost/mpl/plus.hpp:
 
-/usr/include/boost/fusion/include/transform.hpp:
+/usr/include/boost/mpl/aux_/largest_int.hpp:
 
-/usr/include/boost/fusion/sequence/intrinsic/empty.hpp:
+/usr/include/boost/mpl/aux_/preprocessed/gcc/minus.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/products/TriangularSolverVector.h:
+/usr/include/boost/mpl/advance_fwd.hpp:
 
-../src/mini_main.cpp:
+/usr/include/boost/preprocessor/logical/nor.hpp:
 
-/usr/include/boost/fusion/algorithm/transformation/pop_front.hpp:
+/usr/include/boost/mpl/prior.hpp:
 
-/usr/include/boost/move/detail/to_raw_pointer.hpp:
+/usr/include/boost/mpl/aux_/front_impl.hpp:
 
-/usr/include/boost/serialization/strong_typedef.hpp:
+/usr/include/boost/mpl/vector/aux_/size.hpp:
 
-/usr/include/x86_64-linux-gnu/mpich/mpicxx.h:
+/usr/include/boost/mpl/bind_fwd.hpp:
 
-/usr/include/boost/preprocessor/variadic/to_seq.hpp:
+/usr/include/boost/fusion/algorithm/query/find_if_fwd.hpp:
 
-/usr/include/boost/function_types/is_member_function_pointer.hpp:
+/usr/include/boost/mpl/empty_fwd.hpp:
 
-/usr/include/eigen3/Eigen/src/Geometry/Rotation2D.h:
+/usr/include/boost/range/algorithm_ext/iota.hpp:
 
-/usr/include/boost/mpl/aux_/has_key_impl.hpp:
+/usr/include/boost/mpl/vector/aux_/begin_end.hpp:
 
-/usr/include/boost/foreach_fwd.hpp:
+/usr/include/boost/parameter/aux_/unwrap_cv_reference.hpp:
 
-/usr/include/boost/fusion/view/single_view/detail/deref_impl.hpp:
+/usr/include/boost/exception/exception.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/CoreIterators.h:
+/usr/include/boost/mpl/begin_end_fwd.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/Random.h:
+/usr/include/boost/mpl/vector/aux_/preprocessed/typeof_based/vector20.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/Reverse.h:
+/usr/include/boost/mpl/begin_end.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/wctype-wchar.h:
+/usr/include/boost/mpl/aux_/begin_end_impl.hpp:
 
-/usr/include/boost/mpl/aux_/preprocessed/gcc/list.hpp:
+/usr/include/boost/mpl/aux_/traits_lambda_spec.hpp:
 
-/usr/include/eigen3/Eigen/src/Core/util/ReenableStupidWarnings.h:
+/usr/include/boost/type_traits/make_signed.hpp:
 
-/usr/include/boost/xpressive/detail/core/matcher/regex_byref_matcher.hpp:
+/usr/include/linux/close_range.h:
 
-/usr/include/eigen3/Eigen/src/misc/Kernel.h:
+/usr/include/boost/mpl/advance.hpp:
 
-/usr/include/boost/parameter/aux_/pp_impl/match.hpp:
+/usr/include/boost/function_types/detail/encoding/aliases_def.hpp:
 
-/usr/include/eigen3/Eigen/src/Eigenvalues/Tridiagonalization.h:
+/usr/include/boost/xpressive/detail/core/matcher/any_matcher.hpp:
 
-/usr/include/eigen3/Eigen/src/LU/arch/InverseSize4.h:
+/usr/include/boost/mpl/aux_/preprocessed/gcc/less.hpp:
 
-/usr/include/boost/predef/compiler/pgi.h:
+/usr/include/boost/parameter/compose.hpp:
 
-/usr/include/boost/mpl/apply.hpp:
+/usr/include/boost/mpl/negate.hpp:
 
-/usr/include/eigen3/Eigen/src/LU/PartialPivLU.h:
+/usr/include/c++/13/bits/char_traits.h:
 
-/usr/include/boost/serialization/array_wrapper.hpp:
+/usr/include/boost/mpl/aux_/advance_forward.hpp:
 
-/usr/include/eigen3/Eigen/QR:
+/usr/include/boost/graph/overloading.hpp:
 
-/usr/include/boost/smart_ptr/detail/lwm_std_mutex.hpp:
+/usr/include/boost/mpl/order_fwd.hpp:
 
-/usr/include/eigen3/Eigen/src/Householder/Householder.h:
+/usr/include/boost/mpl/deref.hpp:
 
-/usr/include/boost/exception/detail/type_info.hpp:
+/usr/include/boost/typeof/typeof.hpp:
 
-/usr/include/boost/mpl/set/aux_/at_impl.hpp:
+/usr/include/boost/mpl/less.hpp:
 
-/usr/include/eigen3/Eigen/src/QR/HouseholderQR.h:
+/usr/include/boost/typeof/message.hpp:
 
-/usr/include/boost/mpl/distance.hpp:
+/usr/include/c++/13/debug/debug.h:
 
-/usr/include/eigen3/Eigen/SVD:
+/usr/include/boost/numeric/ublas/vector_expression.hpp:
 
-/usr/include/c++/13/experimental/bits/fs_fwd.h:
+/usr/include/boost/numeric/ublas/expression_types.hpp:
 
-/usr/include/boost/function_types/detail/class_transform.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlintrin.h:
 
-/usr/include/eigen3/Eigen/src/SVD/SVDBase.h:
+/usr/include/boost/graph/properties.hpp:
 
-/usr/include/boost/mpl/set/aux_/value_type_impl.hpp:
+/usr/include/boost/spirit/home/classic/iterator/fixed_size_queue.hpp:
 
-/usr/include/boost/config/compiler/gcc.hpp:
+/usr/include/boost/numeric/ublas/functional.hpp:
 
-/usr/include/eigen3/Eigen/src/plugins/ArrayCwiseBinaryOps.h:
+/usr/include/boost/core/ignore_unused.hpp:
 
-/usr/include/boost/parameter/aux_/preprocessor/impl/function_dispatch_tuple.hpp:
+/usr/include/boost/mpl/aux_/preprocessed/gcc/advance_backward.hpp:
 
-/usr/include/boost/range/algorithm/stable_sort.hpp:
+/usr/include/boost/preprocessor/logical/xor.hpp:
 
-/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/layout/slice_static.hpp:
+/usr/include/boost/numeric/ublas/matrix_expression.hpp:
 
-/usr/include/boost/mpl/list/aux_/pop_front.hpp:
+/usr/include/boost/preprocessor/logical/not.hpp:
 
-/usr/include/eigen3/Eigen/src/SVD/BDCSVD.h:
+/usr/include/boost/mp11/list.hpp:
 
-/usr/include/eigen3/Eigen/src/Geometry/RotationBase.h:
+/usr/include/boost/config/workaround.hpp:
 
-/usr/include/c++/13/chrono:
+/usr/include/boost/numeric/ublas/matrix_proxy.hpp:
 
-/usr/include/boost/preprocessor/array.hpp:
+/usr/include/boost/parameter/optional.hpp:
 
-/usr/include/boost/mpl/aux_/config/adl.hpp:
+/usr/include/boost/graph/dijkstra_shortest_paths.hpp:
 
-/usr/include/boost/mpl/aux_/preprocessed/gcc/vector.hpp:
+/usr/include/boost/smart_ptr.hpp:
 
-/usr/include/boost/mpl/aux_/is_msvc_eti_arg.hpp:
+/usr/include/boost/scoped_ptr.hpp:
 
-/usr/include/boost/numeric/conversion/detail/numeric_cast_traits.hpp:
+/usr/include/boost/checked_delete.hpp:
 
-/usr/include/boost/integer_traits.hpp:
+/usr/include/boost/detail/indirect_traits.hpp:
 
-/usr/include/eigen3/Eigen/src/Geometry/Quaternion.h:
+/usr/include/eigen3/Eigen/src/Core/functors/NullaryFunctors.h:
 
-/usr/include/c++/13/string:
+/usr/include/boost/core/checked_delete.hpp:
 
-/usr/include/features.h:
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/stdutil/concepts.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/long-double.h:
+/usr/include/boost/smart_ptr/detail/sp_nullptr_t.hpp:
 
-/usr/include/boost/multi_index/detail/safe_mode.hpp:
+/usr/include/boost/smart_ptr/detail/sp_disable_deprecated.hpp:
 
-/usr/include/boost/preprocessor/array/data.hpp:
+/usr/include/boost/fusion/view/joint_view/detail/deref_impl.hpp:
 
-/usr/include/c++/13/bits/range_access.h:
+/usr/include/boost/smart_ptr/detail/sp_noexcept.hpp:
 
-/usr/include/boost/type_index/stl_type_index.hpp:
+/usr/include/boost/range/detail/extract_optional_type.hpp:
 
-/usr/include/boost/random/detail/uniform_int_float.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/clflushoptintrin.h:
 
-/usr/include/eigen3/Eigen/src/Geometry/ParametrizedLine.h:
+/usr/include/boost/multi_index/detail/node_handle.hpp:
 
-/usr/include/c++/13/bits/alloc_traits.h:
+/usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
-/usr/include/boost/parameter/aux_/preprocessor/nullptr.hpp:
+/usr/include/boost/scoped_array.hpp:
 
-/usr/include/boost/parameter/aux_/result_of0.hpp:
+/usr/include/boost/fusion/view/joint_view/detail/next_impl.hpp:
 
-/usr/include/eigen3/Eigen/src/Geometry/Umeyama.h:
+/usr/include/boost/shared_ptr.hpp:
+
+/usr/include/boost/multiprecision/number.hpp:
+
+/usr/include/boost/smart_ptr/bad_weak_ptr.hpp:
+
+/usr/include/c++/13/bits/stl_raw_storage_iter.h:
+
+/usr/include/boost/smart_ptr/detail/sp_counted_base.hpp:
+
+/usr/include/boost/xpressive/detail/core/matchers.hpp:
+
+/usr/include/boost/fusion/view/single_view/detail/advance_impl.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_has_gcc_intrinsics.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_has_sync_intrinsics.hpp:
+
+/usr/include/boost/fusion/sequence/intrinsic/segments.hpp:
+
+/usr/include/boost/random/detail/config.hpp:
+
+/usr/include/boost/fusion/view/joint_view/joint_view.hpp:
+
+/usr/include/c++/13/bits/shared_ptr_base.h:
+
+/usr/include/c++/13/bits/new_allocator.h:
+
+/usr/include/boost/smart_ptr/detail/sp_counted_base_gcc_atomic.hpp:
+
+/usr/include/boost/mpl/aux_/preprocessed/gcc/advance_forward.hpp:
+
+/usr/include/boost/smart_ptr/detail/sp_typeinfo_.hpp:
 
 /usr/include/boost/tti/detail/dnullptr.hpp:
 
@@ -9650,27 +10218,49 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/multi_index/hashed_index_fwd.hpp:
 
-/usr/include/c++/13/bits/chrono_io.h:
+/usr/include/boost/smart_ptr/detail/sp_convertible.hpp:
 
-/usr/include/x86_64-linux-gnu/bits/pthreadtypes.h:
+/usr/include/boost/fusion/view/transform_view/detail/at_impl.hpp:
 
-/usr/include/boost/mpl/pop_back.hpp:
+/usr/include/boost/smart_ptr/detail/spinlock_pool.hpp:
 
-/usr/include/boost/preprocessor/facilities/detail/is_empty.hpp:
+/usr/include/boost/preprocessor/list/to_array.hpp:
 
-/usr/include/c++/13/span:
+/usr/include/boost/mpl/aux_/ptr_to_ref.hpp:
 
-/usr/include/boost/mpl/count_fwd.hpp:
+/usr/include/boost/mpl/aux_/erase_key_impl.hpp:
 
-/usr/include/boost/range/functions.hpp:
+/usr/include/boost/smart_ptr/detail/yield_k.hpp:
 
-/usr/include/c++/13/tr1/gamma.tcc:
+/usr/include/boost/smart_ptr/detail/sp_thread_pause.hpp:
 
-/usr/include/boost/predef/architecture/sys370.h:
+/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/object.hpp:
 
-/usr/include/boost/config/pragma_message.hpp:
+/usr/include/boost/smart_ptr/detail/local_counted_base.hpp:
 
-/usr/include/c++/13/bits/atomic_base.h:
+/usr/include/boost/shared_array.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/xtestintrin.h:
+
+/usr/include/boost/preprocessor/facilities/is_1.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124fmapsintrin.h:
+
+/usr/include/boost/smart_ptr/weak_ptr.hpp:
+
+/usr/include/boost/smart_ptr/intrusive_ptr.hpp:
+
+/usr/include/boost/predef/os/solaris.h:
+
+/usr/include/boost/enable_shared_from_this.hpp:
+
+/usr/include/boost/make_shared.hpp:
+
+/usr/include/boost/smart_ptr/make_shared.hpp:
+
+/usr/include/boost/container_hash/detail/hash_float.hpp:
+
+/usr/include/boost/optional/detail/optional_config.hpp:
 
 /usr/include/boost/move/core.hpp:
 
@@ -9694,10 +10284,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/list/list10.hpp:
 
-/usr/include/boost/type_traits/has_right_shift.hpp:
-
-/usr/include/boost/smart_ptr/make_shared_array.hpp:
-
 /usr/include/boost/type_traits/has_equal_to.hpp:
 
 /usr/include/boost/smart_ptr/allocate_shared_array.hpp:
@@ -9713,6 +10299,8 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/type_traits/is_bounded_array.hpp:
 
 /usr/include/boost/mpl/aux_/preprocessed/gcc/equal_to.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/pconfigintrin.h:
 
 /usr/include/boost/graph/depth_first_search.hpp:
 
@@ -9776,8 +10364,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/preprocessor/slot/detail/def.hpp:
 
-/usr/include/boost/preprocessor/facilities/intercept.hpp:
-
 /usr/include/boost/preprocessor/iteration/detail/iter/forward1.hpp:
 
 /usr/include/boost/graph/visitors.hpp:
@@ -9794,12 +10380,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/container/vector/detail/distance_impl.hpp:
 
-/usr/include/boost/preprocessor/facilities/expand.hpp:
-
-/usr/include/boost/preprocessor/iteration/detail/bounds/upper1.hpp:
-
-/usr/include/boost/predef/other/endian.h:
-
 /usr/include/boost/utility/detail/result_of_iterate.hpp:
 
 /usr/include/boost/fusion/support/as_const.hpp:
@@ -9812,8 +10392,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/preprocessor.hpp:
 
-/usr/include/boost/xpressive/detail/core/matcher/alternate_end_matcher.hpp:
-
 /usr/include/boost/preprocessor/arithmetic/div.hpp:
 
 /usr/include/boost/random/bernoulli_distribution.hpp:
@@ -9823,10 +10401,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/preprocessor/comparison/less_equal.hpp:
 
 /usr/include/boost/preprocessor/arithmetic/mod.hpp:
-
-/usr/include/boost/preprocessor/array/enum.hpp:
-
-/usr/include/boost/preprocessor/repetition/enum_trailing_binary_params.hpp:
 
 /usr/include/boost/type_traits/is_const.hpp:
 
@@ -9845,10 +10419,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/preprocessor/punctuation/detail/is_begin_parens.hpp:
 
 /usr/include/boost/preprocessor/variadic/has_opt.hpp:
-
-/usr/include/eigen3/Eigen/src/Geometry/Transform.h:
-
-/usr/include/boost/xpressive/detail/core/sub_match_vector.hpp:
 
 /usr/include/boost/preprocessor/variadic/detail/has_opt.hpp:
 
@@ -9922,17 +10492,15 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/adapted/boost_tuple/detail/category_of_impl.hpp:
 
-/usr/include/boost/range/detail/str_types.hpp:
-
-/usr/include/boost/algorithm/string/yes_no_type.hpp:
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124vnniwintrin.h:
 
 /usr/include/boost/preprocessor/list/append.hpp:
 
 /usr/include/boost/preprocessor/list/enum.hpp:
 
-/usr/include/boost/smart_ptr/detail/shared_count.hpp:
-
 /usr/include/boost/parameter.hpp:
+
+/usr/include/boost/smart_ptr/detail/shared_count.hpp:
 
 /usr/include/boost/multi_index/detail/auto_space.hpp:
 
@@ -9967,12 +10535,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/preprocessor/list/to_tuple.hpp:
 
 /usr/include/boost/preprocessor/list/size.hpp:
-
-/usr/include/boost/graph/graph_mutability_traits.hpp:
-
-/usr/include/boost/concept_check.hpp:
-
-/usr/include/boost/preprocessor/list/transform.hpp:
 
 /usr/include/boost/preprocessor/logical.hpp:
 
@@ -10054,6 +10616,8 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/preprocessor/seq/for_each_product.hpp:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/wmmintrin.h:
+
 /usr/include/boost/mpl/contains.hpp:
 
 /usr/include/c++/13/cstdlib:
@@ -10080,13 +10644,15 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/preprocessor/seq/detail/binary_transform.hpp:
 
-/usr/include/boost/proto/detail/args.hpp:
-
 /usr/include/boost/serialization/serialization.hpp:
 
 /usr/include/boost/graph/buffer_concepts.hpp:
 
 /usr/include/boost/preprocessor/variadic/detail/is_single_return.hpp:
+
+/usr/include/boost/mpl/aux_/iter_fold_impl.hpp:
+
+/usr/include/boost/preprocessor/seq/transform.hpp:
 
 /usr/include/boost/pointee.hpp:
 
@@ -10101,6 +10667,14 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/fusion/view/single_view/detail/end_impl.hpp:
 
 /usr/include/boost/preprocessor/tuple.hpp:
+
+/usr/include/boost/xpressive/detail/core/access.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitxintrin.h:
+
+/usr/include/boost/fusion/support/tag_of.hpp:
+
+/usr/include/boost/preprocessor/tuple/insert.hpp:
 
 /usr/include/c++/13/type_traits:
 
@@ -10124,23 +10698,15 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/view/transform_view/detail/distance_impl.hpp:
 
-/usr/include/boost/proto/detail/template_arity.hpp:
-
 /usr/include/boost/preprocessor/wstringize.hpp:
 
 /usr/lib/gcc/x86_64-linux-gnu/13/include/syslimits.h:
 
 /usr/include/boost/parameter/is_argument_pack.hpp:
 
-/usr/include/c++/13/ext/type_traits.h:
-
-/usr/include/boost/parameter/config.hpp:
-
 /usr/include/boost/parameter/aux_/arg_list.hpp:
 
 /usr/include/boost/parameter/aux_/void.hpp:
-
-/usr/include/boost/parameter/aux_/yesno.hpp:
 
 /usr/include/boost/mp11/integral.hpp:
 
@@ -10161,10 +10727,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/archive/detail/abi_prefix.hpp:
 
 /usr/include/boost/mp11/detail/mp_fold.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/VectorwiseOp.h:
-
-/usr/include/boost/fusion/algorithm/query/any.hpp:
 
 /usr/include/boost/mp11/detail/config.hpp:
 
@@ -10196,8 +10758,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/has_key_fwd.hpp:
 
-/usr/include/boost/algorithm/string/detail/find_format_store.hpp:
-
 /usr/include/boost/mpl/aux_/find_if_pred.hpp:
 
 /usr/include/boost/fusion/view/detail/strictest_traversal.hpp:
@@ -10218,17 +10778,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/aux_/preprocessed/gcc/iter_fold_if_impl.hpp:
 
-/usr/include/boost/predef/architecture/sys390.h:
-
-/usr/include/boost/mpl/iter_fold.hpp:
-
 /usr/include/boost/mpl/O1_size.hpp:
 
 /usr/include/boost/mpl/aux_/has_size.hpp:
-
-/usr/include/boost/preprocessor/seq/transform.hpp:
-
-/usr/include/boost/mpl/aux_/iter_fold_impl.hpp:
 
 /usr/include/boost/mpl/iterator_range.hpp:
 
@@ -10260,8 +10812,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/parameter/template_keyword.hpp:
 
-/usr/include/boost/mpl/has_key.hpp:
-
 /usr/include/boost/proto/transform/arg.hpp:
 
 /usr/include/c++/13/bits/codecvt.h:
@@ -10291,8 +10841,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/none_t.hpp:
 
 /usr/include/boost/utility/compare_pointees.hpp:
-
-/usr/include/boost/xpressive/traits/cpp_regex_traits.hpp:
 
 /usr/include/boost/optional/detail/optional_reference_spec.hpp:
 
@@ -10340,8 +10888,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/predef/architecture/sparc.h:
 
-/usr/include/boost/algorithm/string/concept.hpp:
-
 /usr/include/boost/parameter/aux_/pack/tag_keyword_arg.hpp:
 
 /usr/include/boost/parameter/nested_keyword.hpp:
@@ -10388,13 +10934,7 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/parameter/aux_/preprocessor/impl/parenthesized_return_type.hpp:
 
-/usr/include/boost/tti/detail/dmem_fun.hpp:
-
-/usr/include/boost/parameter/aux_/preprocessor/impl/for_each.hpp:
-
 /usr/include/boost/parameter/aux_/preprocessor/impl/split_args.hpp:
-
-/usr/include/boost/exception/detail/error_info_impl.hpp:
 
 /usr/include/boost/mpl/arg.hpp:
 
@@ -10402,15 +10942,17 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/parameter/preprocessor_no_spec.hpp:
 
-/usr/include/boost/xpressive/detail/static/width_of.hpp:
-
-/usr/include/boost/xpressive/match_results.hpp:
-
 /usr/include/boost/type.hpp:
 
 /usr/include/boost/mpl/bitxor.hpp:
 
 /usr/include/boost/mpl/aux_/preprocessed/gcc/bitxor.hpp:
+
+/usr/include/boost/proto/deep_copy.hpp:
+
+/usr/include/boost/proto/detail/preprocessed/generate_by_value.hpp:
+
+/usr/include/boost/function_types/detail/pp_cc_loop/preprocessed.hpp:
 
 /usr/include/boost/function_types/detail/pp_tags/cc_tag.hpp:
 
@@ -10436,8 +10978,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/back_inserter.hpp:
 
-/usr/include/boost/proto/args.hpp:
-
 /usr/include/boost/bind/mem_fn.hpp:
 
 /usr/include/boost/mpl/inserter.hpp:
@@ -10447,12 +10987,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/mpl/front_inserter.hpp:
 
 /usr/include/boost/mpl/push_front.hpp:
-
-/usr/include/boost/fusion/support/tag_of.hpp:
-
-/usr/include/boost/preprocessor/tuple/insert.hpp:
-
-/usr/include/boost/xpressive/detail/core/access.hpp:
 
 /usr/include/boost/mpl/clear.hpp:
 
@@ -10464,19 +10998,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/function_types/config/compiler.hpp:
 
-/usr/include/boost/function_types/config/cc_names.hpp:
-
-/usr/include/boost/mpl/aux_/overload_names.hpp:
-
 /usr/include/boost/mpl/vector/vector30.hpp:
 
 /usr/include/boost/mpl/list/aux_/begin_end.hpp:
 
 /usr/include/boost/mpl/vector/aux_/preprocessed/typeof_based/vector30.hpp:
-
-/usr/include/boost/preprocessor/repetition/enum_shifted_params.hpp:
-
-/usr/include/boost/function_types/detail/pp_variate_loop/preprocessed.hpp:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/cppdlr/dlr_imtime.hpp:
 
@@ -10495,10 +11021,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/preprocessor/punctuation/is_begin_parens.hpp:
 
 /usr/include/boost/mpl/bitand.hpp:
-
-/usr/include/c++/13/tr1/beta_function.tcc:
-
-/usr/include/boost/exception/to_string_stub.hpp:
 
 /usr/include/boost/mpl/aux_/preprocessed/gcc/bitand.hpp:
 
@@ -10550,9 +11072,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/aux_/size_impl.hpp:
 
-/usr/include/boost/proto/detail/deduce_domain_n.hpp:
-
 /usr/include/boost/function_types/detail/cv_traits.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/tmmintrin.h:
 
 /usr/include/boost/function_types/detail/synthesize_impl/arity10_0.hpp:
 
@@ -10575,8 +11097,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/iterators.hpp:
 
 /usr/include/boost/predef/platform/windows_uwp.h:
-
-/usr/include/boost/fusion/include/any.hpp:
 
 /usr/include/boost/range/mutable_iterator.hpp:
 
@@ -10614,19 +11134,11 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/view/iterator_range.hpp:
 
-/usr/include/boost/utility/base_from_member.hpp:
-
-/usr/include/boost/proto/domain.hpp:
-
-/usr/include/boost/fusion/mpl/empty.hpp:
-
 /usr/include/boost/mpl/aux_/push_back_impl.hpp:
 
 /usr/include/boost/utility/identity_type.hpp:
 
 /usr/include/boost/range/empty.hpp:
-
-/usr/include/boost/xpressive/sub_match.hpp:
 
 /usr/include/boost/range/reverse_iterator.hpp:
 
@@ -10653,6 +11165,12 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/xpressive/detail/core/finder.hpp:
 
 /usr/include/c++/13/bits/list.tcc:
+
+/usr/include/boost/xpressive/xpressive_fwd.hpp:
+
+/usr/include/boost/fusion/view/joint_view/detail/value_of_data_impl.hpp:
+
+/usr/include/boost/function_equal.hpp:
 
 /usr/include/c++/13/bits/stl_tree.h:
 
@@ -10685,8 +11203,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/range/algorithm/count.hpp:
 
 /usr/include/boost/mpl/end.hpp:
-
-/usr/include/c++/13/map:
 
 /usr/include/boost/proto/detail/preprocessed/make_expr.hpp:
 
@@ -10728,9 +11244,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/move/detail/iterator_to_raw_pointer.hpp:
 
-/usr/include/boost/fusion/view/joint_view/detail/deref_data_impl.hpp:
-
 /usr/include/eigen3/Eigen/src/Core/Select.h:
+
+/usr/include/boost/fusion/view/joint_view/detail/deref_data_impl.hpp:
 
 /usr/include/boost/core/no_exceptions_support.hpp:
 
@@ -10795,10 +11311,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/mpl/O1_size_fwd.hpp:
 
 /usr/include/boost/property_map/dynamic_property_map.hpp:
-
-/usr/include/boost/predef/architecture/pyramid.h:
-
-/usr/include/boost/math/tools/promotion.hpp:
 
 /usr/include/boost/predef/architecture/riscv.h:
 
@@ -10892,8 +11404,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/predef/platform/mingw32.h:
 
-/usr/include/boost/predef/library/c/uc.h:
-
 /usr/include/boost/predef/library/std.h:
 
 /usr/include/assert.h:
@@ -10903,6 +11413,12 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/predef/detail/_exception.h:
 
 /usr/include/boost/predef/library/std/libcomo.h:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vnnivlintrin.h:
+
+/usr/include/boost/fusion/mpl/size.hpp:
+
+/usr/include/boost/predef/library/std/roguewave.h:
 
 /usr/include/boost/predef/library/std/sgi.h:
 
@@ -10982,6 +11498,8 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/archive/archive_exception.hpp:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vpopcntdqintrin.h:
+
 /usr/include/boost/archive/detail/decl.hpp:
 
 /usr/include/boost/archive/detail/abi_suffix.hpp:
@@ -11011,12 +11529,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/multi_index/detail/ignore_wstrict_aliasing.hpp:
 
 /usr/include/boost/multi_index/identity_fwd.hpp:
-
-/usr/include/boost/multi_index/tag.hpp:
-
-/usr/include/boost/numeric/conversion/detail/udt_builtin_mixture.hpp:
-
-/usr/include/boost/fusion/sequence/intrinsic/detail/segmented_end_impl.hpp:
 
 /usr/include/boost/multi_index/detail/no_duplicate_tags.hpp:
 
@@ -11058,12 +11570,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/set/aux_/insert_range_impl.hpp:
 
-/usr/include/boost/proto/deep_copy.hpp:
-
-/usr/include/boost/function_types/detail/pp_cc_loop/preprocessed.hpp:
-
-/usr/include/boost/proto/detail/preprocessed/generate_by_value.hpp:
-
 /usr/include/boost/mpl/insert_range_fwd.hpp:
 
 /usr/include/boost/mpl/aux_/insert_impl.hpp:
@@ -11099,8 +11605,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/math/special_functions/bernoulli.hpp:
 
 /usr/include/boost/multi_index/detail/is_transparent.hpp:
-
-/usr/include/boost/xpressive/detail/dynamic/sequence.hpp:
 
 /usr/include/boost/range/config.hpp:
 
@@ -11146,13 +11650,19 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/container/list/detail/value_at_impl.hpp:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/smmintrin.h:
+
 /usr/include/boost/mpl/empty.hpp:
 
 /usr/include/boost/mpl/aux_/empty_impl.hpp:
 
 /usr/include/boost/numeric/conversion/detail/bounds.hpp:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/sgxintrin.h:
+
 /usr/include/boost/multi_index/detail/index_loader.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/x86gprintrin.h:
 
 /usr/include/boost/preprocessor/facilities/va_opt.hpp:
 
@@ -11161,6 +11671,10 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/detail/basic_pointerbuf.hpp:
 
 /usr/include/boost/multi_index/detail/index_saver.hpp:
+
+/usr/include/boost/algorithm/string/detail/util.hpp:
+
+/usr/include/boost/multi_index/detail/index_matcher.hpp:
 
 /usr/include/c++/13/pstl/execution_defs.h:
 
@@ -11173,6 +11687,8 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/multi_index/detail/archive_constructed.hpp:
 
 /usr/include/boost/numeric/ublas/fwd.hpp:
+
+/usr/lib/gcc/x86_64-linux-gnu/13/include/hresetintrin.h:
 
 /usr/include/boost/fusion/sequence/intrinsic/detail/segmented_end.hpp:
 
@@ -11201,10 +11717,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/range/rend.hpp:
 
 /usr/include/boost/graph/relax.hpp:
-
-/usr/include/boost/math/special_functions/sin_pi.hpp:
-
-/usr/include/boost/graph/reverse_graph.hpp:
 
 /usr/include/boost/graph/detail/set_adaptor.hpp:
 
@@ -11250,10 +11762,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/numeric/conversion/detail/sign_mixture.hpp:
 
-/usr/include/boost/preprocessor/facilities/apply.hpp:
-
-/usr/include/boost/numeric/conversion/detail/is_subranged.hpp:
-
 /usr/include/boost/mpl/multiplies.hpp:
 
 /usr/include/boost/numeric/conversion/detail/preprocessed/numeric_cast_traits_common.hpp:
@@ -11264,8 +11772,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/get_pointer.hpp:
 
-/usr/include/boost/xpressive/detail/core/matcher/alternate_matcher.hpp:
-
 /usr/include/boost/lexical_cast/detail/lcast_unsigned_converters.hpp:
 
 /usr/include/boost/predef/architecture/superh.h:
@@ -11274,9 +11780,9 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/c++/13/cfloat:
 
-/usr/include/boost/config/no_tr1/functional.hpp:
-
 /usr/include/boost/numeric/ublas/detail/matrix_assign.hpp:
+
+/usr/include/boost/config/no_tr1/functional.hpp:
 
 /usr/include/boost/math/special_functions/detail/round_fwd.hpp:
 
@@ -11284,21 +11790,13 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/math/policies/policy.hpp:
 
-/usr/include/boost/multi_index/detail/hash_index_node.hpp:
-
-/usr/include/boost/mpl/list/list20.hpp:
-
 /usr/include/boost/mpl/list/aux_/push_front.hpp:
 
 /usr/include/boost/mpl/list/aux_/push_back.hpp:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/raointintrin.h:
+
 /usr/include/boost/mpl/list/aux_/front.hpp:
-
-/usr/include/x86_64-linux-gnu/c++/13/bits/c++io.h:
-
-/usr/include/boost/mpl/list/aux_/clear.hpp:
-
-/usr/include/boost/fusion/iterator/iterator_facade.hpp:
 
 /usr/include/boost/math/tools/user.hpp:
 
@@ -11307,8 +11805,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/mpl/list/aux_/iterator.hpp:
 
 /usr/include/boost/math/special_functions/detail/fp_traits.hpp:
-
-/usr/include/boost/proto/transform/pass_through.hpp:
 
 /usr/include/boost/math/special_functions/trigamma.hpp:
 
@@ -11536,6 +12032,8 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/algorithm/iteration/detail/segmented_for_each.hpp:
 
+/usr/lib/gcc/x86_64-linux-gnu/13/include/ia32intrin.h:
+
 /usr/include/boost/fusion/algorithm/iteration/for_each_fwd.hpp:
 
 /usr/include/boost/mpl/remove_if.hpp:
@@ -11550,8 +12048,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/fusion/iterator/mpl.hpp:
 
-/usr/include/boost/fusion/adapted/mpl/detail/size_impl.hpp:
-
 /usr/include/boost/fusion/adapted/mpl/detail/value_at_impl.hpp:
 
 /usr/include/boost/fusion/adapted/mpl/detail/at_impl.hpp:
@@ -11563,8 +12059,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/fusion/adapted/mpl/detail/category_of_impl.hpp:
 
 /usr/include/boost/mpl/back.hpp:
-
-/usr/include/boost/mpl/aux_/back_impl.hpp:
 
 /usr/include/boost/mpl/min.hpp:
 
@@ -11612,8 +12106,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 
 /usr/include/boost/mpl/aux_/joint_iter.hpp:
 
-/usr/include/boost/mpl/aux_/iter_push_front.hpp:
-
 /usr/include/boost/predef/platform/windows_server.h:
 
 /usr/include/boost/fusion/mpl/pop_back.hpp:
@@ -11621,12 +12113,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/mpl/aux_/pop_back_impl.hpp:
 
 /usr/include/boost/fusion/mpl/push_front.hpp:
-
-/usr/include/boost/xpressive/detail/utility/any.hpp:
-
-/usr/include/boost/predef/library/std/roguewave.h:
-
-/usr/include/boost/fusion/mpl/size.hpp:
 
 /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/cppdlr/utils.hpp:
 
@@ -11647,10 +12133,6 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/c++/13/thread:
 
 /usr/include/boost/fusion/container/vector/detail/value_of_impl.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/GlobalFunctions.h:
-
-/usr/include/boost/exception/detail/shared_ptr.hpp:
 
 /usr/include/boost/fusion/container/vector/detail/next_impl.hpp:
 
@@ -11675,105 +12157,3 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.o: ../src/mini_main.cpp \
 /usr/include/boost/algorithm/string/replace.hpp:
 
 /usr/include/boost/algorithm/string/config.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/getopt_posix.h:
-
-/usr/include/boost/algorithm/string/find_format.hpp:
-
-/usr/include/boost/algorithm/string/detail/replace_storage.hpp:
-
-/usr/include/boost/algorithm/string/sequence_traits.hpp:
-
-/usr/include/boost/algorithm/string/detail/find_format_all.hpp:
-
-/usr/include/boost/algorithm/string/finder.hpp:
-
-/usr/include/boost/algorithm/string/compare.hpp:
-
-/usr/include/boost/algorithm/string/formatter.hpp:
-
-/usr/include/boost/multi_index/detail/index_matcher.hpp:
-
-/usr/include/boost/algorithm/string/detail/util.hpp:
-
-/usr/include/boost/xpressive/regex_primitives.hpp:
-
-/usr/include/boost/fusion/view/joint_view/detail/value_of_data_impl.hpp:
-
-/usr/include/boost/function_equal.hpp:
-
-/usr/include/boost/xpressive/xpressive_fwd.hpp:
-
-/usr/include/boost/xpressive/detail/core/quant_style.hpp:
-
-/usr/include/boost/proto/traits.hpp:
-
-/usr/include/boost/proto/detail/is_noncopyable.hpp:
-
-/usr/include/boost/proto/detail/preprocessed/args.hpp:
-
-/usr/include/boost/proto/detail/preprocessed/deduce_domain_n.hpp:
-
-/usr/include/boost/proto/transform/impl.hpp:
-
-/usr/include/boost/proto/detail/static_const.hpp:
-
-/usr/include/boost/random/poisson_distribution.hpp:
-
-/usr/include/boost/proto/detail/ignore_unused.hpp:
-
-/usr/include/boost/proto/detail/traits.hpp:
-
-/usr/include/boost/proto/detail/preprocessed/traits.hpp:
-
-/usr/include/boost/serialization/level_enum.hpp:
-
-/usr/include/boost/xpressive/detail/dynamic/matchable.hpp:
-
-/usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h:
-
-/usr/include/boost/xpressive/detail/utility/counted_base.hpp:
-
-/usr/include/boost/mpl/map/aux_/contains_impl.hpp:
-
-/usr/include/boost/detail/atomic_count.hpp:
-
-/usr/include/boost/exception/info.hpp:
-
-/usr/include/boost/exception/detail/is_output_streamable.hpp:
-
-/usr/include/boost/exception/detail/object_hex_dump.hpp:
-
-/usr/include/eigen3/Eigen/src/misc/RealSvd2x2.h:
-
-/usr/include/boost/core/typeinfo.hpp:
-
-/usr/include/boost/xpressive/detail/core/regex_impl.hpp:
-
-/usr/include/boost/xpressive/regex_traits.hpp:
-
-/usr/include/boost/xpressive/detail/utility/literals.hpp:
-
-/usr/include/c++/13/bits/nested_exception.h:
-
-/usr/include/boost/xpressive/detail/utility/tracking_ptr.hpp:
-
-/usr/include/boost/xpressive/detail/core/results_cache.hpp:
-
-/usr/include/boost/predef/os/cygwin.h:
-
-/usr/include/c++/13/tr1/poly_hermite.tcc:
-
-/usr/include/boost/xpressive/detail/core/list.hpp:
-
-/usr/include/boost/xpressive/detail/utility/algorithm.hpp:
-
-/usr/include/eigen3/Eigen/src/Core/util/ConfigureVectorization.h:
-
-/usr/include/boost/xpressive/detail/utility/ignore_unused.hpp:
-
-/usr/include/boost/xpressive/detail/utility/chset/basic_chset.hpp:
-
-/usr/include/x86_64-linux-gnu/bits/stdint-uintn.h:
-
-/usr/include/boost/xpressive/detail/utility/chset/range_run.ipp:

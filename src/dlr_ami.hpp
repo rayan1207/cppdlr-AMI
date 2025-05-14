@@ -52,7 +52,11 @@ struct dlr_obj{
 };
 class mDLR{
 	private:
-    std::vector<double> _kx_list, _ky_list;
+	double two_pi     ;
+    double inv_two_pi ;
+    double inv_dk     ;
+	int internal_dof;
+    double* kvals_ptr;
 	public:
 	std::vector<dlr_obj> multiple_dlr_structs;
 	double beta; double eps; double Emax; AmiBase::g_prod_t R0;
@@ -61,6 +65,7 @@ class mDLR{
 	size_t kl;///total number of momentum k grid;
 	size_t kN;///total number of cartesian momenta, kl_1^2* kl_2^2.....
 	double dk;
+	
 	std::vector<double> kvals;
 	size_t master_pole_num;
 	cppdlr::imfreq_ops master_if_ops;
@@ -84,12 +89,17 @@ class mDLR{
 	nda::array<dcomplex,1> recover_dlro_G_from_master_weights(nda::array<dcomplex,1> &master_weights, std::vector<std::complex<double>> &dlro_if);
 	void transfer_master_DLR_weights_to_dlrR0_elements();
 	void generate_momenta_cartesian_combo();
-	nda::array<dcomplex,1>  compute_momenta_kernel( double kx_ext,double ky_ext);
+	inline nda::dcomplex compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,const int* combo_ptr,const int* kcombo_ptr);
+	nda::array<nda::dcomplex,1> compute_momenta_kernel_qext(double kx_ext,double ky_ext);
+    std::vector<std::vector<nda::array<dcomplex,1>>> compute_momenta_kernel_bz();
+	std::vector<std::vector<nda::array<dcomplex,1>>> vdot_freq_momenta_kernel_M(const std::vector<std::vector<nda::array<dcomplex,1>>> mk, const std::vector<nda::array<dcomplex,1>> fk);
 };
 
 dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0_element);
 
 std::vector<std::complex<double>> convertToComplex(const std::vector<double> vec);
+template<typename T>
+void triangle_to_square(std::vector<std::vector<T>>& M);
 
 
 
@@ -148,6 +158,9 @@ inline void cprint2d(const std::vector<std::vector<std::complex<T>>>& vec)
     }
     std::cout << std::endl;
 }
+
+
+
 
 
 
