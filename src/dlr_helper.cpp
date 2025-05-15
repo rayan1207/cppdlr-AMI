@@ -228,7 +228,7 @@ void mDLR::generate_auxillary_energy_list(){
 }
 
 
-nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(std::complex<double> &imfreq){
+nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
 	nda::array<dcomplex,1> frequency_kernel(CN);
 	AmiBase ami;
 	AmiBase::frequency_t frequency;
@@ -304,8 +304,6 @@ void mDLR::create_DLR_master_if_ops(){
 void mDLR::populate_master_dlrW_from_G0(){
 	auto nodes = master_if_ops.get_ifnodes();
 	nda::array<dcomplex,1> mfreq(nodes.size());
-	for (size_t i =0; i<nodes.size();i++){ mfreq[i]=dcomplex(0,(2*nodes[i]+1)/beta);}
-	
 	for (int i =0;i< kl;i++){
 		for (int j=0;j<kl;j++){
         double e = hubbard_dispersion(kvals[i],kvals[j]);
@@ -465,19 +463,21 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
     return kernel;
 }
 
-std::vector<std::vector<nda::array<dcomplex,1>>> mDLR::compute_momenta_kernel_bz(){
+Bz_container mDLR::compute_momenta_kernel_bz(){
 	int n = (kl+1)/2;
 	auto reduced_kgrid = nda::array<double,1> (n);
-	std::vector<std::vector<nda::array<dcomplex,1>>> M(n,std::vector<nda::array<dcomplex,1>>(n));
+	Bz_container M(n,std::vector<nda::array<dcomplex,1>>(n));
 	for(size_t i=0; i<n; i++){reduced_kgrid[i] = dk* double(i);}
-	//////// computing momeneta kernel
+	int data = n*(n+1)/2;
+	int count =1;
 	for (int i =0;i< n; i ++){
 		for (int j=0;j<=i;j++){
 			double qx = reduced_kgrid(i);
 			double qy = reduced_kgrid(j);
-			//std::cout<<"(qx ,qy)= ( " << qx <<" , " << qy <<" )"<< std::endl;
+			std::cout<< "Computing -> " << count <<"/" << data << " data point \n";
 			auto momenta_kernel = mDLR::compute_momenta_kernel_qext(qx,qy);
 			M[i][j] = momenta_kernel;
+			count++;
 		}		
 	}
 	triangle_to_square(M);
@@ -485,13 +485,10 @@ std::vector<std::vector<nda::array<dcomplex,1>>> mDLR::compute_momenta_kernel_bz
 	return data_to_full_bz(M);
 	 
 }	
-
-std::vector<std::vector<nda::array<dcomplex,1>>> mDLR::vdot_freq_momenta_kernel_M(
-std::vector<std::vector<nda::array<dcomplex,1>>> mk, 
-std::vector<nda::array<dcomplex,1>> fk){
+Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::array<dcomplex,1>> fk){
 	
-	using arr1d = nda::array<dcomplex,1>;
-	std::vector<std::vector<arr1d>> result(kl,std::vector<arr1d>(kl, arr1d(fk.size())));
+	
+	Bz_container result(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(fk.size())));
 	for (int i =0;i<kl;i++){
 		for (int j=0;j<kl;j++){
 			auto const &momenta_kernel = mk[i][j];
@@ -503,6 +500,79 @@ std::vector<nda::array<dcomplex,1>> fk){
 	}
 	return result;	
 }
+
+
+Bz_container mDLR::G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq){
+	Bz_container G(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(mfreq.size())));
+	for (int i =0; i<kl; i++) {
+		for (int j =0; j <kl; j++){
+			double kx = kvals[i]; double ky = kvals[j];
+			double e = hubbard_dispersion(kx,ky);
+			for (int f =0; f< mfreq.size();f++) {
+				G[i][j](f) = 1/(mfreq(f) - e - SE[i][j](f));			
+			}
+		}	
+	}	
+	return G;	
+}
+
+void mDLR::repopulate_master_dlrW_from_G(Bz_container &G ){
+	for (int i =0;i< kl;i++){
+		for (int j=0;j<kl;j++){
+		auto master_gdlr = G[i][j];
+		auto weights= master_if_ops.vals2coefs(beta,master_gdlr);
+		master_dlrW_in_square[i][j]=weights;
+		}	
+	}	
+}
+
+void mDLR::write_data_ij_momenta(const std::string& filename,
+                            Bz_container& data,
+                            nda::array<dcomplex,1>& mfreq,
+                            std::pair<int, int> ij)
+{
+    // Extract the NDA 1D array for the (i,j) momenta
+    auto array1d = data[ij.first][ij.second];
+    int size = array1d.size();
+
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return;
+    }
+
+    // Optional: write header
+    file << "# wn_imag    qx     qy     Re[G]       Im[G]\n";
+
+    for (int i = 0; i < size; ++i) {
+        double wn_imag = mfreq[i].imag();
+        double qx = kvals[ij.first];
+        double qy = kvals[ij.second];
+        double re = array1d[i].real();
+        double im = array1d[i].imag();
+
+        // Print to console
+        std::cout << wn_imag << "  "
+                  << qx << "  "
+                  << qy << "  "
+                  << re << "  "
+                  << im << std::endl;
+
+        // Write to file
+        file << wn_imag << "  "
+             << qx << "  "
+             << qy << "  "
+             << re << "  "
+             << im << "\n";
+    }
+
+    file.close();
+    std::cout << "Data written to " << filename << std::endl;
+}
+	
+	
+	
+
 	
 	
 	

@@ -38,6 +38,7 @@
 AmiBase::g_prod_t construct_example2();
 AmiBase::ami_vars construct_ext_example2();
 
+using Bz_container =  std::vector<std::vector<nda::array<dcomplex,1>>>;
 
 struct dlr_obj{
 	cppdlr::imfreq_ops if_ops;
@@ -82,7 +83,7 @@ class mDLR{
 	void create_multiple_gstruct();
 	void generate_cartesian_list();
 	void generate_auxillary_energy_list();
-	nda::array<dcomplex,1> evaluate_auxillary_energies(std::complex<double> &imfreq);
+	nda::array<dcomplex,1> evaluate_auxillary_energies(nda::dcomplex &imfreq);
 	nda::array<dcomplex,1> evaluate_auxillary_weights( nda::array<double,1> &energy);
 	void populate_master_dlrW_from_G0();
 	void reshape_dlrW_square_per_kgrid();
@@ -91,8 +92,11 @@ class mDLR{
 	void generate_momenta_cartesian_combo();
 	inline nda::dcomplex compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,const int* combo_ptr,const int* kcombo_ptr);
 	nda::array<nda::dcomplex,1> compute_momenta_kernel_qext(double kx_ext,double ky_ext);
-    std::vector<std::vector<nda::array<dcomplex,1>>> compute_momenta_kernel_bz();
-	std::vector<std::vector<nda::array<dcomplex,1>>> vdot_freq_momenta_kernel_M(const std::vector<std::vector<nda::array<dcomplex,1>>> mk, const std::vector<nda::array<dcomplex,1>> fk);
+    Bz_container compute_momenta_kernel_bz();
+	Bz_container vdot_freq_momenta_kernel_M(const std::vector<std::vector<nda::array<dcomplex,1>>> mk, const std::vector<nda::array<dcomplex,1>> fk);
+	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq);
+	void repopulate_master_dlrW_from_G(Bz_container &G );
+	void write_data_ij_momenta(const std::string& filename,Bz_container& data, nda::array<dcomplex,1>& mfreq, std::pair<int, int> ij);
 };
 
 dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0_element);
