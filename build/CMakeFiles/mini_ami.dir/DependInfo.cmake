@@ -10,6 +10,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/dlr_helper.cpp" "CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o" "gcc" "CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o.d"
   "/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/mini_main.cpp" "CMakeFiles/mini_ami.dir/src/mini_main.cpp.o" "gcc" "CMakeFiles/mini_ami.dir/src/mini_main.cpp.o.d"
+  "/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/params_reader.cpp" "CMakeFiles/mini_ami.dir/src/params_reader.cpp.o" "gcc" "CMakeFiles/mini_ami.dir/src/params_reader.cpp.o.d"
   )
 
 # Targets to which this target links.

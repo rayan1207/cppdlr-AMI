@@ -32,14 +32,38 @@
 #include <iomanip>
 #include <cppdlr/cppdlr.hpp>
 #include <omp.h>
+#include <format>
+#include <string>
+
 
 
 
 AmiBase::g_prod_t construct_example2();
 AmiBase::ami_vars construct_ext_example2();
 
-using Bz_container =  std::vector<std::vector<nda::array<dcomplex,1>>>;
 
+
+
+//////params loader functions/////////////
+using Bz_container =  std::vector<std::vector<nda::array<dcomplex,1>>>;
+struct params_param {
+	double Uval;
+	double beta;
+	double Emax;
+	double eps;
+	int iter;
+	int L;
+};
+
+std::string trim(const std::string& str);
+void parseLine(const std::string& line, std::string& paramName, std::string& paramValue);
+void params_loader(const std::string& filename, params_param& params);
+
+
+
+
+
+/////////// DLR stuff //////////////
 struct dlr_obj{
 	cppdlr::imfreq_ops if_ops;
 	//Eigen::VectorXcd im_freqs;
@@ -60,22 +84,22 @@ class mDLR{
     double* kvals_ptr;
 	public:
 	std::vector<dlr_obj> multiple_dlr_structs;
-	double beta; double eps; double Emax; AmiBase::g_prod_t R0;
+	double beta; double eps; double Emax;double Uval; AmiBase::g_prod_t R0;
 	size_t N; ///num of greens function
 	size_t CN; ///total number of cartesian, pole_num1* pole_num2* ...pole numN 
 	size_t kl;///total number of momentum k grid;
 	size_t kN;///total number of cartesian momenta, kl_1^2* kl_2^2.....
 	double dk;
 	
-	std::vector<double> kvals;
-	size_t master_pole_num;
-	cppdlr::imfreq_ops master_if_ops;
-	std::vector<std::vector<nda::array<dcomplex,1>>> master_dlrW_in_square;
-	std::vector<std::vector<int>> cartesian_combo_list;
-	std::vector<std::vector<int>> cartesian_k_combo_list;
+	std::vector<double> kvals;/// kgrid vals
+	size_t master_pole_num;/// number of poles in master DLR
+	cppdlr::imfreq_ops master_if_ops; /// master dlr obj
+	std::vector<std::vector<nda::array<dcomplex,1>>> master_dlrW_in_square; //master dlr weight
+	std::vector<std::vector<int>> cartesian_combo_list; /// contains the cartesian product indices for poles
+	std::vector<std::vector<int>> cartesian_k_combo_list; ///co
 	
 	std::vector<std::vector<double>> auxillary_energy_list;
-	mDLR(double _beta, double _eps, double _Emax,size_t kl,AmiBase::g_prod_t _R0);
+	mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t kl,AmiBase::g_prod_t _R0);
 	//////// methods ////////////
 	void create_DLR_master_if_ops();
 	
@@ -96,7 +120,11 @@ class mDLR{
 	Bz_container vdot_freq_momenta_kernel_M(const std::vector<std::vector<nda::array<dcomplex,1>>> mk, const std::vector<nda::array<dcomplex,1>> fk);
 	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq);
 	void repopulate_master_dlrW_from_G(Bz_container &G );
-	void write_data_ij_momenta(const std::string& filename,Bz_container& data, nda::array<dcomplex,1>& mfreq, std::pair<int, int> ij);
+	void write_data_momenta(const std::string& filename,Bz_container& data, nda::array<dcomplex,1>& mfreq);
+	void write_data_ij_momenta(const std::string& filename,
+                            Bz_container& data,
+                            nda::array<dcomplex,1>& mfreq,
+                            std::pair<int, int> ij);
 };
 
 dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0_element);

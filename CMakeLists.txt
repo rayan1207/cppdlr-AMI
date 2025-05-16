@@ -32,10 +32,8 @@ add_executable(${PROJECT_NAME}
   src/mini_main.cpp
   src/dlr_ami.hpp
   src/dlr_helper.cpp
-  #src/sparse_sampler_sigma.cpp
-  #src/helper.cpp
-  #src/molecule_solver.cpp
-  #src/energy.cpp
+  src/params_reader.cpp
+
 )
 target_compile_options(${PROJECT_NAME} PRIVATE
   -O3

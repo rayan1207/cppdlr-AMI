@@ -128,7 +128,7 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 	return dlro;
 }
 ///////part of mdlr ///////////////////////////////////////////
-mDLR::mDLR(double _beta, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t _R0):beta(_beta),eps(_eps),Emax(_Emax),kl(_kl), R0(_R0){
+mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t _R0):beta(_beta),Uval(_Uval),eps(_eps),Emax(_Emax),kl(_kl), R0(_R0){
 	auto t0 = std::chrono::high_resolution_clock::now();
 	N = R0.size();
 	std::cout<<"-_-_-_-_-_-_-_-_-  Constructing multiple DLR Object for num(G):" << N << "  -_-_-_-_-_-_-_-_-  \n";
@@ -167,15 +167,6 @@ mDLR::mDLR(double _beta, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t 
 	master_dlrW_in_square.resize(kl);
 	for (size_t i = 0; i < kl; ++i)
 	master_dlrW_in_square[i].resize(kl);
-
-
-	std::cout <<"Populating the 2-dim master_dlrW_in_square grid with weights from G0 with L: " << kl <<std::endl;
-	populate_master_dlrW_from_G0();
-	std::cout << "Done";
-	std::cout << "Transferring DLR weights to gstructs \n";
-	reshape_dlrW_square_per_kgrid();
-	transfer_master_DLR_weights_to_dlrR0_elements();
-	std::cout <<"Done";
 	auto t1 = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
 	std::cout << " Construction of mDLR took time: " <<duration.count() << " ms \n";
@@ -297,7 +288,7 @@ double hubbard_dispersion(double kx, double ky){
 
 void mDLR::create_DLR_master_if_ops(){
 	double lambda = beta*Emax;
-    auto dlr_rf = build_dlr_rf(lambda, 1e-7 );
+    auto dlr_rf = build_dlr_rf(lambda,eps );
     master_if_ops = imfreq_ops(lambda, dlr_rf, Fermion);	
 }
 
@@ -359,11 +350,15 @@ nda::array<dcomplex,1> mDLR::recover_dlro_G_from_master_weights(nda::array<dcomp
 void mDLR::transfer_master_DLR_weights_to_dlrR0_elements(){
 	for (auto &dlr_R0 : multiple_dlr_structs){
 		auto wn_list = dlr_R0.im_freqs;
-		//dlr_R0.dlrW_in_square.clear();
+		dlr_R0.dlrW_in_square.clear();
+		dlr_R0.dlrW_in_square.resize(kl);
+		for (size_t i = 0; i < kl; ++i){
+		dlr_R0.dlrW_in_square[i].resize(kl);}
 		for (int i =0; i <kl;i++){
 			for (int j =0; j < kl;j++){
 				auto master_weights = master_dlrW_in_square[i][j];
 				auto dlr_R0_g = recover_dlro_G_from_master_weights(master_weights, wn_list);
+				
 				dlr_R0.dlrW_in_square[i][j] = dlr_R0.if_ops.vals2coefs(beta, dlr_R0_g);
 				//std::cout << dlr_R0.dlrW_in_square[i][j] <<std::endl;
 			}	
@@ -494,7 +489,7 @@ Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::
 			auto const &momenta_kernel = mk[i][j];
 			
 			for (int k; k<fk.size();k++){
-				result[i][j](k) = nda::dotc(fk[k],momenta_kernel)/(-1*std::pow((double) kl,4));
+				result[i][j](k) = std::pow(Uval,2)*nda::dotc(fk[k],momenta_kernel)/(-1*std::pow((double) kl,4));
 			}			
 		}	
 	}
@@ -517,6 +512,11 @@ Bz_container mDLR::G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfre
 }
 
 void mDLR::repopulate_master_dlrW_from_G(Bz_container &G ){
+	master_dlrW_in_square.clear();
+	master_dlrW_in_square.resize(kl);
+	for (size_t i = 0; i < kl; ++i){
+	master_dlrW_in_square[i].resize(kl);}
+	
 	for (int i =0;i< kl;i++){
 		for (int j=0;j<kl;j++){
 		auto master_gdlr = G[i][j];
@@ -526,6 +526,48 @@ void mDLR::repopulate_master_dlrW_from_G(Bz_container &G ){
 	}	
 }
 
+void mDLR::write_data_momenta(const std::string& filename,
+                            Bz_container& data,
+                            nda::array<dcomplex,1>& mfreq  )
+{
+    // Extract the NDA 1D array for the (i,j) momenta
+ 
+    int size = data[0][0].size();
+
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return;
+    }
+
+    // Optional: write header
+    //file << "# wn    qx     qy     Re       Im\n";
+    for (int i =0; i<kl;++i){
+		for (int j =0; j<kl;++j){		
+			for (int f = 0; f < size; ++f) {
+				double wn_imag = mfreq[f].imag();
+				double qx = kvals[i];
+				double qy = kvals[j];
+				double re = data[i][j](f).real();
+				double im = data[i][j](f).imag();
+
+			
+				// Write to file
+				file << wn_imag << "  "
+					 << qx << "  "
+					 << qy << "  "
+					 << re << "  "
+					 << im << "\n";
+					}
+		}
+	}
+
+    file.close();
+    std::cout << "Data written to " << filename << std::endl;
+}
+	
+	
+	
 void mDLR::write_data_ij_momenta(const std::string& filename,
                             Bz_container& data,
                             nda::array<dcomplex,1>& mfreq,
@@ -569,10 +611,6 @@ void mDLR::write_data_ij_momenta(const std::string& filename,
     file.close();
     std::cout << "Data written to " << filename << std::endl;
 }
-	
-	
-	
-
 	
 	
 	

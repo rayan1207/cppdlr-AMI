@@ -222,6 +222,30 @@ src/mini_main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/mini_main.cpp.s
 .PHONY : src/mini_main.cpp.s
 
+src/params_reader.o: src/params_reader.cpp.o
+.PHONY : src/params_reader.o
+
+# target to build an object file
+src/params_reader.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/params_reader.cpp.o
+.PHONY : src/params_reader.cpp.o
+
+src/params_reader.i: src/params_reader.cpp.i
+.PHONY : src/params_reader.i
+
+# target to preprocess a source file
+src/params_reader.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/params_reader.cpp.i
+.PHONY : src/params_reader.cpp.i
+
+src/params_reader.s: src/params_reader.cpp.s
+.PHONY : src/params_reader.s
+
+# target to generate assembly for a file
+src/params_reader.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/params_reader.cpp.s
+.PHONY : src/params_reader.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -241,6 +265,9 @@ help:
 	@echo "... src/mini_main.o"
 	@echo "... src/mini_main.i"
 	@echo "... src/mini_main.s"
+	@echo "... src/params_reader.o"
+	@echo "... src/params_reader.i"
+	@echo "... src/params_reader.s"
 .PHONY : help
 
 
