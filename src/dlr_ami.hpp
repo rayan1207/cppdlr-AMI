@@ -132,17 +132,16 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 std::vector<std::complex<double>> convertToComplex(const std::vector<double> vec);
 template<typename T>
 void triangle_to_square(std::vector<std::vector<T>>& M);
-
-
-
-
+template<typename T>
+std::vector<std::vector<T>> data_to_full_bz(const std::vector<std::vector<T>>& M);
+template<typename T>
+std::vector<T> sumVectors(const std::vector<std::vector<T>>& vecs);
 nda::array<dcomplex,1> recover_G_from_poles_n_weights(dlr_obj& dlr_R0, nda::array<dcomplex,1> weights, std::vector<std::complex<double>> imfreqs);
 
 double hubbard_dispersion(double kx, double ky);
 
 
-template<typename T>
-std::vector<T> sumVectors(const std::vector<std::vector<T>>& vecs);
+
 
 
 ////////////////////////////////////// Print stuff ////////////////////////////
@@ -191,7 +190,58 @@ inline void cprint2d(const std::vector<std::vector<std::complex<T>>>& vec)
     std::cout << std::endl;
 }
 
+template<typename T>
+void triangle_to_square(std::vector<std::vector<T>>& M) {
+    int n = M.size();
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            if (i > j) {
+                M[j][i] = M[i][j];
+            }
+        }
+    }
+}	
 
+template<typename T>
+std::vector<std::vector<T>> data_to_full_bz(const std::vector<std::vector<T>>& M) {
+    int n = M.size();
+    int N = 2 * n - 1;
+    int s_ind = n - 1;    
+    int b_ind = N - 1;    
+    std::vector<std::vector<T>> F(N, std::vector<T>(N));
+    for (int i = 0; i < N; ++i) {
+        for (int j = 0; j < N; ++j) {
+            if (i > s_ind && j <= s_ind) F[i][j] = M[b_ind - i][j];
+            else if (j > s_ind && i <= s_ind) F[i][j] = M[i][b_ind - j];
+            else if (i > s_ind && j > s_ind) F[i][j] = M[b_ind - i][b_ind - j];
+            else                               F[i][j] = M[i][j];
+        }
+    }
+    return F;
+}
+
+
+	
+template<typename T>
+std::vector<T> sumVectors(const std::vector<std::vector<T>>& vecs) {
+    if (vecs.empty()) return {};
+    
+    size_t N = vecs[0].size();
+    // Verify all inner vectors have the same size
+    for (const auto& v : vecs) {
+        if (v.size() != N) {
+            throw std::invalid_argument("All vectors must have the same length");
+        }
+    }
+    
+    std::vector<T> result(N, T{});
+    for (const auto& v : vecs) {
+        for (size_t i = 0; i < N; ++i) {
+            result[i] += v[i];
+        }
+    }
+    return result;
+}
 
 
 

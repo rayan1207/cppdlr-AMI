@@ -31,8 +31,8 @@ find_package(LAPACK REQUIRED)
 add_executable(${PROJECT_NAME}
   src/mini_main.cpp
   src/dlr_ami.hpp
-  src/dlr_helper.cpp
-  src/params_reader.cpp
+  src/helper.cpp
+  src/AmiDlr_func.cpp
 
 )
 target_compile_options(${PROJECT_NAME} PRIVATE

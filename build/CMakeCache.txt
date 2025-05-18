@@ -301,6 +301,15 @@ mini_ami_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 mini_ami_SOURCE_DIR:STATIC=/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT
 
+//Value Computed by CMake
+renormalized_pt_BINARY_DIR:STATIC=/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build
+
+//Value Computed by CMake
+renormalized_pt_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+renormalized_pt_SOURCE_DIR:STATIC=/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT
+
 
 ########################
 # INTERNAL cache entries

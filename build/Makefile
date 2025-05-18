@@ -174,29 +174,53 @@ mini_ami/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/build
 .PHONY : mini_ami/fast
 
-src/dlr_helper.o: src/dlr_helper.cpp.o
-.PHONY : src/dlr_helper.o
+src/AmiDlr_func.o: src/AmiDlr_func.cpp.o
+.PHONY : src/AmiDlr_func.o
 
 # target to build an object file
-src/dlr_helper.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o
-.PHONY : src/dlr_helper.cpp.o
+src/AmiDlr_func.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.o
+.PHONY : src/AmiDlr_func.cpp.o
 
-src/dlr_helper.i: src/dlr_helper.cpp.i
-.PHONY : src/dlr_helper.i
+src/AmiDlr_func.i: src/AmiDlr_func.cpp.i
+.PHONY : src/AmiDlr_func.i
 
 # target to preprocess a source file
-src/dlr_helper.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.i
-.PHONY : src/dlr_helper.cpp.i
+src/AmiDlr_func.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.i
+.PHONY : src/AmiDlr_func.cpp.i
 
-src/dlr_helper.s: src/dlr_helper.cpp.s
-.PHONY : src/dlr_helper.s
+src/AmiDlr_func.s: src/AmiDlr_func.cpp.s
+.PHONY : src/AmiDlr_func.s
 
 # target to generate assembly for a file
-src/dlr_helper.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.s
-.PHONY : src/dlr_helper.cpp.s
+src/AmiDlr_func.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.s
+.PHONY : src/AmiDlr_func.cpp.s
+
+src/helper.o: src/helper.cpp.o
+.PHONY : src/helper.o
+
+# target to build an object file
+src/helper.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/helper.cpp.o
+.PHONY : src/helper.cpp.o
+
+src/helper.i: src/helper.cpp.i
+.PHONY : src/helper.i
+
+# target to preprocess a source file
+src/helper.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/helper.cpp.i
+.PHONY : src/helper.cpp.i
+
+src/helper.s: src/helper.cpp.s
+.PHONY : src/helper.s
+
+# target to generate assembly for a file
+src/helper.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/helper.cpp.s
+.PHONY : src/helper.cpp.s
 
 src/mini_main.o: src/mini_main.cpp.o
 .PHONY : src/mini_main.o
@@ -222,30 +246,6 @@ src/mini_main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/mini_main.cpp.s
 .PHONY : src/mini_main.cpp.s
 
-src/params_reader.o: src/params_reader.cpp.o
-.PHONY : src/params_reader.o
-
-# target to build an object file
-src/params_reader.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/params_reader.cpp.o
-.PHONY : src/params_reader.cpp.o
-
-src/params_reader.i: src/params_reader.cpp.i
-.PHONY : src/params_reader.i
-
-# target to preprocess a source file
-src/params_reader.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/params_reader.cpp.i
-.PHONY : src/params_reader.cpp.i
-
-src/params_reader.s: src/params_reader.cpp.s
-.PHONY : src/params_reader.s
-
-# target to generate assembly for a file
-src/params_reader.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/mini_ami.dir/build.make CMakeFiles/mini_ami.dir/src/params_reader.cpp.s
-.PHONY : src/params_reader.cpp.s
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -259,15 +259,15 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... mini_ami"
-	@echo "... src/dlr_helper.o"
-	@echo "... src/dlr_helper.i"
-	@echo "... src/dlr_helper.s"
+	@echo "... src/AmiDlr_func.o"
+	@echo "... src/AmiDlr_func.i"
+	@echo "... src/AmiDlr_func.s"
+	@echo "... src/helper.o"
+	@echo "... src/helper.i"
+	@echo "... src/helper.s"
 	@echo "... src/mini_main.o"
 	@echo "... src/mini_main.i"
 	@echo "... src/mini_main.s"
-	@echo "... src/params_reader.o"
-	@echo "... src/params_reader.i"
-	@echo "... src/params_reader.s"
 .PHONY : help
 
 

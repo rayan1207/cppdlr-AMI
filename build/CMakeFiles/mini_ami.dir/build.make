@@ -83,46 +83,46 @@ CMakeFiles/mini_ami.dir/src/mini_main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mini_ami.dir/src/mini_main.cpp.s"
 	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/mini_main.cpp -o CMakeFiles/mini_ami.dir/src/mini_main.cpp.s
 
-CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o: CMakeFiles/mini_ami.dir/flags.make
-CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o: ../src/dlr_helper.cpp
-CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o: CMakeFiles/mini_ami.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o"
-	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o -MF CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o.d -o CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o -c /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/dlr_helper.cpp
+CMakeFiles/mini_ami.dir/src/helper.cpp.o: CMakeFiles/mini_ami.dir/flags.make
+CMakeFiles/mini_ami.dir/src/helper.cpp.o: ../src/helper.cpp
+CMakeFiles/mini_ami.dir/src/helper.cpp.o: CMakeFiles/mini_ami.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/mini_ami.dir/src/helper.cpp.o"
+	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mini_ami.dir/src/helper.cpp.o -MF CMakeFiles/mini_ami.dir/src/helper.cpp.o.d -o CMakeFiles/mini_ami.dir/src/helper.cpp.o -c /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/helper.cpp
 
-CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.i"
-	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/dlr_helper.cpp > CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.i
+CMakeFiles/mini_ami.dir/src/helper.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mini_ami.dir/src/helper.cpp.i"
+	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/helper.cpp > CMakeFiles/mini_ami.dir/src/helper.cpp.i
 
-CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.s"
-	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/dlr_helper.cpp -o CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.s
+CMakeFiles/mini_ami.dir/src/helper.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mini_ami.dir/src/helper.cpp.s"
+	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/helper.cpp -o CMakeFiles/mini_ami.dir/src/helper.cpp.s
 
-CMakeFiles/mini_ami.dir/src/params_reader.cpp.o: CMakeFiles/mini_ami.dir/flags.make
-CMakeFiles/mini_ami.dir/src/params_reader.cpp.o: ../src/params_reader.cpp
-CMakeFiles/mini_ami.dir/src/params_reader.cpp.o: CMakeFiles/mini_ami.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/mini_ami.dir/src/params_reader.cpp.o"
-	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mini_ami.dir/src/params_reader.cpp.o -MF CMakeFiles/mini_ami.dir/src/params_reader.cpp.o.d -o CMakeFiles/mini_ami.dir/src/params_reader.cpp.o -c /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/params_reader.cpp
+CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.o: CMakeFiles/mini_ami.dir/flags.make
+CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.o: ../src/AmiDlr_func.cpp
+CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.o: CMakeFiles/mini_ami.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.o"
+	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.o -MF CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.o.d -o CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.o -c /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/AmiDlr_func.cpp
 
-CMakeFiles/mini_ami.dir/src/params_reader.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mini_ami.dir/src/params_reader.cpp.i"
-	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/params_reader.cpp > CMakeFiles/mini_ami.dir/src/params_reader.cpp.i
+CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.i"
+	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/AmiDlr_func.cpp > CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.i
 
-CMakeFiles/mini_ami.dir/src/params_reader.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mini_ami.dir/src/params_reader.cpp.s"
-	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/params_reader.cpp -o CMakeFiles/mini_ami.dir/src/params_reader.cpp.s
+CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.s"
+	/usr/bin/mpicxx $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/AmiDlr_func.cpp -o CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.s
 
 # Object files for target mini_ami
 mini_ami_OBJECTS = \
 "CMakeFiles/mini_ami.dir/src/mini_main.cpp.o" \
-"CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o" \
-"CMakeFiles/mini_ami.dir/src/params_reader.cpp.o"
+"CMakeFiles/mini_ami.dir/src/helper.cpp.o" \
+"CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.o"
 
 # External object files for target mini_ami
 mini_ami_EXTERNAL_OBJECTS =
 
 mini_ami: CMakeFiles/mini_ami.dir/src/mini_main.cpp.o
-mini_ami: CMakeFiles/mini_ami.dir/src/dlr_helper.cpp.o
-mini_ami: CMakeFiles/mini_ami.dir/src/params_reader.cpp.o
+mini_ami: CMakeFiles/mini_ami.dir/src/helper.cpp.o
+mini_ami: CMakeFiles/mini_ami.dir/src/AmiDlr_func.cpp.o
 mini_ami: CMakeFiles/mini_ami.dir/build.make
 mini_ami: ../../libamigraph/install/lib/libamigraph.so
 mini_ami: ../../libamicalc/install/lib/libamicalc.so

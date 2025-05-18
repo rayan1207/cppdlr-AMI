@@ -1,7 +1,8 @@
 CMakeFiles/mini_ami.dir/src/helper.cpp.o: \
  /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/helper.cpp \
  /usr/include/stdc-predef.h \
- /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/mini_ami.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/src/dlr_ami.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/../libamicalc/install/include/ami_calc.hpp \
  /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/../../../libami/install/include/ami_base.hpp \
  /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
@@ -228,11 +229,16 @@ CMakeFiles/mini_ami.dir/src/helper.cpp.o: \
  /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
  /usr/include/c++/13/bits/random.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/opt_random.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/pmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/xmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h \
+ /usr/include/c++/13/stdlib.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitintrin.h \
  /usr/include/c++/13/bits/random.tcc /usr/include/c++/13/numeric \
  /usr/include/c++/13/bits/stl_numeric.h \
  /usr/include/c++/13/pstl/glue_numeric_defs.h \
- /usr/include/c++/13/stdlib.h \
- /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/../libamicalc/install/include/ami_calc.hpp \
  /usr/include/c++/13/experimental/filesystem \
  /usr/include/c++/13/experimental/bits/fs_fwd.h \
  /usr/include/c++/13/bits/chrono.h /usr/include/c++/13/ratio \
@@ -258,10 +264,95 @@ CMakeFiles/mini_ami.dir/src/helper.cpp.o: \
  /usr/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
  /usr/include/eigen3/Eigen/src/Core/util/Macros.h \
  /usr/include/eigen3/Eigen/src/Core/util/ConfigureVectorization.h \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/mmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/emmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/xmmintrin.h \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/mm_malloc.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/tmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/smmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/popcntintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/nmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/immintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/x86gprintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/ia32intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/adxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/bmiintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/bmi2intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/cetintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/cldemoteintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/clflushoptintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/clwbintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/clzerointrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/cmpccxaddintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/enqcmdintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/fxsrintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/lzcntintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/lwpintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/movdirintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/mwaitxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/pconfigintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/pkuintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/prfchiintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/raointintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/rdseedintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/rtmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/serializeintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/sgxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/tbmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/tsxldtrkintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/uintrintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/waitpkgintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/wbnoinvdintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/xsavecintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/xsaveoptintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/xsavesintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/xtestintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/hresetintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/wmmintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avxintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avxvnniintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avxifmaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avxvnniint8intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx2intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512erintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512pfintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512cdintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512dqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vlbwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vldqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512ifmaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512ifmavlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmiintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmivlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124fmapsintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx5124vnniwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vpopcntdqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmi2intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vbmi2vlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vnniintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vnnivlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vpopcntdqvlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bitalgintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vp2intersectintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512vp2intersectvlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512fp16vlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/shaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/fmaintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/f16cintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/gfniintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/vaesintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/vpclmulqdqintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bf16vlintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avx512bf16intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/avxneconvertintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/amxtileintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/amxint8intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/amxbf16intrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/amxcomplexintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/prfchwintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/keylockerintrin.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/amxfp16intrin.h \
  /usr/include/eigen3/Eigen/src/Core/util/MKL_support.h \
  /usr/include/c++/13/cassert /usr/include/assert.h \
  /usr/include/c++/13/cstring /usr/include/string.h /usr/include/strings.h \
@@ -295,8 +386,12 @@ CMakeFiles/mini_ami.dir/src/helper.cpp.o: \
  /usr/include/eigen3/Eigen/src/Core/arch/Default/GenericPacketMathFunctionsFwd.h \
  /usr/include/eigen3/Eigen/src/Core/arch/SSE/PacketMath.h \
  /usr/include/eigen3/Eigen/src/Core/arch/SSE/TypeCasting.h \
- /usr/include/eigen3/Eigen/src/Core/arch/SSE/MathFunctions.h \
  /usr/include/eigen3/Eigen/src/Core/arch/SSE/Complex.h \
+ /usr/include/eigen3/Eigen/src/Core/arch/AVX/PacketMath.h \
+ /usr/include/eigen3/Eigen/src/Core/arch/AVX/TypeCasting.h \
+ /usr/include/eigen3/Eigen/src/Core/arch/AVX/Complex.h \
+ /usr/include/eigen3/Eigen/src/Core/arch/SSE/MathFunctions.h \
+ /usr/include/eigen3/Eigen/src/Core/arch/AVX/MathFunctions.h \
  /usr/include/eigen3/Eigen/src/Core/arch/Default/Settings.h \
  /usr/include/eigen3/Eigen/src/Core/arch/Default/GenericPacketMathFunctions.h \
  /usr/include/eigen3/Eigen/src/Core/functors/TernaryFunctors.h \
@@ -2643,4 +2738,178 @@ CMakeFiles/mini_ami.dir/src/helper.cpp.o: \
  /usr/include/c++/13/bits/atomic_timed_wait.h \
  /usr/include/c++/13/bits/this_thread_sleep.h \
  /usr/include/x86_64-linux-gnu/sys/time.h /usr/include/semaphore.h \
- /usr/include/x86_64-linux-gnu/bits/semaphore.h
+ /usr/include/x86_64-linux-gnu/bits/semaphore.h \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/cppdlr/cppdlr.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/cppdlr/dlr_build.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/nda.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./accessors.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./algorithms.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././concepts.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././stdutil/concepts.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././traits.hpp \
+ /usr/include/c++/13/ranges \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././layout/for_each.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././layout/./permutation.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././layout/./../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././layout/./../stdutil/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././layout/../stdutil/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./arithmetic.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././declarations.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././layout/idx_map.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././layout/./range.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/itertools.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/./enumerate.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/././iterator_facade.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/././sentinel.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/./product.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/./range.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/././product.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/./slice.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/././utils.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/./stride.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/./transform.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/itertools/./zip.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././layout/./slice_static.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././layout/./../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././layout/./../stdutil/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././layout/../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././layout/policies.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././mem/address_space.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././mem/../device.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././mem/policies.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././mem/./allocators.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././mem/././malloc.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././mem/././memset.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././mem/./../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././mem/./handle.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././mem/././memcpy.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././mem/././../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/matmul.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../basic_functions.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/clef.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/./auto_assign_subscript.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/././expression.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/./././utils.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/././function.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/./././eval.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/././././operation.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/././././../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/././././placeholder.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/./././../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/././../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/./../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/./auto_assign.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././clef/./make_lazy.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././exceptions.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../././macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/gemm.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/./interface/cxx_interface.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/./interface/../tools.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/./interface/../../map.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/./interface/../.././macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/./interface/../../mapped_functions.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/../layout_transforms.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/.././group_indices.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/../././stdutil/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/.././stdutil/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../blas/gemv.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/det_and_inverse.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../basic_array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././basic_array_view.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../././clef.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././././clef/adapters/math.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././././clef/adapters/vector.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././././clef/io.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././././clef/literals.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././././clef/sum.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../././iterators.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././././stdutil/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../././_impl_basic_array_view_common.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././stdutil/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././_impl_basic_array_view_common.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../lapack/getrf.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../lapack/./interface/cxx_interface.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../lapack/../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../lapack/getri.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../matrix_functions.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../print.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/.././array_adapter.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../././stdutil/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././stdutil/complex.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./layout.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././layout/bound_check_worker.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././layout/rect_str.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./linalg.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././blas.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././blas/dot.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././blas/../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././blas/gemm_batch.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././blas/ger.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././blas/../stdutil/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././blas/scal.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././lapack.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././lapack/gelss.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././lapack/../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././lapack/geqp3.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././lapack/gesvd.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././lapack/getrs.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././lapack/gtsv.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././lapack/orgqr.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./././lapack/ungqr.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/cross_product.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/dot.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/eigenelements.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/norm.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././linalg/../mapped_functions.hxx \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./mem.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/./stdutil.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/././stdutil/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/cppdlr/dlr_kernels.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/cppdlr/dlr_imfreq.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/cppdlr/utils.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/h5.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./array_interface.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/././group.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./././file.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/././././object.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./././././utils.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/././object.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./complex.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./file.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./format.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/././macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/././stl/string.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/././stl/../group.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./generic.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./group.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./object.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./scalar.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/././array_interface.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/././complex.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./utils.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/string.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/array.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/../array_interface.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/../complex.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/../macros.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/vector.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/./string.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/../format.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/../group.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/../scalar.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/../utils.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/map.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/pair.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/tuple.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/optional.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/variant.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/h5/./stl/../generic.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/nda/h5.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/cppdlr/dlr_imtime.hpp \
+ /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include/cppdlr/dlr_dyson.hpp \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/omp.h

@@ -2,5 +2,5 @@ Uval=4.0
 beta=10.0
 L=11
 eps=1e-6
-iter =1
+iter =2
 Emax=5
