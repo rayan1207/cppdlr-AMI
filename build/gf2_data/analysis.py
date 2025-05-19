@@ -9,7 +9,7 @@ beta =10
 U = 4
 # Load all data into a list
 
-for i in [1,2,3,4,5,7,8,10,12]:
+for i in [1,]:
     fname = f"{i}i_shot_{kind}.txt"
     try:
         data = np.loadtxt(fname, comments="#")
@@ -23,8 +23,8 @@ for i in [1,2,3,4,5,7,8,10,12]:
 df = pd.DataFrame(all_data, columns=["iter", "wn", "qx", "qy", "Re", "Im"])
 
 # ==== user input ====
-qx_val = np.pi
-qy_val = np.pi
+qx_val = np.pi/2
+qy_val = np.pi/2
 
 # Use np.isclose to filter
 df_filtered = df[np.isclose(df["qx"], qx_val) & np.isclose(df["qy"], qy_val)]
@@ -47,5 +47,5 @@ ax2.legend(ncol=3)
 ax1.grid(True)
 ax2.grid(True)
 plt.tight_layout()
-plt.savefig('qpp_beta10_U4.pdf',dpi=500)
+# plt.savefig('qpp_beta10_U4.pdf',dpi=500)
 plt.show()

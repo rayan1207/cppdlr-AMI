@@ -30,7 +30,11 @@ int main(){
 	nda::array<dcomplex,1> mfreq(nodes.size());
 	
 	
-	for (size_t i =0; i<nodes.size();i++){ mfreq[i]=dcomplex(0,(2*nodes[i]+1)*M_PI/beta);}
+	for (size_t i =0; i<nodes.size();i++){ 
+	mfreq[i]=dcomplex(0,(2*nodes[i]+1)*M_PI/beta);
+	}
+	
+	
 	std::vector< nda::array<dcomplex,1>> frequency_kernel_list;
 	
 	for (int i=0; i <nodes.size();i++){
