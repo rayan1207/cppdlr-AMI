@@ -24,8 +24,6 @@ find_package(Boost 1.71 REQUIRED COMPONENTS filesystem system)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(BLAS REQUIRED)
 find_package(LAPACK REQUIRED)
-find_package(OpenMP REQUIRED)
-
 
 # --------------------
 # Executable
@@ -37,8 +35,6 @@ add_executable(${PROJECT_NAME}
   src/AmiDlr_func.cpp
 
 )
-# Link OpenMP after target is defined
-target_link_libraries(mini_ami PRIVATE OpenMP::OpenMP_CXX)
 target_compile_options(${PROJECT_NAME} PRIVATE
   -O3
   -march=native
