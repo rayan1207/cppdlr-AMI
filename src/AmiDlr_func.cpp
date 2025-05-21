@@ -37,6 +37,7 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t _R0):beta(_beta),Uval(_Uval),eps(_eps),Emax(_Emax),kl(_kl), R0(_R0){
 	auto t0 = std::chrono::high_resolution_clock::now();
 	N = R0.size();
+	ord = (N+1)/2;
 	std::cout<<"-_-_-_-_-_-_-_-_-  Constructing multiple DLR Object for num(G):" << N << "  -_-_-_-_-_-_-_-_-  \n";
 	create_multiple_gstruct();
 	std::cout<< "Done\n";
@@ -68,7 +69,6 @@ mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,AmiBa
     two_pi     = 2.0 * M_PI;
     inv_two_pi = 1.0 / two_pi;
     inv_dk     = 1.0 / dk;
-    internal_dof = N-1;
     kvals_ptr = kvals.data();
 	master_dlrW_in_square.resize(kl);
 	for (size_t i = 0; i < kl; ++i)
@@ -129,7 +129,7 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
 	nda::array<dcomplex,1> frequency_kernel(CN);
 	AmiBase ami;
 	AmiBase::frequency_t frequency;
-	for(int i=0;i<N-1;i++){ frequency.push_back(std::complex<double>(0,0));}
+	for(int i=0;i<ord;i++){ frequency.push_back(std::complex<double>(0,0));}
 	frequency.push_back(imfreq);
 	
 	
@@ -144,7 +144,7 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
 
 	// Integration/Evaluation parameters
 	double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
-	int N_INT=N-1;  // Number of Matsubara sums to perform
+	int N_INT=ord;  // Number of Matsubara sums to perform
 	AmiBase::ami_parms test_amiparms(N_INT, E_REG);
 
 	//Construction Stage
@@ -243,11 +243,11 @@ void mDLR::transfer_master_DLR_weights_to_dlrR0_elements(){
 
 void mDLR::generate_momenta_cartesian_combo(){
 	
-	int kC_num =  std::pow(std::pow(kl,2),(N-1));
+	int kC_num =  std::pow(std::pow(kl,2),ord);
 
 	std::vector<int> num_k_each_dlr;
 	
-	for (int i = 0; i< 2*(N-1);i++){
+	for (int i = 0; i< 2*ord;i++){
 		num_k_each_dlr.push_back(kl);	
 	}
 	print1d(num_k_each_dlr);
@@ -284,7 +284,7 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
         int   asz      = info.alpha_.size();
         double qx = alpha[asz - 1] * kx_ext;
         double qy = alpha[asz - 1] * ky_ext;
-        for (int j = 0; j < internal_dof; ++j) {
+        for (int j = 0; j < ord; ++j) {
             double a = static_cast<double>(alpha[j]);
             qx += a * kvals_ptr[ kcombo_ptr[2*j    ] ];
             qy += a * kvals_ptr[ kcombo_ptr[2*j + 1] ];
@@ -313,11 +313,10 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
     nda::array<nda::dcomplex,1> kernel = nda::zeros<nda::dcomplex>(C);
 
     const int K = static_cast<int>(cartesian_k_combo_list.size());
-    
+    #pragma omp parallel for
     for (int c = 0; c < C; ++c) {
         const int* combo_ptr = cartesian_combo_list[c].data();
         auto sum = nda::dcomplex(0,0);
-
         for (int k = 0; k < K; ++k) {
             const int* kcombo_ptr = cartesian_k_combo_list[k].data();
             sum += compute_momenta_one_kCN_kernel(
@@ -363,7 +362,7 @@ Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::
 			auto const &momenta_kernel = mk[i][j];
 			
 			for (int k; k<fk.size();k++){
-				result[i][j](k) = std::pow(Uval,internal_dof)*nda::dotc(fk[k],momenta_kernel)/(-1*std::pow((double) kl,internal_dof*internal_dof));
+				result[i][j](k) = std::pow(Uval,ord)*nda::dotc(fk[k],momenta_kernel)/(-1*std::pow((double) kl,ord*ord));
 			}			
 		}	
 	}

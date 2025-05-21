@@ -140,6 +140,8 @@ mini_ami: /usr/lib/x86_64-linux-gnu/libf77blas.so
 mini_ami: /usr/lib/x86_64-linux-gnu/libatlas.so
 mini_ami: /usr/lib/x86_64-linux-gnu/libboost_filesystem.so.1.74.0
 mini_ami: /usr/lib/x86_64-linux-gnu/libboost_system.so.1.74.0
+mini_ami: /usr/lib/gcc/x86_64-linux-gnu/13/libgomp.so
+mini_ami: /usr/lib/x86_64-linux-gnu/libpthread.a
 mini_ami: /usr/lib/x86_64-linux-gnu/liblapack.so
 mini_ami: CMakeFiles/mini_ami.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/mnt/c/Users/Rayan/Research/leblanc_codes/AMI/DLR_PT/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable mini_ami"

@@ -80,7 +80,6 @@ class mDLR{
 	double two_pi     ;
     double inv_two_pi ;
     double inv_dk     ;
-	int internal_dof;
     double* kvals_ptr;
 	public:
 	std::vector<dlr_obj> multiple_dlr_structs;
@@ -90,6 +89,7 @@ class mDLR{
 	size_t kl;///total number of momentum k grid;
 	size_t kN;///total number of cartesian momenta, kl_1^2* kl_2^2.....
 	double dk;
+	int ord;
 	
 	std::vector<double> kvals;/// kgrid vals
 	size_t master_pole_num;/// number of poles in master DLR

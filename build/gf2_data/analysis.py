@@ -23,7 +23,7 @@ for i in [1,2,3,4,5,7,8,10,12]:
 df = pd.DataFrame(all_data, columns=["iter", "wn", "qx", "qy", "Re", "Im"])
 
 # ==== user input ====
-qx_val = np.pi
+qx_val = 0
 qy_val = np.pi
 
 # Use np.isclose to filter
