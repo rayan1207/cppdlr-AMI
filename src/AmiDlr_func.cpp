@@ -1,6 +1,6 @@
 #include "dlr_ami.hpp"
 using namespace cppdlr;
-
+using Bz_container =  std::vector<std::vector<nda::array<dcomplex,1>>>;
 
 
 dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0_element) {
@@ -23,9 +23,10 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 	int eps_size = dlro.ginfo.eps_.size();
 	for (int i = 0; i< dlro.pole_num; i++){          /// filling in pole locations 
 		dlro.pole_locs.emplace_back(all_poles[i]);	
+		std::cout << all_poles[i] << std::endl;
 		std::vector<double> tmp;
 		tmp.reserve(eps_size);
-		for (auto element : dlro.ginfo.eps_ ){ tmp.emplace_back( -1*element* all_poles[i]);}
+		for (auto element : dlro.ginfo.eps_ ){ tmp.emplace_back(element* all_poles[i]);}///could negative
 		dlro.evec.emplace_back(tmp);	
 	}
 	
@@ -34,7 +35,7 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 	return dlro;
 }
 ///////part of mdlr ///////////////////////////////////////////
-mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,AmiBase::g_prod_t _R0):beta(_beta),Uval(_Uval),eps(_eps),Emax(_Emax),kl(_kl), R0(_R0){
+mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,double _tp, AmiBase::g_prod_t _R0):beta(_beta),Uval(_Uval),eps(_eps),Emax(_Emax),kl(_kl),tp (_tp), R0(_R0){
 	auto t0 = std::chrono::high_resolution_clock::now();
 	N = R0.size();
 	ord = (N+1)/2;
@@ -65,7 +66,10 @@ mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,AmiBa
 	std::cout<< " the matsubara frequency nodes of master DLR object is \n ";
 	std::cout<< master_if_ops.get_ifnodes() << std::endl;
 	master_pole_num = master_if_ops.get_ifnodes().size();
-
+	master_poles = master_if_ops.get_rfnodes()/beta;
+	fd_master_poles = fd_on_master_poles();
+	std::cout << "real poles in master dlr is: \n";
+	std::cout << master_poles;
     two_pi     = 2.0 * M_PI;
     inv_two_pi = 1.0 / two_pi;
     inv_dk     = 1.0 / dk;
@@ -81,9 +85,16 @@ mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,AmiBa
 
 void mDLR::create_multiple_gstruct(){
 	for (int i =0; i< R0.size(); i++){
-		double new_Emax = Emax - static_cast<double>(i)/2.0;
+		double new_Emax = Emax - static_cast<double>(i)/1.8;
 		multiple_dlr_structs.push_back(create_dlr_obj(beta,eps, new_Emax, R0[i]));
 	}
+}
+
+void mDLR::create_DLR_master_if_ops(){
+	double E = 10; double eps=1e-10;
+	double lambda = beta*E;
+    auto dlr_rf = build_dlr_rf(lambda,eps );
+    master_if_ops = imfreq_ops(lambda, dlr_rf, Fermion);	
 }
 
 
@@ -122,6 +133,7 @@ void mDLR::generate_auxillary_energy_list(){
 		}
 		auxillary_energy_list.push_back(sumVectors(tmp));
 	}
+	print2d(auxillary_energy_list);
 }
 
 
@@ -152,32 +164,12 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
 	std::complex<double> calc_result=ami.evaluate(test_amiparms,R_array, P_array, S_array,  external);
 	//std::cout<<"Result was "<< calc_result<<std::endl;
 	
-	frequency_kernel(i) = calc_result;
+	frequency_kernel(i) = dcomplex(-1,0)*calc_result;
 
 	}
 	return frequency_kernel;
 	
 
-}
-
-void mDLR::create_DLR_master_if_ops(){
-	double lambda = beta*Emax;
-    auto dlr_rf = build_dlr_rf(lambda,eps );
-    master_if_ops = imfreq_ops(lambda, dlr_rf, Fermion);	
-}
-
-void mDLR::populate_master_dlrW_from_G0(){
-	auto nodes = master_if_ops.get_ifnodes();
-	nda::array<dcomplex,1> mfreq(nodes.size());
-	for (int i =0;i< kl;i++){
-		for (int j=0;j<kl;j++){
-        double e = hubbard_dispersion(kvals[i],kvals[j]);
-		
-		auto master_gdlr = generate_nda_Gdlr_from_energy(master_if_ops,e);
-		auto weights= master_if_ops.vals2coefs(beta,master_gdlr);
-		master_dlrW_in_square[i][j]=weights;
-		}	
-	}	
 }
 
 nda::array<dcomplex,1> mDLR::generate_nda_Gdlr_from_energy( cppdlr::imfreq_ops &ops,
@@ -191,10 +183,26 @@ nda::array<dcomplex,1> mDLR::generate_nda_Gdlr_from_energy( cppdlr::imfreq_ops &
 
     for (size_t i = 0; i < N; ++i) {
         dcomplex mf(0.0, (2*nodes(i) + 1) * M_PI / beta);
-        G(i) = 1.0 / ( mf - dcomplex(energy, 0.0) );
+        G(i) = 1.0 / ( mf -dcomplex(energy, 0.0) );
     }
     return G;
 }
+
+void mDLR::populate_master_dlrW_from_G0(double mu){
+	auto nodes = master_if_ops.get_ifnodes();
+	nda::array<dcomplex,1> mfreq(nodes.size());
+	for (int i =0;i< kl;i++){
+		for (int j=0;j<kl;j++){
+        double e = hubbard_dispersion(kvals[i],kvals[j],mu);
+		
+		auto master_gdlr = generate_nda_Gdlr_from_energy(master_if_ops,e);
+		auto weights= master_if_ops.vals2coefs(beta,master_gdlr);
+		master_dlrW_in_square[i][j]=weights;
+		}	
+	}	
+}
+
+
 
 void mDLR::reshape_dlrW_square_per_kgrid(){
 	for (int i =0; i < N;i++){
@@ -213,7 +221,7 @@ nda::array<dcomplex,1> mDLR::recover_dlro_G_from_master_weights(nda::array<dcomp
 	for (int i=0; i < size;i++){
 		auto iw = dlro_if[i];
 		for (int j=0; j < master_weights.size(); j++){
-			recovered_G(i) += master_weights(j)/(iw - master_dlr_poles[j]);		
+			recovered_G(i) +=master_weights(j)/(iw - master_dlr_poles[j]);		
 		}			
 	}
 	return recovered_G;
@@ -226,8 +234,7 @@ void mDLR::transfer_master_DLR_weights_to_dlrR0_elements(){
 		auto wn_list = dlr_R0.im_freqs;
 		dlr_R0.dlrW_in_square.clear();
 		dlr_R0.dlrW_in_square.resize(kl);
-		for (size_t i = 0; i < kl; ++i){
-		dlr_R0.dlrW_in_square[i].resize(kl);}
+		for (size_t i = 0; i < kl; ++i){dlr_R0.dlrW_in_square[i].resize(kl);}
 		for (int i =0; i <kl;i++){
 			for (int j =0; j < kl;j++){
 				auto master_weights = master_dlrW_in_square[i][j];
@@ -275,7 +282,7 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
     
 
 
-    nda::dcomplex val{1.0, 0.0};
+    nda::dcomplex val(1.0, 0.0);
 
     for (int i = 0; i < N; ++i) {
 
@@ -291,8 +298,8 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
         }
 
 
-        qx -= std::floor(qx * inv_two_pi) * two_pi;
-        qy -= std::floor(qy * inv_two_pi) * two_pi;
+        qx -= std::floor(qx* inv_two_pi) * two_pi;
+        qy -= std::floor(qy* inv_two_pi) * two_pi;
 
         int idx1 = static_cast<int>(qx * inv_dk);
         int idx2 = static_cast<int>(qy * inv_dk);
@@ -300,7 +307,7 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
      
         const auto& wlist =
           multiple_dlr_structs[i].dlrW_in_square[idx1][idx2];
-        val = -val * wlist[ combo_ptr[i] ];
+        val *=   wlist[ combo_ptr[i] ];
     }
 
     return val;
@@ -314,10 +321,10 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
 
     const int K = static_cast<int>(cartesian_k_combo_list.size());
     #pragma omp parallel for
-    for (int c = 0; c < C; ++c) {
+    for (int c = 0; c < C; c++) {
         const int* combo_ptr = cartesian_combo_list[c].data();
         auto sum = nda::dcomplex(0,0);
-        for (int k = 0; k < K; ++k) {
+        for (int k = 0; k < K; k++) {
             const int* kcombo_ptr = cartesian_k_combo_list[k].data();
             sum += compute_momenta_one_kCN_kernel(
                        kx_ext, ky_ext,
@@ -362,7 +369,7 @@ Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::
 			auto const &momenta_kernel = mk[i][j];
 			
 			for (int k; k<fk.size();k++){
-				result[i][j](k) = std::pow(Uval,ord)*nda::dotc(fk[k],momenta_kernel)/(-1*std::pow((double) kl,ord*ord));
+				result[i][j](k) = std::pow(Uval,ord)*nda::dotc(fk[k],momenta_kernel)/(-1*std::pow((double) kl*kl,ord));
 			}			
 		}	
 	}
@@ -370,12 +377,12 @@ Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::
 }
 
 
-Bz_container mDLR::G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq){
+Bz_container mDLR::G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu){
 	Bz_container G(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(mfreq.size())));
 	for (int i =0; i<kl; i++) {
 		for (int j =0; j <kl; j++){
 			double kx = kvals[i]; double ky = kvals[j];
-			double e = hubbard_dispersion(kx,ky);
+			double e = hubbard_dispersion(kx,ky,mu);
 			for (int f =0; f< mfreq.size();f++) {
 				G[i][j](f) = 1/(mfreq(f) - e - SE[i][j](f));			
 			}
@@ -383,6 +390,124 @@ Bz_container mDLR::G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfre
 	}	
 	return G;	
 }
+
+
+
+
+
+Bz_container mDLR::G_from_DLR_SE_M_DMFT(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu){
+	std::cout << "APPLYING DMFT SCHEMES\n";
+	
+	auto SE_loc = nda::zeros<dcomplex>(mfreq.size());
+	auto G_loc = nda::zeros<dcomplex>(mfreq.size());
+	
+	////create local SE
+	for (int f =0; f< mfreq.size();f++) {
+		for (int i =0; i<kl; i++) {
+			for (int j =0; j <kl; j++){
+				SE_loc(f) +=  SE[i][j](f);			
+			}
+		}	
+	}
+	
+	SE_loc = SE_loc/nda::dcomplex(kl*kl,0);
+	
+	
+	for (int i =0; i < mfreq.size();i++){
+		std::cout <<i<< " :" << mfreq(i) <<", " << SE_loc(i) << std::endl;
+	}
+	for (int f =0; f< mfreq.size();f++) {
+		for (int i =0; i<kl; i++) {
+			for (int j =0; j <kl; j++){
+				double kx = kvals[i]; double ky = kvals[j];
+				double e = hubbard_dispersion(kx,ky,mu);
+				G_loc(f) +=  1/( mfreq(f) - e- SE[i][j](f));			
+			}
+		}
+	}
+	
+	G_loc = G_loc/nda::dcomplex(kl*kl,0);
+	
+	
+	
+	
+	Bz_container G(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(mfreq.size())));
+	
+	for (int i =0; i<kl; i++) {
+		for (int j =0; j <kl; j++){
+			double kx = kvals[i]; double ky = kvals[j];
+			for (int f =0; f< mfreq.size();f++) {
+					G[i][j](f)=	1.0/(1.0/G_loc(f) - SE_loc(f));
+			}
+		}	
+	}
+	
+	return G;
+
+}
+
+
+
+Bz_container mDLR::G_from_DLR_SE_M_DCA(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu,double NC){
+	std::cout << " Applying  DCA patch averaging "<<std::endl;
+	Bz_container G(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(mfreq.size())));
+	for (int i =0; i<kl; i++) {
+		for (int j =0; j <kl; j++){
+			double kx = kvals[i]; double ky = kvals[j];
+			for (int f =0; f< mfreq.size();f++) {
+					G[i][j](f)=	patch_avg_one_GF(kx,ky,NC,mu,mfreq[f],SE[i][j](f));
+			}
+		}	
+	}	
+	return G;	
+}
+
+
+
+nda::dcomplex  mDLR::patch_avg_one_GF(double Kx,double Ky, double Nc, double mu, nda::dcomplex iw, nda::dcomplex SE_K  ){
+	double kx_top = Kx + dk/2;
+	double kx_bottom = Kx-dk/2;
+	double ky_top = Ky + dk/2;
+	double ky_bottom = Ky-dk/2;
+
+	double dK = dk/(Nc-1);
+	auto GF_loc = nda::dcomplex(0,0);
+	
+	for (int i = 0; i < Nc; i++){
+		for (int j = 0; j < Nc; j++){
+			//std::cout << "kx : " << kx_bottom+ i*dK << " ky : "<< ky_bottom+j*dK <<std::endl;
+			GF_loc += 1/(iw - hubbard_dispersion(kx_bottom+ i*dK,ky_bottom+j*dK,mu) - SE_K);	
+		}
+		
+	}
+	
+	GF_loc = GF_loc/nda::dcomplex(Nc*Nc,0);
+	
+	nda::dcomplex g0_inv = 1/GF_loc + SE_K;
+	
+	
+	
+	return 1/g0_inv;
+	
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void mDLR::repopulate_master_dlrW_from_G(Bz_container &G ){
 	master_dlrW_in_square.clear();
@@ -401,7 +526,7 @@ void mDLR::repopulate_master_dlrW_from_G(Bz_container &G ){
 
 	
 
-	 
+
 	 
 	 
 	 

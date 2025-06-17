@@ -53,6 +53,12 @@ struct params_param {
 	double eps;
 	int iter;
 	int L;
+	double mu;
+	double tp;
+	double target_n;
+	double mu_L;
+	double mu_R;
+
 };
 
 std::string trim(const std::string& str);
@@ -81,50 +87,68 @@ class mDLR{
     double inv_two_pi ;
     double inv_dk     ;
     double* kvals_ptr;
+	
+	
+
 	public:
 	std::vector<dlr_obj> multiple_dlr_structs;
-	double beta; double eps; double Emax;double Uval; AmiBase::g_prod_t R0;
+	double beta; double eps; double tp; double Emax;double Uval; AmiBase::g_prod_t R0;
 	size_t N; ///num of greens function
 	size_t CN; ///total number of cartesian, pole_num1* pole_num2* ...pole numN 
 	size_t kl;///total number of momentum k grid;
 	size_t kN;///total number of cartesian momenta, kl_1^2* kl_2^2.....
 	double dk;
+
 	int ord;
 	
 	std::vector<double> kvals;/// kgrid vals
 	size_t master_pole_num;/// number of poles in master DLR
+	nda::array<double,1> master_poles;
+	nda::array<dcomplex,1> fd_master_poles;
 	cppdlr::imfreq_ops master_if_ops; /// master dlr obj
 	std::vector<std::vector<nda::array<dcomplex,1>>> master_dlrW_in_square; //master dlr weight
 	std::vector<std::vector<int>> cartesian_combo_list; /// contains the cartesian product indices for poles
 	std::vector<std::vector<int>> cartesian_k_combo_list; ///co
 	
 	std::vector<std::vector<double>> auxillary_energy_list;
-	mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t kl,AmiBase::g_prod_t _R0);
+	mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl, double _tp, AmiBase::g_prod_t _R0);
 	//////// methods ////////////
 	void create_DLR_master_if_ops();
-	
+	double hubbard_dispersion(double kx, double ky,double mu);
 	nda::array<dcomplex,1> generate_nda_Gdlr_from_energy( cppdlr::imfreq_ops &ops, double &energy);
 	void create_multiple_gstruct();
 	void generate_cartesian_list();
 	void generate_auxillary_energy_list();
 	nda::array<dcomplex,1> evaluate_auxillary_energies(nda::dcomplex &imfreq);
 	nda::array<dcomplex,1> evaluate_auxillary_weights( nda::array<double,1> &energy);
-	void populate_master_dlrW_from_G0();
+	void populate_master_dlrW_from_G0(double mu);
 	void reshape_dlrW_square_per_kgrid();
 	nda::array<dcomplex,1> recover_dlro_G_from_master_weights(nda::array<dcomplex,1> &master_weights, std::vector<std::complex<double>> &dlro_if);
 	void transfer_master_DLR_weights_to_dlrR0_elements();
 	void generate_momenta_cartesian_combo();
 	inline nda::dcomplex compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,const int* combo_ptr,const int* kcombo_ptr);
 	nda::array<nda::dcomplex,1> compute_momenta_kernel_qext(double kx_ext,double ky_ext);
-    Bz_container compute_momenta_kernel_bz();
+	nda::dcomplex patch_avg_one_GF(double Kx,double Ky, double Nc, double mu, nda::dcomplex iw, nda::dcomplex SE_K  );	
+    Bz_container G_from_DLR_SE_M_DCA(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu,double NC);
+	Bz_container G_from_DLR_SE_M_DMFT(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
+	
+	
+	Bz_container compute_momenta_kernel_bz();
 	Bz_container vdot_freq_momenta_kernel_M(const std::vector<std::vector<nda::array<dcomplex,1>>> mk, const std::vector<nda::array<dcomplex,1>> fk);
-	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq);
+	nda::array<nda::dcomplex,1>  LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,  double mu);
+	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
+	nda::array<dcomplex,1> fd_on_master_poles();
+	double compute_density_from_SE(Bz_container &SE,nda::array<dcomplex,1> &mfreq, double mu);
+	double adjust_chemical_potential_bisc(params_param &params, Bz_container &SE,nda::array<dcomplex,1> &mfreq, int max);
+	double non_interacting_density(nda::array<dcomplex,1> &mfreq,double mu);
 	void repopulate_master_dlrW_from_G(Bz_container &G );
 	void write_data_momenta(const std::string& filename,Bz_container& data, nda::array<dcomplex,1>& mfreq);
 	void write_data_ij_momenta(const std::string& filename,
                             Bz_container& data,
                             nda::array<dcomplex,1>& mfreq,
                             std::pair<int, int> ij);
+							
+							
 };
 
 dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0_element);
@@ -138,7 +162,8 @@ template<typename T>
 std::vector<T> sumVectors(const std::vector<std::vector<T>>& vecs);
 nda::array<dcomplex,1> recover_G_from_poles_n_weights(dlr_obj& dlr_R0, nda::array<dcomplex,1> weights, std::vector<std::complex<double>> imfreqs);
 
-double hubbard_dispersion(double kx, double ky);
+
+double fermi_distribution(double energy, double beta );
 
 
 

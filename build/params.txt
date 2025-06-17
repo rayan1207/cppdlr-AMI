@@ -1,6 +1,11 @@
-Uval=4.0
-beta=10.0
-L=17
+Uval=3
+beta=5
+L=15
 eps=1e-6
-iter =10
+iter=3
 Emax=5
+mu=0
+tp=0
+mu_L=-3.5
+mu_R=3.5
+target_n=1

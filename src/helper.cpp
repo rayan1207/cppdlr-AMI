@@ -38,6 +38,8 @@ void params_loader(const std::string& filename, params_param& params) {
             params.Uval = std::stod(paramValue);
         else if (paramName == "Emax")
             params.Emax = std::stod(paramValue);
+		else if (paramName == "mu")
+        params.mu = std::stod(paramValue);
         else if (paramName == "eps")
             params.eps = std::stod(paramValue);
         else if (paramName == "beta")
@@ -46,12 +48,20 @@ void params_loader(const std::string& filename, params_param& params) {
             params.L = std::stoi(paramValue);
 		else if (paramName == "iter")
             params.iter = std::stoi(paramValue);
-    
+		else if (paramName == "tp")
+		params.tp = std::stod(paramValue);
+		else if (paramName == "mu_L")
+			params.mu_L = std::stod(paramValue);
+		else if (paramName == "mu_R")
+			params.mu_R = std::stod(paramValue);
+		else if (paramName == "target_n")
+			params.target_n = std::stod(paramValue);
     }
+	
 
     inputFile.close();
 	std::cout << "Loaded params file with values: " << " Beta="  << params.beta << ", Emax="<<  params.Emax 
-	<< ", eps = " << params.eps << ", L= " << params.L << " and SCS iteration = " << params.iter;
+	<< ", eps = " << params.eps << ", L= " << params.L<< ", mu= " << params.mu << ", tp= "<< params.tp << " and SCS iteration = " << params.iter;
 }
 
 
@@ -206,7 +216,7 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_weights(nda::array<double,1> &en
 		auto const& combo  = cartesian_combo_list[i];
 	    auto result = dcomplex(1,0);
 		for (int j =0; j< N ; j++){
-			result = -1*result * G_dlr_w_list[j](combo[j]);
+			result = result * G_dlr_w_list[j](combo[j]);
 		}
 		full_weights(i) = result;	
 	}
@@ -215,8 +225,104 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_weights(nda::array<double,1> &en
 }
 
 
-double hubbard_dispersion(double kx, double ky){
-  return -2.0*(std::cos(kx) + std::cos(ky));
+double mDLR::hubbard_dispersion(double kx, double ky,double mu){
+  double e =-2.0*(std::cos(kx) + std::cos(ky))-4*tp*(std::cos(kx)*std::cos(ky)) -mu;
+  return e;
 }
 
+double fermi_distribution(double energy, double beta ){
+	double arg = (energy*beta);
+	return 1.0/(1+std::exp(arg));
+}
+
+
+
+nda::array<dcomplex,1> mDLR::LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu) {
+	   dcomplex prefactor = dcomplex(kl*kl,0);
+	   int mfreq_size = mfreq.size();
+	   auto  local_G = nda::zeros<dcomplex>(mfreq_size);
+	   for (int m = 0; m < mfreq_size;m++){
+		   for (int i = 0; i < kl;i++){
+			   for( int j =0; j< kl;j++){
+				   double e = hubbard_dispersion(kvals[i],kvals[j],mu);
+				   local_G(m) +=  1/(mfreq(m) - e - SE[i][j](m));    
+			   }   
+		   }    
+	   }
+	   return local_G/prefactor;	
+}
+
+
+double mDLR::compute_density_from_SE(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu){
+	auto local_G = LocalG_from_DLR_SE_M(SE,mfreq,mu);
+	auto local_weights = master_if_ops.vals2coefs(beta,local_G);
+    auto density = nda::dotc(local_weights,fd_master_poles).real();
+	return 2.0*density;
+}
+
+nda::array<dcomplex,1> mDLR::fd_on_master_poles(){
+	auto fd_master_poles = nda::array<dcomplex,1>(master_pole_num);
+	for (int i =0;i< master_pole_num;i++){
+		fd_master_poles(i) = dcomplex(fermi_distribution(master_poles(i), beta),0);
+	}
+	return fd_master_poles;
+}
+
+double mDLR::non_interacting_density(nda::array<dcomplex,1> &mfreq,double mu){
+	  dcomplex prefactor = dcomplex(kl*kl,0);
+	  int mfreq_size = mfreq.size();
+	  auto  local_G = nda::zeros<dcomplex>(mfreq_size);
+	   for (int m = 0; m < mfreq_size;m++){
+		   for (int i = 0; i < kl;i++){
+			   for( int j =0; j< kl;j++){
+				   double e = hubbard_dispersion(kvals[i],kvals[j],mu);
+				   local_G(m) +=  1/(mfreq(m) - e );    
+			   }   
+		   }    
+	   }
+	local_G /= prefactor;
+	auto local_weights = master_if_ops.vals2coefs(beta,local_G);
+    auto density = nda::dotc(local_weights,fd_master_poles).real();
+	return 2.0*density;
+		
+}
+
+double mDLR::adjust_chemical_potential_bisc(params_param &params, Bz_container &SE,nda::array<dcomplex,1> &mfreq, int max){
+	
+	double a = params.mu_L;
+	double b = params.mu_R;
+	
+	double fa = params.target_n - compute_density_from_SE(SE,mfreq,a);
+	double fb = params.target_n - compute_density_from_SE(SE,mfreq,b);
+	
+	
+	if (fa*fb > 0){
+		std::cerr<< " Pick the correct lower (a) and upper (b) bound chemical potential \n";
+	}
+	double c;
+	for (int i =0; i < max;i++){
+		c = (a+b)/2.0;
+		double fc = params.target_n - compute_density_from_SE(SE,mfreq,c);
+		if ( std::abs(fa-fb)< 1e-6){
+			std::cout << "  Correct chemical potential is found on " << i << "-th iteration "<< std::endl;
+			std::cout << " Adjusted mu = " << c << std::endl;
+			
+			return c;
+		}
+		
+		if (fa*fc < 0){
+			b= c;
+			fb = fc;	
+		}
+		
+		else {
+		 a= c;
+		 fa = fc;	
+		}	
+	}
+	
+	std::cerr << "Couldnt find chemical potential \n";
+	return c;
+		
+}
 
