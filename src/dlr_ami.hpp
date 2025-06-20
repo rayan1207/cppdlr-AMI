@@ -41,7 +41,7 @@
 AmiBase::g_prod_t construct_example2();
 AmiBase::ami_vars construct_ext_example2();
 
-
+inline AmiGraph g(AmiBase::Sigma, 0);
 
 
 //////params loader functions/////////////
@@ -56,9 +56,11 @@ struct params_param {
 	double mu;
 	double tp;
 	double target_n;
+	std::string graph;
+	int ord_max;
+	int ord_min;
 	double mu_L;
 	double mu_R;
-
 };
 
 std::string trim(const std::string& str);
@@ -92,13 +94,13 @@ class mDLR{
 
 	public:
 	std::vector<dlr_obj> multiple_dlr_structs;
-	double beta; double eps; double tp; double Emax;double Uval; AmiBase::g_prod_t R0;
+	double beta; double eps; double tp; double Emax;double Uval; AmiGraph::graph_t graph; AmiBase::g_prod_t R0;
 	size_t N; ///num of greens function
 	size_t CN; ///total number of cartesian, pole_num1* pole_num2* ...pole numN 
 	size_t kl;///total number of momentum k grid;
 	size_t kN;///total number of cartesian momenta, kl_1^2* kl_2^2.....
 	double dk;
-
+	double prefactor;
 	int ord;
 	
 	std::vector<double> kvals;/// kgrid vals
@@ -111,8 +113,11 @@ class mDLR{
 	std::vector<std::vector<int>> cartesian_k_combo_list; ///co
 	
 	std::vector<std::vector<double>> auxillary_energy_list;
-	mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl, double _tp, AmiBase::g_prod_t _R0);
+	mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl, double _tp, AmiGraph::graph_t _graph );
 	//////// methods ////////////
+	
+	AmiBase::g_prod_t create_R0_from_graph();
+	
 	void create_DLR_master_if_ops();
 	double hubbard_dispersion(double kx, double ky,double mu);
 	nda::array<dcomplex,1> generate_nda_Gdlr_from_energy( cppdlr::imfreq_ops &ops, double &energy);
@@ -121,6 +126,10 @@ class mDLR{
 	void generate_auxillary_energy_list();
 	nda::array<dcomplex,1> evaluate_auxillary_energies(nda::dcomplex &imfreq);
 	nda::array<dcomplex,1> evaluate_auxillary_weights( nda::array<double,1> &energy);
+	
+	
+	
+	
 	void populate_master_dlrW_from_G0(double mu);
 	void reshape_dlrW_square_per_kgrid();
 	nda::array<dcomplex,1> recover_dlro_G_from_master_weights(nda::array<dcomplex,1> &master_weights, std::vector<std::complex<double>> &dlro_if);
@@ -131,12 +140,11 @@ class mDLR{
 	nda::dcomplex patch_avg_one_GF(double Kx,double Ky, double Nc, double mu, nda::dcomplex iw, nda::dcomplex SE_K  );	
     Bz_container G_from_DLR_SE_M_DCA(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu,double NC);
 	Bz_container G_from_DLR_SE_M_DMFT(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
-	
-	
+	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
 	Bz_container compute_momenta_kernel_bz();
 	Bz_container vdot_freq_momenta_kernel_M(const std::vector<std::vector<nda::array<dcomplex,1>>> mk, const std::vector<nda::array<dcomplex,1>> fk);
 	nda::array<nda::dcomplex,1>  LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,  double mu);
-	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
+	
 	nda::array<dcomplex,1> fd_on_master_poles();
 	double compute_density_from_SE(Bz_container &SE,nda::array<dcomplex,1> &mfreq, double mu);
 	double adjust_chemical_potential_bisc(params_param &params, Bz_container &SE,nda::array<dcomplex,1> &mfreq, int max);

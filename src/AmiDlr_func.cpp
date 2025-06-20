@@ -21,6 +21,7 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 	auto all_poles = dlro.if_ops.get_rfnodes()/beta;
 	dlro.pole_num = all_poles.size();
 	int eps_size = dlro.ginfo.eps_.size();
+	
 	for (int i = 0; i< dlro.pole_num; i++){          /// filling in pole locations 
 		dlro.pole_locs.emplace_back(all_poles[i]);	
 		std::cout << all_poles[i] << std::endl;
@@ -30,15 +31,15 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 		dlro.evec.emplace_back(tmp);	
 	}
 	
-	std::cout<< " The pole weights are :";
-	print2d(dlro.evec);
 	return dlro;
 }
 ///////part of mdlr ///////////////////////////////////////////
-mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,double _tp, AmiBase::g_prod_t _R0):beta(_beta),Uval(_Uval),eps(_eps),Emax(_Emax),kl(_kl),tp (_tp), R0(_R0){
+mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,double _tp, AmiGraph::graph_t _graph ):beta(_beta),Uval(_Uval),eps(_eps),Emax(_Emax),kl(_kl),tp (_tp), graph(_graph){
 	auto t0 = std::chrono::high_resolution_clock::now();
+	R0 = create_R0_from_graph();
 	N = R0.size();
-	ord = (N+1)/2;
+	ord = g.graph_order(graph);
+	prefactor =  g.get_prefactor(graph,ord);
 	std::cout<<"-_-_-_-_-_-_-_-_-  Constructing multiple DLR Object for num(G):" << N << "  -_-_-_-_-_-_-_-_-  \n";
 	create_multiple_gstruct();
 	std::cout<< "Done\n";
@@ -81,6 +82,8 @@ mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,doubl
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
 	std::cout << " Construction of mDLR took time: " <<duration.count() << " ms \n";
 }
+
+
 
 
 void mDLR::create_multiple_gstruct(){
@@ -133,7 +136,7 @@ void mDLR::generate_auxillary_energy_list(){
 		}
 		auxillary_energy_list.push_back(sumVectors(tmp));
 	}
-	print2d(auxillary_energy_list);
+	//print2d(auxillary_energy_list);
 }
 
 

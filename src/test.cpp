@@ -26,10 +26,10 @@ int main() {
 
 	
 
-  
+
 	for (size_t i = 0; i < N; ++i) {
         dcomplex mf(0.0, (2*nodes(i) + 1) * M_PI / beta);
-		G(i) = 1.0 / ( mf + e );
+		G(i) = 1.0 / ( mf - e );
     }
 	
 	std::cout << " Greens functions are : \n\n";
@@ -43,7 +43,7 @@ int main() {
 	for (int i=0; i < N;i++){
 		dcomplex iw(0.0, (2*nodes(i) + 1) * M_PI / beta);
 		for (int j=0; j < weights.size(); j++){
-			recovered_G(i) +=weights(j)/(iw + all_poles[j]);		
+			recovered_G(i) +=-weights(j)/(iw + all_poles[j]);		
 		}			
 	}
 	std::cout << " Recovered Greens functions are : \n\n";

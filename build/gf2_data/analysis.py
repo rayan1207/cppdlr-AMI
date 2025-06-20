@@ -9,7 +9,7 @@ beta =10
 U = 1
 # Load all data into a list
 
-for i in [2,]:
+for i in [1,13,14]:
     fname = f"{i}i_shot_{kind}.txt"
     try:
         data = np.loadtxt(fname, comments="#")
@@ -37,12 +37,7 @@ for i in sorted(df_filtered["iter"].unique()):
     sub = df_filtered[df_filtered["iter"] == i]
     ax1.plot(sub["wn"], sub["Re"],".-", label=f"i={i}")
     ax2.plot(sub["wn"], sub["Im"], ".-", label=f"i={i}")
-    print(i)
-    if ( i==20):
-        filename= f'data/SE_U{U}_L15_i{i}_b10_IPT.txt'
-        print(filename)
-        result = np.column_stack([sub["wn"],sub["Im"]])
-        #np.savetxt(filename, result)
+
         
 
 

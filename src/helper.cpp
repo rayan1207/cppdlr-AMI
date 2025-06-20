@@ -50,12 +50,18 @@ void params_loader(const std::string& filename, params_param& params) {
             params.iter = std::stoi(paramValue);
 		else if (paramName == "tp")
 		params.tp = std::stod(paramValue);
-		else if (paramName == "mu_L")
-			params.mu_L = std::stod(paramValue);
-		else if (paramName == "mu_R")
-			params.mu_R = std::stod(paramValue);
 		else if (paramName == "target_n")
 			params.target_n = std::stod(paramValue);
+		else if (paramName == "graph")
+             params.graph = paramValue;	
+		else if (paramName == "ord_max")
+             params.ord_max = std::stoi(paramValue);
+        else if (paramName == "ord_min")
+             params.ord_max = std::stoi(paramValue);
+		else if (paramName == "mu_L")
+             params.mu_L = std::stod(paramValue);
+		else if (paramName == "mu_R")
+             params.mu_R = std::stod(paramValue);
     }
 	
 
@@ -186,6 +192,25 @@ AmiBase::g_prod_t construct_example2(){
 
 }
 
+AmiBase::g_prod_t mDLR::create_R0_from_graph() {
+	AmiBase::g_prod_t R0;
+	AmiGraph::edge_vector_t fermionic_edge;
+	g.find_internal_fermionic_edges(graph,fermionic_edge);
+	int n = fermionic_edge.size();
+
+	
+	for (int i =0; i < n;i++){
+		AmiBase::alpha_t alpha = graph[fermionic_edge[i]].g_struct_.alpha_;
+		AmiBase::epsilon_t epsilon = graph[fermionic_edge[i]].g_struct_.eps_;
+		AmiBase::g_struct g(epsilon,alpha);
+		R0.push_back(g);	
+	}
+		
+	return R0;
+	
+	
+}
+
 std::vector<std::complex<double>> convertToComplex(const std::vector<double> vec) {
     std::vector<std::complex<double>> cplx_vec;
     cplx_vec.reserve(vec.size()); 
@@ -204,6 +229,7 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_weights(nda::array<double,1> &en
 	std::vector<nda::array<dcomplex,1>> G_dlr_w_list;
 	for (int i =0; i< N;i++){
 		auto dlr_R0 =  multiple_dlr_structs[i];
+		
 		auto gdlr_R0 = generate_nda_Gdlr_from_energy(dlr_R0.if_ops, energy[i]);
 		auto weights = dlr_R0.if_ops.vals2coefs(beta, gdlr_R0);
 		G_dlr_list.push_back(gdlr_R0);
@@ -286,6 +312,10 @@ double mDLR::non_interacting_density(nda::array<dcomplex,1> &mfreq,double mu){
 	return 2.0*density;
 		
 }
+
+
+
+
 
 double mDLR::adjust_chemical_potential_bisc(params_param &params, Bz_container &SE,nda::array<dcomplex,1> &mfreq, int max){
 	
