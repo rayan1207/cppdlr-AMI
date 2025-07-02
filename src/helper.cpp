@@ -62,6 +62,8 @@ void params_loader(const std::string& filename, params_param& params) {
              params.mu_L = std::stod(paramValue);
 		else if (paramName == "mu_R")
              params.mu_R = std::stod(paramValue);
+		else if (paramName == "DCA")
+			 params.DCA = std::stoi(paramValue);
     }
 	
 
@@ -78,7 +80,7 @@ void mDLR::write_data_momenta(const std::string& filename,
                             nda::array<dcomplex,1>& mfreq  )
 {
     // Extract the NDA 1D array for the (i,j) momenta
- 
+	if (MPI_obj.rank == 0){
     int size = data[0][0].size();
 
     std::ofstream file(filename);
@@ -110,7 +112,7 @@ void mDLR::write_data_momenta(const std::string& filename,
 	}
 
     file.close();
-    std::cout << "Data written to " << filename << std::endl;
+    std::cout << "Data written to " << filename << std::endl;}
 }
 	
 	
@@ -119,7 +121,9 @@ void mDLR::write_data_ij_momenta(const std::string& filename,
                             Bz_container& data,
                             nda::array<dcomplex,1>& mfreq,
                             std::pair<int, int> ij)
+
 {
+	if (MPI_obj.rank == 0){
     // Extract the NDA 1D array for the (i,j) momenta
     auto array1d = data[ij.first][ij.second];
     int size = array1d.size();
@@ -156,7 +160,8 @@ void mDLR::write_data_ij_momenta(const std::string& filename,
     }
 
     file.close();
-    std::cout << "Data written to " << filename << std::endl;
+std::cout << "Data written to " << filename << std::endl;
+}
 }
 
 
@@ -170,7 +175,7 @@ AmiBase::g_prod_t construct_example2(){
 
 	AmiBase::alpha_t alpha_1={1,0,0};
 	AmiBase::alpha_t alpha_2={0,1,0};
-	AmiBase::alpha_t alpha_3={-1,1,1};
+	AmiBase::alpha_t alpha_3={1,-1,1};
 
 	//defining epsilon's
 	AmiBase::epsilon_t epsilon_1={1,0,0};
@@ -198,10 +203,15 @@ AmiBase::g_prod_t mDLR::create_R0_from_graph() {
 	g.find_internal_fermionic_edges(graph,fermionic_edge);
 	int n = fermionic_edge.size();
 
-	
+	std::cout << " Constructing an R0 element with: \n"; 
 	for (int i =0; i < n;i++){
 		AmiBase::alpha_t alpha = graph[fermionic_edge[i]].g_struct_.alpha_;
 		AmiBase::epsilon_t epsilon = graph[fermionic_edge[i]].g_struct_.eps_;
+		std::cout << " i = " << i << std::endl;
+		print1d(alpha);
+		print1d(epsilon);
+		
+		
 		AmiBase::g_struct g(epsilon,alpha);
 		R0.push_back(g);	
 	}
@@ -261,7 +271,23 @@ double fermi_distribution(double energy, double beta ){
 	return 1.0/(1+std::exp(arg));
 }
 
+void mDLR::fill_dlro_pole_info(){
+	
+		for (auto dlr_R0 : multiple_dlr_structs){
+		total_num =total_num*dlr_R0.pole_num;
+		num_pole_each_dlr.push_back(dlr_R0.pole_num);	
+	}	
+}
 
+void mDLR::fill_dlro_momenta_info(){
+	
+
+	kN = std::pow(std::pow(kl,2),ord);
+	for (int i = 0; i< 2*ord;i++){
+		num_k_each_dlr.push_back(kl);	
+	}
+	kcombo_element.resize(2*ord);		
+}
 
 nda::array<dcomplex,1> mDLR::LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu) {
 	   dcomplex prefactor = dcomplex(kl*kl,0);
@@ -356,3 +382,20 @@ double mDLR::adjust_chemical_potential_bisc(params_param &params, Bz_container &
 		
 }
 
+Bz_container mDLR::SE_mixer(Bz_container SE_old, Bz_container SE_new, double alpha){
+	
+	int fk_size = SE_old[0][0].size();
+	Bz_container result(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(fk_size)));
+	
+	for (int i =0;i< kl;i++){
+		for (int j =0;j< kl;j++){
+			for (int f=0;f< fk_size;f++){	
+				result[i][j](f) =  dcomplex(alpha,0)*SE_old[i][j](f) + dcomplex(1-alpha,0)*SE_new[i][j](f);
+			
+			}
+	
+		}
+		
+	}
+	return result;
+}

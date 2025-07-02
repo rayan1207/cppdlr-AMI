@@ -1,33 +1,34 @@
+
+
+
 #include "dlr_ami.hpp"
 using namespace cppdlr;
 
-
-int main(){
+int main(int argc, char** argv){
+	int size, rank;
+	MPI_Init(&argc,&argv);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Comm_size(MPI_COMM_WORLD, &size);
+	
+	
+	
+	
+	
 	params_param params;
-	std::string loader_file = "params.txt";
+	std::string loader_file = "../loader/params.txt";
 	params_loader(loader_file,params);
 	
 	
 	////////////   Load the graphs here //////////////////
 	
 	AmiGraph::gg_matrix_t ggm;
-	std::cout<<"Attempting to load self-energy graphs from example_graphs"<<std::endl;
 	g.read_ggmp(params.graph,ggm, params.ord_max);
-	std::cout<<"Completed read"<<std::endl;
 	std::cout<<std::endl;
-	g.ggm_label(ggm,0); 
-    AmiGraph::graph_t graph = ggm[2][0].graph_vec[0];	
-	
-
 	
 	
 	
 	
-	
-	
-	
-	
-	
+	AmiGraph::graph_t graph =ggm[params.ord_max][0].graph_vec[0];
 	
 	
 	
@@ -40,17 +41,19 @@ int main(){
 	double lambda = beta*Emax;
 	double mu = params.mu;
 	double tp = params.tp;
+	int iter = params.iter;
 	AmiBase ami;
 	//AmiBase::g_prod_t R0=construct_example2();
 	
 	mDLR multiple_DLR(beta,Uval,eps,Emax,kl,tp,graph);
-    
+   
 	//////// Computing the frequency kernel ////////////////
+	if (rank ==0){
 	std::cout << "--__--__--__--__--__--__--__--__--__--__--"<< std::endl;
 	std::cout <<" Precomputing Computing the frequency kernel \n";
+	
+	}
 	auto t0 = std::chrono::high_resolution_clock::now();
-	
-	
 	auto nodes = multiple_DLR.master_if_ops.get_ifnodes();
 	nda::array<dcomplex,1> mfreq(nodes.size());
 	
@@ -64,94 +67,117 @@ int main(){
 	
 	for (int i=0; i <nodes.size();i++){
 	auto val = mfreq(i);
+	if (rank ==0){
 	std::cout << val <<std::endl;
+	}
 	auto frequency_kernel=multiple_DLR.evaluate_auxillary_energies(val); 
 	frequency_kernel_list.push_back(frequency_kernel);
+	
+	}
+	auto t1 = std::chrono::high_resolution_clock::now();
+	if (rank==0){
+		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
+		std::cout << " Consturctin of frequency kernel took: " <<duration.count() << " ms \n";
 	}
 	
-	
-	auto t1 = std::chrono::high_resolution_clock::now();
-	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
-	std::cout << " Duration of frequency kernel computation: " <<duration.count() << " ms \n";
-	
-
-
-    std::cout << "--__--__--__--__--__--__--__--__--__--__-- "<<std::endl;
-	std::cout << "Preparing for momneta kernel for the first shot" <<std::endl;
-	std::cout <<"Populating the 2-dim master_dlrW_in_square grid with weights from G0 with L: " << kl <<std::endl;
 	
 	multiple_DLR.populate_master_dlrW_from_G0(mu);
-	
-	std::cout << "Done";
-	std::cout << "Transferring DLR weights to gstructs \n";
-
 	multiple_DLR.transfer_master_DLR_weights_to_dlrR0_elements();
 	
-	std::cout <<"Done \n\n";
-	double U0_density = multiple_DLR.non_interacting_density(mfreq,params.mu);
-	std::cout << "Non interacting density n= " << U0_density <<" \n\n";
-	params.target_n = U0_density;
-    
-	int iter = params.iter;
-    auto density_lst = nda::array<double,1>(iter-1);
 	
+	double DENSITY_TOLERANCE = 1e-4;
+	int    BISECT_STEPS    = 1000;
+    double alpha=0.3;
+	int max_iters = iter; 
+	auto density_lst = nda::array<double,1>(iter);
+    Bz_container SE_old;
+	Bz_container SE;
+	for (int iter_idx = 1; iter_idx < max_iters; ++iter_idx) {
+		// 1) Build the kernel and compute self energy
+		auto momenta_kernel = multiple_DLR.compute_momenta_kernel_bz();
+		auto SE_new = multiple_DLR.MPI_vdot_freq_momenta_kernel_M(momenta_kernel, frequency_kernel_list);
+		// 2) Mix old SE with new SE 
+		
+		SE = ( iter_idx < 2) ? SE_new : multiple_DLR.SE_mixer(SE_old,SE_new, alpha);
 
-    for (int i=1;i<iter;i++){
-		std::cout << "--__--__--__--__--__--__--__--__--__--__-- "<<std::endl;
-		
-		
-		std::cout << "computing for momneta kernel for the "<< i <<" shot" <<std::endl;
-		
-		auto momenta_kernel_bz =multiple_DLR.compute_momenta_kernel_bz();
-		auto SE =  multiple_DLR.vdot_freq_momenta_kernel_M(momenta_kernel_bz,frequency_kernel_list);
-	
-	
-		std:: cout << "Target denisty is n= " << params.target_n << std::endl;
-		
-		 double mu_new = multiple_DLR.adjust_chemical_potential_bisc(params,SE,mfreq,1000);
-		
-		 auto density = multiple_DLR.compute_density_from_SE(SE,mfreq,mu_new);
-		 std::cout<< "Computed density in this iteration n: " << density << std::endl;
-		 density_lst(i-1)=density;
-		 
-		auto GF = multiple_DLR.G_from_DLR_SE_M(SE, mfreq,mu_new);
-		
-		
-		std::string filename_SE = std::format("gf2_data/{}i_shot_SE.txt", i);
-		std::string filename_GF = std::format("gf2_data/{}i_shot_GF.txt", i);
-		
-		std::cout <<   "Writing SE data to " << filename_SE <<std::endl;
-		
-		multiple_DLR.write_data_momenta(filename_SE,SE,mfreq);
-		
-		std::cout <<   "Writing GF data to " << filename_GF <<std::endl;
-		
-		multiple_DLR.write_data_momenta(filename_GF,GF,mfreq);
-		
-		std::cout << " Repopulating the master DLR with new G" <<std::endl;
-	    
+		// 3) Compute density at current mu, adjust mu if needed
+		double density = multiple_DLR.compute_density_from_SE(SE, mfreq, mu);
+		double mu_new = (std::abs(params.target_n - density) < DENSITY_TOLERANCE)
+						? mu
+						: multiple_DLR.adjust_chemical_potential_bisc(params, SE, mfreq, BISECT_STEPS);
+
+		double density_adj = multiple_DLR.compute_density_from_SE(SE, mfreq, mu_new);
+		density_lst[iter_idx - 1] = density_adj;
+
+		if (rank == 0) {
+			std::cout << "Iteration " << iter_idx
+					  << ": density = " << density_adj << std::endl;
+		}
+
+		// 4) Compute Green’s function and write out data
+		Bz_container GF;
+		if (params.DCA ==1){
+		  GF = multiple_DLR.G_from_DLR_SE_M_DCA(SE, mfreq, mu_new,NC);
+		}
+		else {
+		  GF = multiple_DLR.G_from_DLR_SE_M(SE, mfreq, mu_new);
+		}
+		std::string file_SE = std::format("../result/{}i_shot_SE.txt", iter_idx);
+		std::string file_GF = std::format("../result/{}i_shot_GF.txt", iter_idx);
+
+		multiple_DLR.write_data_momenta(file_SE, SE, mfreq);
+		multiple_DLR.write_data_momenta(file_GF, GF, mfreq);
+
+		// 5) Update master DLR weights for next iteration
 		multiple_DLR.repopulate_master_dlrW_from_G(GF);
-		
-		std::cout << " Tranferring DLR weights to all dlr R0 elements for next iteration" <<std::endl;
-		
 		multiple_DLR.transfer_master_DLR_weights_to_dlrR0_elements();
 		
-		std::cout << "done \n";
-       
+		// 6) Old SE back to current SE
+		SE_old = SE;
 	}
+
+		
+		
 	
-	std::cout<< "Density in each list from first to last \n";
-	std::cout << density_lst;
+
+	MPI_Finalize();
 
 	
 }
 
+
+
 // int main () {
 	
 	// params_param params;
-	// std::string loader_file = "params.txt";
+	// std::string loader_file = "../loader/params.txt";
 	// params_loader(loader_file,params);
 	
+	
+	// ////////////   Load the graphs here //////////////////
+	
+	// AmiGraph::gg_matrix_t ggm;
+	// std::cout<<"Attempting to load self-energy graphs from example_graphs"<<std::endl;
+	// g.read_ggmp(params.graph,ggm, params.ord_max);
+	// std::cout<<"Completed read"<<std::endl;
+	// std::cout<<std::endl;
+	
+	
+	
+	// for (int i =  params.ord_min; i <  params.ord_max+1;i++){
+		// for (int j =0; j< ggm[i].size();j++){
+			 // for (int k = 0; k < ggm[i][j].graph_vec.size(); ++k) {
+				// std::cout << "Labeling graph with " << "o" << i << "_g" << j << "_n" << k <<std::endl;
+				// g.label_systematic(ggm[i][j].graph_vec[k]);
+			 // }
+		// }
+	// }
+
+	// AmiGraph::graph_t graph =ggm[2][0].graph_vec[0];
+	
+	
+	
+	// double NC = 161;
 	// double beta   = params.beta;
     // double eps    = params.eps;
 	// int kl = params.L;
@@ -160,13 +186,14 @@ int main(){
 	// double lambda = beta*Emax;
 	// double mu = params.mu;
 	// double tp = params.tp;
- 
 	// AmiBase ami;
-	// AmiBase::g_prod_t R0=construct_example2();
+	// //AmiBase::g_prod_t R0=construct_example2();
 	
-	// mDLR multiple_DLR(beta,Uval,eps,Emax,kl,tp,R0);
+	// mDLR multiple_DLR(beta,Uval,eps,Emax,kl,tp,graph);
+   
+	
+	
     
-	// Computing the frequency kernel ////////////////
 	// std::cout << "--__--__--__--__--__--__--__--__--__--__--"<< std::endl;
 	// std::cout <<" Precomputing Computing the frequency kernel \n";
 	// auto t0 = std::chrono::high_resolution_clock::now();
@@ -207,7 +234,7 @@ int main(){
 
 // int main() {
 // params_param params;
-// std::string loader_file = "params.txt";
+// std::string loader_file = "../loader/params.txt";
 // params_loader(loader_file,params);
 
 
@@ -253,3 +280,129 @@ int main(){
 
 
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// #include <mpi.h>
+// #include <iostream>
+// #include <vector>
+// #include <cppdlr/cppdlr.hpp>
+
+// template<typename T>
+ // void print2d( std::vector< std::vector<T>> vec)
+// {
+    // for ( auto row : vec) {
+        // for ( auto elem : row) {
+            // std::cout << elem << " ";
+        // }
+        // std::cout << std::endl;
+    // }
+	// std::cout << std::endl;
+	
+// }
+
+
+// template<typename T> 
+ // void print1d( std::vector<T>& vec) {
+  // std::cout << "[";
+  // for (size_t i = 0; i < vec.size(); ++i) {
+    // std::cout << vec[i];
+    // if (i != vec.size() - 1) {
+      // std::cout << ", ";
+    // }
+  // }
+  // std::cout << "]\n";
+// }
+
+// std::vector<std::vector<int>> generate_cartesian_list(){
+	// int total_num=3*4*5;
+	// int rank, size;
+	// MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    // MPI_Comm_size(MPI_COMM_WORLD, &size);
+	// int chunk = total_num/size ;
+	// int remainder =  total_num % size;
+	// int start = rank*chunk + std::min(rank, remainder);
+	// int count = chunk + (rank < remainder ? 1 : 0);
+	// int end   = start + count; 
+	
+	
+	// std::vector<int> num_pole_each_dlr = {3,4,5};
+    // std::vector<std::vector<int>> cartesian_combo_list;
+	// cartesian_combo_list.reserve(total_num);
+	
+	
+	// int i =0;
+	// for (int i=start; i < end;i++){
+		// std::vector<int> tmp;
+		// int previous = 1;
+		// for (int j =0;j<  num_pole_each_dlr.size();j++){
+			// tmp.push_back( i/previous %( num_pole_each_dlr[j] ));
+			// previous = previous*num_pole_each_dlr[j];    
+		// }
+		// cartesian_combo_list.emplace_back(tmp);	
+		
+	// }
+	// return cartesian_combo_list;
+// }
+
+// int main(int argc, char** argv) {
+    // MPI_Init(&argc, &argv);
+    // int rank, size;
+    // MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+    // MPI_Comm_size(MPI_COMM_WORLD, &size);
+	
+	
+	
+	// int total_num=3*4*5;
+	// int chunk = total_num/size ;
+	// int remainder =  total_num % size;
+	
+	// int start = rank*chunk + std::min(rank, remainder);
+	// int count = chunk + (rank < remainder ? 1 : 0);
+	// int end   = start + count;  
+	
+
+	
+	// std::cout << "I am rank : " <<  rank  << "with start :" << start  << " end :" << end   <<std::endl;
+	// auto combos = generate_cartesian_list();
+	// print2d(combos);
+	
+
+	// MPI_Finalize();
+
+// 

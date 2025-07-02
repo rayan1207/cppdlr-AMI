@@ -35,7 +35,7 @@ add_executable(${PROJECT_NAME}
   src/dlr_ami.hpp
   src/helper.cpp
   src/AmiDlr_func.cpp
-
+  src/momenta_sampler.cpp
 )
 # Link OpenMP after target is defined
 target_link_libraries(mini_ami PRIVATE OpenMP::OpenMP_CXX)

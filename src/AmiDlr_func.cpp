@@ -1,13 +1,12 @@
 #include "dlr_ami.hpp"
 using namespace cppdlr;
-using Bz_container =  std::vector<std::vector<nda::array<dcomplex,1>>>;
 
 
 dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0_element) {
     dlr_obj dlro;
     dlro.ginfo = R0_element;
-	std::cout << " Created a DLR object with Epsilon and Alpha: ";
-	print1d(dlro.ginfo.eps_);print1d(dlro.ginfo.alpha_);
+	//std::cout << " Created a DLR object with Epsilon and Alpha: ";
+	//print1d(dlro.ginfo.eps_);print1d(dlro.ginfo.alpha_);
 		
 	double lambda = beta*Emax;
     auto dlr_rf = build_dlr_rf(lambda, eps);
@@ -24,7 +23,7 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 	
 	for (int i = 0; i< dlro.pole_num; i++){          /// filling in pole locations 
 		dlro.pole_locs.emplace_back(all_poles[i]);	
-		std::cout << all_poles[i] << std::endl;
+		//std::cout << all_poles[i] << std::endl;
 		std::vector<double> tmp;
 		tmp.reserve(eps_size);
 		for (auto element : dlro.ginfo.eps_ ){ tmp.emplace_back(element* all_poles[i]);}///could negative
@@ -33,35 +32,69 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 	
 	return dlro;
 }
+
+
+MPI_INFO create_MPI_obj(int total_num){
+	MPI_INFO  MPI_obj;
+	
+	MPI_Comm_rank(MPI_COMM_WORLD, &MPI_obj.rank);
+    MPI_Comm_size(MPI_COMM_WORLD, &MPI_obj.size);
+	MPI_obj.chunk = total_num/MPI_obj.size;
+	MPI_obj.remainder =  total_num% MPI_obj.size;
+	MPI_obj.start = MPI_obj.rank*MPI_obj.chunk + std::min(MPI_obj.rank, MPI_obj.remainder);
+	MPI_obj.count = MPI_obj.chunk + (MPI_obj.rank < MPI_obj.remainder ? 1 : 0);
+	MPI_obj.end   = MPI_obj.start + MPI_obj.count; 
+	
+	auto s = std::format("created a DLR with rank={}, with start_index={}, and end_index={}, perfoming {}/{} of  Freq kernel  \n",MPI_obj.rank,
+	MPI_obj.start, MPI_obj.end, MPI_obj.count, total_num);
+	std::cout << s;
+	
+	return MPI_obj;
+}
 ///////part of mdlr ///////////////////////////////////////////
 mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,double _tp, AmiGraph::graph_t _graph ):beta(_beta),Uval(_Uval),eps(_eps),Emax(_Emax),kl(_kl),tp (_tp), graph(_graph){
+	
+	
 	auto t0 = std::chrono::high_resolution_clock::now();
+	g.label_systematic(graph);
 	R0 = create_R0_from_graph();
+	
+	//R0 = construct_example2();
 	N = R0.size();
 	ord = g.graph_order(graph);
 	prefactor =  g.get_prefactor(graph,ord);
 	std::cout<<"-_-_-_-_-_-_-_-_-  Constructing multiple DLR Object for num(G):" << N << "  -_-_-_-_-_-_-_-_-  \n";
 	create_multiple_gstruct();
+	fill_dlro_pole_info();
+	fill_dlro_momenta_info();
+	MPI_obj =create_MPI_obj(total_num);
 	std::cout<< "Done\n";
 	std::cout << " Generating cartesian list from auxillary poless from G DLR rep \n";
 	generate_cartesian_list();
 	std::cout<<std::endl;
 	CN = cartesian_combo_list.size();
 	std::cout<<std::endl;
-	std::cout <<" Generating cartesian momenta grid for flat momenta sampling \n";
-	generate_momenta_cartesian_combo();
-	kN = cartesian_k_combo_list.size();
-	dk = 2*M_PI/(kl-1);
+
+	dk = 2*M_PI/(kl);
+	kvals.resize(kl);
+	for(size_t i=0; i<kl; i++){kvals[i] = dk* double(i);}
+	std::cout << "Operating on the grid\n " ;
+	two_pi     = 2.0 * M_PI;
+    inv_two_pi = 1.0 / two_pi;
+    inv_dk     = 1.0 / dk;
+	print1d(kvals);
+
+	
+	
+	
 	std::cout <<" Total number of auxillary epsilon_t required to be computed num(epsilon_t): " << CN <<std::endl;
 	std::cout <<" Total number of cartesian momemta grid t required to be sampled Npoints: " << kN <<std::endl;
 	std::cout << " Populating the auxillary energy lists from cartesian list \n";
 	generate_auxillary_energy_list();
 	std::cout << "done\n";
 	std::cout<<std::endl;
-	kvals.resize(kl);
-	for(size_t i=0; i<kl; i++){kvals[i] = dk* double(i);}
-	std::cout << "Operating on the grid\n " ;
-	print1d(kvals);
+	
+	
 	std::cout<<" creating master DLR object \n";
 	create_DLR_master_if_ops();
 	std::cout<< " the matsubara frequency nodes of master DLR object is \n ";
@@ -71,9 +104,7 @@ mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,doubl
 	fd_master_poles = fd_on_master_poles();
 	std::cout << "real poles in master dlr is: \n";
 	std::cout << master_poles;
-    two_pi     = 2.0 * M_PI;
-    inv_two_pi = 1.0 / two_pi;
-    inv_dk     = 1.0 / dk;
+   
     kvals_ptr = kvals.data();
 	master_dlrW_in_square.resize(kl);
 	for (size_t i = 0; i < kl; ++i)
@@ -102,20 +133,10 @@ void mDLR::create_DLR_master_if_ops(){
 
 
 
+
 void mDLR::generate_cartesian_list(){
-	int total_num=1;
-	int num_dlr = multiple_dlr_structs.size();
-	std::vector<int> num_pole_each_dlr;
-	
-	for (auto dlr_R0 : multiple_dlr_structs){
-		total_num =total_num*dlr_R0.pole_num;
-		num_pole_each_dlr.push_back(dlr_R0.pole_num);	
-	}
-	// std::cout<<"pole num for each dlr";
-	// print1d(num_pole_each_dlr);
-	cartesian_combo_list.reserve(total_num);
-	int i =0;
-	while ( i < total_num ){
+	cartesian_combo_list.reserve(MPI_obj.count);
+	for (int i=MPI_obj.start; i < MPI_obj.end;i++){
 		std::vector<int> tmp;
 		int previous = 1;
 		for (int j =0;j<  num_pole_each_dlr.size();j++){
@@ -123,8 +144,9 @@ void mDLR::generate_cartesian_list(){
 			previous = previous*num_pole_each_dlr[j];    
 		}
 		cartesian_combo_list.emplace_back(tmp);	
-		i++;
-	}		
+		
+	}
+	
 }
 
 
@@ -251,118 +273,6 @@ void mDLR::transfer_master_DLR_weights_to_dlrR0_elements(){
 }
 
 
-void mDLR::generate_momenta_cartesian_combo(){
-	
-	int kC_num =  std::pow(std::pow(kl,2),ord);
-
-	std::vector<int> num_k_each_dlr;
-	
-	for (int i = 0; i< 2*ord;i++){
-		num_k_each_dlr.push_back(kl);	
-	}
-	print1d(num_k_each_dlr);
-	
-	cartesian_k_combo_list.reserve(kC_num);
-	int i =0;
-	while ( i < kC_num ){
-		std::vector<int> tmp;
-		int previous = 1;
-		for (int j =0;j<  num_k_each_dlr.size();j++){
-			tmp.push_back( i/previous %( num_k_each_dlr[j] ));
-			previous = previous*num_k_each_dlr[j];    
-		}
-		cartesian_k_combo_list.emplace_back(tmp);	
-		i++;
-	}
-	
-}
-
-
-
-
-inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,const int* combo_ptr,const int* kcombo_ptr)
-{
-    
-
-
-    nda::dcomplex val(1.0, 0.0);
-
-    for (int i = 0; i < N; ++i) {
-
-        const auto& info      = multiple_dlr_structs[i].ginfo;
-        const int* alpha   = info.alpha_.data();
-        int   asz      = info.alpha_.size();
-        double qx = alpha[asz - 1] * kx_ext;
-        double qy = alpha[asz - 1] * ky_ext;
-        for (int j = 0; j < ord; ++j) {
-            double a = static_cast<double>(alpha[j]);
-            qx += a * kvals_ptr[ kcombo_ptr[2*j    ] ];
-            qy += a * kvals_ptr[ kcombo_ptr[2*j + 1] ];
-        }
-
-
-        qx -= std::floor(qx* inv_two_pi) * two_pi;
-        qy -= std::floor(qy* inv_two_pi) * two_pi;
-
-        int idx1 = static_cast<int>(qx * inv_dk);
-        int idx2 = static_cast<int>(qy * inv_dk);
-
-     
-        const auto& wlist =
-          multiple_dlr_structs[i].dlrW_in_square[idx1][idx2];
-        val *=   wlist[ combo_ptr[i] ];
-    }
-
-    return val;
-}
-        
- nda::array<nda::dcomplex,1> mDLR::compute_momenta_kernel_qext(double kx_ext,double ky_ext)
-{
-    const int C = CN;
-  
-    nda::array<nda::dcomplex,1> kernel = nda::zeros<nda::dcomplex>(C);
-
-    const int K = static_cast<int>(cartesian_k_combo_list.size());
-    #pragma omp parallel for
-    for (int c = 0; c < C; c++) {
-        const int* combo_ptr = cartesian_combo_list[c].data();
-        auto sum = nda::dcomplex(0,0);
-        for (int k = 0; k < K; k++) {
-            const int* kcombo_ptr = cartesian_k_combo_list[k].data();
-            sum += compute_momenta_one_kCN_kernel(
-                       kx_ext, ky_ext,
-                       combo_ptr,
-                       kcombo_ptr);
-        }
-
-        kernel(c) = sum;
-    }
-
-    return kernel;
-}
-
-Bz_container mDLR::compute_momenta_kernel_bz(){
-	int n = (kl+1)/2;
-	auto reduced_kgrid = nda::array<double,1> (n);
-	Bz_container M(n,std::vector<nda::array<dcomplex,1>>(n));
-	for(size_t i=0; i<n; i++){reduced_kgrid[i] = dk* double(i);}
-	int data = n*(n+1)/2;
-	int count =1;
-	for (int i =0;i< n; i ++){
-		for (int j=0;j<=i;j++){
-			double qx = reduced_kgrid(i);
-			double qy = reduced_kgrid(j);
-			std::cout<< "Computing -> " << count <<"/" << data << " data point \n";
-			auto momenta_kernel = mDLR::compute_momenta_kernel_qext(qx,qy);
-			M[i][j] = momenta_kernel;
-			count++;
-		}		
-	}
-	triangle_to_square(M);
-	
-	return data_to_full_bz(M);
-	 
-}	
 Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::array<dcomplex,1>> fk){
 	
 	
@@ -372,12 +282,14 @@ Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::
 			auto const &momenta_kernel = mk[i][j];
 			
 			for (int k; k<fk.size();k++){
-				result[i][j](k) = std::pow(Uval,ord)*nda::dotc(fk[k],momenta_kernel)/(-1*std::pow((double) kl*kl,ord));
+				result[i][j](k) = prefactor*std::pow(Uval,ord)*nda::dotc(fk[k],momenta_kernel)/(std::pow((double) kl*kl,ord));
 			}			
 		}	
 	}
 	return result;	
 }
+
+
 
 
 Bz_container mDLR::G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu){
@@ -452,7 +364,8 @@ Bz_container mDLR::G_from_DLR_SE_M_DMFT(Bz_container &SE,nda::array<dcomplex,1> 
 
 
 Bz_container mDLR::G_from_DLR_SE_M_DCA(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu,double NC){
-	std::cout << " Applying  DCA patch averaging "<<std::endl;
+	if (MPI_obj.rank == 0){
+	std::cout << " Applying  DCA patch averaging "<<std::endl;}
 	Bz_container G(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(mfreq.size())));
 	for (int i =0; i<kl; i++) {
 		for (int j =0; j <kl; j++){

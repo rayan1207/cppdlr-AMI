@@ -36,8 +36,6 @@
 #include <string>
 
 
-
-
 AmiBase::g_prod_t construct_example2();
 AmiBase::ami_vars construct_ext_example2();
 
@@ -61,6 +59,7 @@ struct params_param {
 	int ord_min;
 	double mu_L;
 	double mu_R;
+	int DCA;
 };
 
 std::string trim(const std::string& str);
@@ -83,16 +82,27 @@ struct dlr_obj{
 	std::vector<std::vector<nda::array<dcomplex,1>>> dlrW_in_square;
 	
 };
+
+
+
+struct MPI_INFO {
+	int rank,size,chunk,remainder,start,end,count;
+};
+
+
+
+
 class mDLR{
 	private:
 	double two_pi     ;
     double inv_two_pi ;
     double inv_dk     ;
     double* kvals_ptr;
-	
+	std::vector<int> kcombo_element;
 	
 
 	public:
+	MPI_INFO MPI_obj;
 	std::vector<dlr_obj> multiple_dlr_structs;
 	double beta; double eps; double tp; double Emax;double Uval; AmiGraph::graph_t graph; AmiBase::g_prod_t R0;
 	size_t N; ///num of greens function
@@ -102,6 +112,10 @@ class mDLR{
 	double dk;
 	double prefactor;
 	int ord;
+	int total_num=1;
+	std::vector< int> num_pole_each_dlr;
+	std::vector< int> num_k_each_dlr;
+
 	
 	std::vector<double> kvals;/// kgrid vals
 	size_t master_pole_num;/// number of poles in master DLR
@@ -110,17 +124,18 @@ class mDLR{
 	cppdlr::imfreq_ops master_if_ops; /// master dlr obj
 	std::vector<std::vector<nda::array<dcomplex,1>>> master_dlrW_in_square; //master dlr weight
 	std::vector<std::vector<int>> cartesian_combo_list; /// contains the cartesian product indices for poles
-	std::vector<std::vector<int>> cartesian_k_combo_list; ///co
+ ///co
 	
 	std::vector<std::vector<double>> auxillary_energy_list;
 	mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl, double _tp, AmiGraph::graph_t _graph );
 	//////// methods ////////////
 	
 	AmiBase::g_prod_t create_R0_from_graph();
-	
 	void create_DLR_master_if_ops();
 	double hubbard_dispersion(double kx, double ky,double mu);
 	nda::array<dcomplex,1> generate_nda_Gdlr_from_energy( cppdlr::imfreq_ops &ops, double &energy);
+	void fill_dlro_pole_info();
+	void fill_dlro_momenta_info();
 	void create_multiple_gstruct();
 	void generate_cartesian_list();
 	void generate_auxillary_energy_list();
@@ -134,8 +149,10 @@ class mDLR{
 	void reshape_dlrW_square_per_kgrid();
 	nda::array<dcomplex,1> recover_dlro_G_from_master_weights(nda::array<dcomplex,1> &master_weights, std::vector<std::complex<double>> &dlro_if);
 	void transfer_master_DLR_weights_to_dlrR0_elements();
-	void generate_momenta_cartesian_combo();
-	inline nda::dcomplex compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,const int* combo_ptr,const int* kcombo_ptr);
+	inline void generate_ith_momenta_cartesian_combo(int i, std::vector<int>& result );
+	
+	
+	inline nda::dcomplex compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,const int* combo_ptr,const std::vector<int> &kcombo);
 	nda::array<nda::dcomplex,1> compute_momenta_kernel_qext(double kx_ext,double ky_ext);
 	nda::dcomplex patch_avg_one_GF(double Kx,double Ky, double Nc, double mu, nda::dcomplex iw, nda::dcomplex SE_K  );	
     Bz_container G_from_DLR_SE_M_DCA(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu,double NC);
@@ -143,8 +160,9 @@ class mDLR{
 	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
 	Bz_container compute_momenta_kernel_bz();
 	Bz_container vdot_freq_momenta_kernel_M(const std::vector<std::vector<nda::array<dcomplex,1>>> mk, const std::vector<nda::array<dcomplex,1>> fk);
+	Bz_container MPI_vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::array<dcomplex,1>> fk);
 	nda::array<nda::dcomplex,1>  LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,  double mu);
-	
+	Bz_container SE_mixer(Bz_container SE_old, Bz_container SE_new, double alpha);
 	nda::array<dcomplex,1> fd_on_master_poles();
 	double compute_density_from_SE(Bz_container &SE,nda::array<dcomplex,1> &mfreq, double mu);
 	double adjust_chemical_potential_bisc(params_param &params, Bz_container &SE,nda::array<dcomplex,1> &mfreq, int max);
@@ -160,6 +178,8 @@ class mDLR{
 };
 
 dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0_element);
+
+MPI_INFO create_MPI_obj(int total_num);
 
 std::vector<std::complex<double>> convertToComplex(const std::vector<double> vec);
 template<typename T>
