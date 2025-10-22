@@ -21,7 +21,13 @@ int main(int argc, char** argv){
 	AmiGraph::gg_matrix_t ggm;
 	g.read_ggmp(params.graph,ggm, params.ord_max);
 	std::cout<<std::endl;
-
+	
+	
+	
+	
+	AmiGraph::graph_t graph =ggm[params.ord_max][0].graph_vec[0];
+	
+	
 	
 	double NC = 161;
 	double beta   = params.beta;
@@ -36,122 +42,103 @@ int main(int argc, char** argv){
 	AmiBase ami;
 	//AmiBase::g_prod_t R0=construct_example2();
 	
-	double master_E = 4; double master_eps=1e-6;
+	double master_E = 5; double master_eps=1e-7;
 	double master_lambda = params.beta*master_E;
     auto dlr_rf = build_dlr_rf(master_lambda,master_eps );
     auto master_if_ops = imfreq_ops(master_lambda, dlr_rf, Fermion);
 	
-
-
-	ggm_mDLR  mult_mDLR( params, ggm,master_if_ops);
+	mDLR multiple_DLR(beta,Uval,eps,Emax,kl,tp,graph,master_if_ops);
 	
-		
-	mult_mDLR.ggm_Fk_solver();
-	mult_mDLR.intialize_ggm_DLR_W();
-	std::vector<Bz_container> SE_list(mult_mDLR.graph_size);
-	auto &Fk1 =mult_mDLR.Fk_ggm[0];
-	SE_list[0] = mult_mDLR.generate_SE( mult_mDLR.mDLR_list[0],Fk1);
-	 
-	 
-	auto &Fk2 =mult_mDLR.Fk_ggm[0];
-	SE_list[0] = mult_mDLR.generate_SE( mult_mDLR.mDLR_list[0],Fk2);
-	// for (int i =0; i< mult_mDLR.graph_size; i++){
-		// SE_list[i] = mult_mDLR.generate_SE( mult_mDLR.mDLR_list[i], mult_mDLR.Fk_ggm[i]);		
-		// std::string file_SE = std::format("../result/SE_graph_{}.txt", i+1);
-		// mult_mDLR.mDLR_list[i].write_data_momenta(file_SE, SE_list[i], mult_mDLR.master_mfreq);	
-	// }
-	
-	//// temporary lets print SE
-	
-	
+	std::cout <<" Testing " <<std::endl;
+	ggm_mDLR  mult_mDLR( params, ggm);
    
-	// //////// Computing the frequency kernel ////////////////
-	// if (rank ==0){
-	// std::cout << "--__--__--__--__--__--__--__--__--__--__--"<< std::endl;
-	// std::cout <<" Precomputing Computing the frequency kernel \n";
-	// }
-	// auto t0 = std::chrono::high_resolution_clock::now();
-	// auto nodes = multiple_DLR.master_if_ops.get_ifnodes();
-	// nda::array<dcomplex,1> mfreq(nodes.size());
+	//////// Computing the frequency kernel ////////////////
+	if (rank ==0){
+	std::cout << "--__--__--__--__--__--__--__--__--__--__--"<< std::endl;
+	std::cout <<" Precomputing Computing the frequency kernel \n";
+	}
+	auto t0 = std::chrono::high_resolution_clock::now();
+	auto nodes = multiple_DLR.master_if_ops.get_ifnodes();
+	nda::array<dcomplex,1> mfreq(nodes.size());
 	
 	
-	// for (size_t i =0; i<nodes.size();i++){ 
-	// mfreq[i]=dcomplex(0,(2*nodes[i]+1)*M_PI/beta);
-	// }
+	for (size_t i =0; i<nodes.size();i++){ 
+	mfreq[i]=dcomplex(0,(2*nodes[i]+1)*M_PI/beta);
+	}
 	
 	
-	// std::vector< nda::array<dcomplex,1>> frequency_kernel_list;
+	std::vector< nda::array<dcomplex,1>> frequency_kernel_list;
 	
-	// for (int i=0; i <nodes.size();i++){
-	// auto val = mfreq(i);
-	// if (rank ==0){
-	// std::cout << val <<std::endl;
-	// }
-	// auto frequency_kernel=multiple_DLR.evaluate_auxillary_energies(val); 
-	// frequency_kernel_list.push_back(frequency_kernel);
+	for (int i=0; i <nodes.size();i++){
+	auto val = mfreq(i);
+	if (rank ==0){
+	std::cout << val <<std::endl;
+	}
+	auto frequency_kernel=multiple_DLR.evaluate_auxillary_energies(val); 
+	frequency_kernel_list.push_back(frequency_kernel);
 	
-	// }
-	// auto t1 = std::chrono::high_resolution_clock::now();
-	// if (rank==0){
-		// auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
-		// std::cout << " Consturctin of frequency kernel took: " <<duration.count() << " ms \n";
-	// }
-	
-	
-	// multiple_DLR.populate_master_dlrW_from_G0(mu);
-	// multiple_DLR.transfer_master_DLR_weights_to_dlrR0_elements();
+	}
+	auto t1 = std::chrono::high_resolution_clock::now();
+	if (rank==0){
+		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
+		std::cout << " Consturctin of frequency kernel took: " <<duration.count() << " ms \n";
+	}
 	
 	
-	// double DENSITY_TOLERANCE = 1e-4;
-	// int    BISECT_STEPS    = 1000;
-    // double alpha=0.3;
-	// int max_iters = iter; 
-	// auto density_lst = nda::array<double,1>(iter);
-    // Bz_container SE_old;
-	// Bz_container SE;
-	// for (int iter_idx = 1; iter_idx < max_iters; ++iter_idx) {
-		// // 1) Build the kernel and compute self energy
-		// auto momenta_kernel = multiple_DLR.compute_momenta_kernel_bz();
-		// auto SE_new = multiple_DLR.MPI_vdot_freq_momenta_kernel_M(momenta_kernel, frequency_kernel_list);
-		// // 2) Mix old SE with new SE 
+	multiple_DLR.populate_master_dlrW_from_G0(mu);
+	multiple_DLR.transfer_master_DLR_weights_to_dlrR0_elements();
+	
+	
+	double DENSITY_TOLERANCE = 1e-4;
+	int    BISECT_STEPS    = 1000;
+    double alpha=0.3;
+	int max_iters = iter; 
+	auto density_lst = nda::array<double,1>(iter);
+    Bz_container SE_old;
+	Bz_container SE;
+	for (int iter_idx = 1; iter_idx < max_iters; ++iter_idx) {
+		// 1) Build the kernel and compute self energy
+		auto momenta_kernel = multiple_DLR.compute_momenta_kernel_bz();
+		auto SE_new = multiple_DLR.MPI_vdot_freq_momenta_kernel_M(momenta_kernel, frequency_kernel_list);
+		// 2) Mix old SE with new SE 
 		
-		// SE = ( iter_idx < 2) ? SE_new : multiple_DLR.SE_mixer(SE_old,SE_new, alpha);
+		SE = ( iter_idx < 2) ? SE_new : multiple_DLR.SE_mixer(SE_old,SE_new, alpha);
 
-		// // 3) Compute density at current mu, adjust mu if needed
-		// double density = multiple_DLR.compute_density_from_SE(SE, mfreq, mu);
-		// double mu_new = (std::abs(params.target_n - density) < DENSITY_TOLERANCE)
-						// ? mu
-						// : multiple_DLR.adjust_chemical_potential_bisc(params, SE, mfreq, BISECT_STEPS);
+		// 3) Compute density at current mu, adjust mu if needed
+		double density = multiple_DLR.compute_density_from_SE(SE, mfreq, mu);
+		double mu_new = (std::abs(params.target_n - density) < DENSITY_TOLERANCE)
+						? mu
+						: multiple_DLR.adjust_chemical_potential_bisc(params, SE, mfreq, BISECT_STEPS);
 
-		// double density_adj = multiple_DLR.compute_density_from_SE(SE, mfreq, mu_new);
-		// density_lst[iter_idx - 1] = density_adj;
+		double density_adj = multiple_DLR.compute_density_from_SE(SE, mfreq, mu_new);
+		density_lst[iter_idx - 1] = density_adj;
 
-		// if (rank == 0) {
-			// std::cout << "Iteration " << iter_idx
-					  // << ": density = " << density_adj << std::endl;
-		// }
+		if (rank == 0) {
+			std::cout << "Iteration " << iter_idx
+					  << ": density = " << density_adj << std::endl;
+		}
 
-		// // 4) Compute Green’s function and write out data
-		// Bz_container GF;
-		// if (params.DCA ==1){
-		  // GF = multiple_DLR.G_from_DLR_SE_M_DCA(SE, mfreq, mu_new,NC);
-		// }
-		// else {
-		  // GF = multiple_DLR.G_from_DLR_SE_M(SE, mfreq, mu_new);
-		// }
-		// std::string file_SE = std::format("../result/{}i_shot_SE.txt", iter_idx);
-		// std::string file_GF = std::format("../result/{}i_shot_GF.txt", iter_idx);
+		// 4) Compute Green’s function and write out data
+		Bz_container GF;
+		if (params.DCA ==1){
+		  GF = multiple_DLR.G_from_DLR_SE_M_DCA(SE, mfreq, mu_new,NC);
+		}
+		else {
+		  GF = multiple_DLR.G_from_DLR_SE_M(SE, mfreq, mu_new);
+		}
+		std::string file_SE = std::format("../result/{}i_shot_SE.txt", iter_idx);
+		std::string file_GF = std::format("../result/{}i_shot_GF.txt", iter_idx);
 
-		// multiple_DLR.write_data_momenta(file_SE, SE, mfreq);
-		// multiple_DLR.write_data_momenta(file_GF, GF, mfreq);
+		multiple_DLR.write_data_momenta(file_SE, SE, mfreq);
+		multiple_DLR.write_data_momenta(file_GF, GF, mfreq);
 
-		// // 5) Update master DLR weights for next iteration
-		// multiple_DLR.repopulate_master_dlrW_from_G(GF);
-		// multiple_DLR.transfer_master_DLR_weights_to_dlrR0_elements();
+		// 5) Update master DLR weights for next iteration
+		multiple_DLR.repopulate_master_dlrW_from_G(GF);
+		multiple_DLR.transfer_master_DLR_weights_to_dlrR0_elements();
 		
-		// // 6) Old SE back to current SE
-		// SE_old = SE;
-	// }
+		// 6) Old SE back to current SE
+		SE_old = SE;
+	}
 
 		
 		

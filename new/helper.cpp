@@ -249,7 +249,7 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_weights(nda::array<double,1> &en
 	
 	nda::array<dcomplex,1> full_weights (CN);
 	for (int i=0; i < CN;i++){
-		auto combo  = generate_single_CN(i);
+		auto const& combo  = cartesian_combo_list[i];
 	    auto result = dcomplex(1,0);
 		for (int j =0; j< N ; j++){
 			result = result * G_dlr_w_list[j](combo[j]);

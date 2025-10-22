@@ -44,8 +44,6 @@ inline AmiGraph g(AmiBase::Sigma, 0);
 
 //////params loader functions/////////////
 using Bz_container =  std::vector<std::vector<nda::array<dcomplex,1>>>;
-using Fk_container =  std::vector<nda::array<dcomplex,2>>;
-Bz_container sum_containers(const std::vector<Bz_container>& all);
 struct params_param {
 	double Uval;
 	double beta;
@@ -124,7 +122,7 @@ class mDLR{
 	nda::array<double,1> master_poles;
 	nda::array<dcomplex,1> fd_master_poles;
 	std::vector<std::vector<nda::array<dcomplex,1>>> master_dlrW_in_square; //master dlr weight
-	// std::vector<std::vector<int>> cartesian_combo_list; /// contains the cartesian product indices for poles
+	std::vector<std::vector<int>> cartesian_combo_list; /// contains the cartesian product indices for poles
  ///co
 	
 	std::vector<std::vector<double>> auxillary_energy_list;
@@ -139,11 +137,9 @@ class mDLR{
 	void fill_dlro_momenta_info();
 	void create_multiple_gstruct();
 	void generate_cartesian_list();
-	std::vector<int> generate_single_CN(int index);
 	void generate_auxillary_energy_list();
-	AmiBase::energy_t generate_auxillary_energy(std::vector<int> &combo);
 	nda::array<dcomplex,1> evaluate_auxillary_energies(nda::dcomplex &imfreq);
-	nda::array<dcomplex,1> evaluate_auxillary_weights(nda::array<double,1> &energy);
+	nda::array<dcomplex,1> evaluate_auxillary_weights( nda::array<double,1> &energy);
 	
 	
 	
@@ -155,15 +151,15 @@ class mDLR{
 	inline void generate_ith_momenta_cartesian_combo(int i, std::vector<int>& result );
 	
 	
-	inline nda::dcomplex compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,std::vector<int> &combo,const std::vector<int> &kcombo);
+	inline nda::dcomplex compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,const int* combo_ptr,const std::vector<int> &kcombo);
 	nda::array<nda::dcomplex,1> compute_momenta_kernel_qext(double kx_ext,double ky_ext);
 	nda::dcomplex patch_avg_one_GF(double Kx,double Ky, double Nc, double mu, nda::dcomplex iw, nda::dcomplex SE_K  );	
     Bz_container G_from_DLR_SE_M_DCA(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu,double NC);
 	Bz_container G_from_DLR_SE_M_DMFT(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
 	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
 	Bz_container compute_momenta_kernel_bz();
-	Bz_container vdot_freq_momenta_kernel_M(const std::vector<std::vector<nda::array<dcomplex,1>>> mk, nda::array<dcomplex,2> &fk);
-	Bz_container MPI_vdot_freq_momenta_kernel_M(Bz_container mk, nda::array<dcomplex,2> &fk);
+	Bz_container vdot_freq_momenta_kernel_M(const std::vector<std::vector<nda::array<dcomplex,1>>> mk, const std::vector<nda::array<dcomplex,1>> fk);
+	Bz_container MPI_vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::array<dcomplex,1>> fk);
 	nda::array<nda::dcomplex,1>  LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,  double mu);
 	Bz_container SE_mixer(Bz_container SE_old, Bz_container SE_new, double alpha);
 	nda::array<dcomplex,1> fd_on_master_poles();
@@ -184,28 +180,17 @@ class mDLR{
 
 class ggm_mDLR{
 private:
-int rank;
+
 
 public:
- ggm_mDLR(const params_param& _params,
-             const AmiGraph::gg_matrix_t& _ggm,
-             const cppdlr::imfreq_ops& _master_if_ops);
-params_param params; 
-AmiGraph::gg_matrix_t ggm;
-std::vector<AmiGraph::graph_t> graphlist;
-std::vector<std::string> graphlist_names;
-std::vector<mDLR> mDLR_list;
-size_t graph_size;
-cppdlr::imfreq_ops master_if_ops;
-void ggm_to_graphlist();
-void graphlist_to_mDLRlist();
-nda::array<dcomplex,1> master_mfreq;
-Fk_container  Fk_ggm;
+params_param params; AmiGraph::gg_matrix_t ggm; //declaration fields
+ggm_mDLR(params_param _params, AmiGraph::gg_matrix_t _ggm);
+std::vector<AmiGraph::graph_t> graph_list;
 
-void reshape_Fk_ggm();
-void ggm_Fk_solver();
-void intialize_ggm_DLR_W();
-Bz_container generate_SE(mDLR &_mDLR, nda::array<dcomplex,2> &fk);	
+void ggm_to_graphlist();
+
+	
+	
 	
 };
 

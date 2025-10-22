@@ -57,7 +57,7 @@ void params_loader(const std::string& filename, params_param& params) {
 		else if (paramName == "ord_max")
              params.ord_max = std::stoi(paramValue);
         else if (paramName == "ord_min")
-             params.ord_min = std::stoi(paramValue);
+             params.ord_max = std::stoi(paramValue);
 		else if (paramName == "mu_L")
              params.mu_L = std::stod(paramValue);
 		else if (paramName == "mu_R")
@@ -69,7 +69,7 @@ void params_loader(const std::string& filename, params_param& params) {
 
     inputFile.close();
 	std::cout << "Loaded params file with values: " << " Beta="  << params.beta << ", Emax="<<  params.Emax 
-	<< ", eps = " << params.eps << ", L= " << params.L<< ", mu= " << params.mu << ", tp= "<< params.tp << " and SCS iteration = " << params.iter << "min and max " <<params.ord_min << " " << params.ord_max;
+	<< ", eps = " << params.eps << ", L= " << params.L<< ", mu= " << params.mu << ", tp= "<< params.tp << " and SCS iteration = " << params.iter;
 }
 
 
@@ -207,9 +207,9 @@ AmiBase::g_prod_t mDLR::create_R0_from_graph() {
 	for (int i =0; i < n;i++){
 		AmiBase::alpha_t alpha = graph[fermionic_edge[i]].g_struct_.alpha_;
 		AmiBase::epsilon_t epsilon = graph[fermionic_edge[i]].g_struct_.eps_;
-		// std::cout << " i = " << i << std::endl;
-		// print1d(alpha);
-		// print1d(epsilon);
+		std::cout << " i = " << i << std::endl;
+		print1d(alpha);
+		print1d(epsilon);
 		
 		
 		AmiBase::g_struct g(epsilon,alpha);
@@ -249,7 +249,7 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_weights(nda::array<double,1> &en
 	
 	nda::array<dcomplex,1> full_weights (CN);
 	for (int i=0; i < CN;i++){
-		auto combo  = generate_single_CN(i);
+		auto const& combo  = cartesian_combo_list[i];
 	    auto result = dcomplex(1,0);
 		for (int j =0; j< N ; j++){
 			result = result * G_dlr_w_list[j](combo[j]);
@@ -398,24 +398,4 @@ Bz_container mDLR::SE_mixer(Bz_container SE_old, Bz_container SE_new, double alp
 		
 	}
 	return result;
-}
-
-Bz_container sum_containers(const std::vector<Bz_container>& all)
-{
-    if (all.empty()) return {};
-
-    // Start from the first container as a base
-    Bz_container result = all.front();
-
-    // Iterate over the remaining containers and accumulate elementwise
-    for (size_t n = 1; n < all.size(); ++n) {
-        const auto& cont = all[n];
-        for (size_t i = 0; i < cont.size(); ++i) {
-            for (size_t j = 0; j < cont[i].size(); ++j) {
-                result[i][j] += cont[i][j];  // nda::array supports operator+=
-            }
-        }
-    }
-
-    return result;
 }

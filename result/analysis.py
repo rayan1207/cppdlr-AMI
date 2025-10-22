@@ -9,7 +9,7 @@ beta =10
 U = 1
 # Load all data into a list
 
-for i in [1,]:
+for i in [1,2,3,5,7,9,11,13,15,19]:
     fname = f"{i}i_shot_{kind}.txt"
     try:
         data = np.loadtxt(fname, comments="#")
@@ -27,9 +27,11 @@ qx_val = 0
 qy_val = np.pi
 
 # Use np.isclose to filter
-df_filtered = df[np.isclose(df["qx"], qx_val) & np.isclose(df["qy"], qy_val) &  (df["wn"] > 0)]
+df_filtered = df[np.isclose(df["qx"], qx_val) & np.isclose(df["qy"], qy_val) &  (df["wn"] > 0) &  (df["wn"] <10 )]
 
 # ==== plot ====
+
+
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
 
 
@@ -41,17 +43,31 @@ for i in sorted(df_filtered["iter"].unique()):
         
 
 
-ax1.set_ylabel("Re")
-ax2.set_ylabel("Im")
-ax2.set_xlabel(" DLR Matsubara Frequency $\\omega_n$")
+ax1.set_ylabel(" Re $\Sigma$ ",fontsize=11)
+ax2.set_ylabel("Im $\Sigma$ ",fontsize=11)
+ax2.set_xlabel(" DLR Matsubara Frequency $\\omega_n$",fontsize=11)
 
-# ax1.set_title(f"{kind} at q ≈ ({qx_val:.3f}, {qy_val:.3f}), L=15x15,beta={beta},U={U}")
+
 ax1.legend(ncol=3)
 ax2.legend(ncol=3)
 ax1.grid(True)
 ax2.grid(True)
+plt.suptitle(r'GF2, $q=(\pi,0), N_c=64,\beta=33, U=13$',fontsize=13)
 plt.tight_layout()
-
 plt.show()
+
+
+last_iter =1
+
+# Select only that iteration
+sub_last = df_filtered[df_filtered["iter"] == last_iter]
+
+# Stack wn and Im into two columns
+out = np.column_stack((sub_last["wn"], sub_last["Im"]))
+
+# Save to disk
+np.savetxt(f"data/o3_DCA_N0_NC16.txt",
+           out,
+           fmt="%.8e")
 
 
