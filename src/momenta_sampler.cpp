@@ -22,7 +22,7 @@ inline void mDLR::generate_ith_momenta_cartesian_combo(int i, std::vector<int>& 
 inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,std::vector<int> &combo,const std::vector<int> &kcombo)
 {
     nda::dcomplex val(1.0, 0.0);
-
+    
     for (int i = 0; i < N; ++i) {
 
         const auto& info      = multiple_dlr_structs[i].ginfo;
@@ -32,8 +32,8 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
         double qy = alpha[asz - 1] * ky_ext;
         for (int j = 0; j < ord; ++j) {
             double a = static_cast<double>(alpha[j]);
-            qx += a * kvals_ptr[ kcombo[2*j    ] ];
-            qy += a * kvals_ptr[ kcombo[2*j + 1] ];
+            qx += a * kvals[ kcombo[2*j    ] ];
+            qy += a * kvals[ kcombo[2*j + 1] ];
         }
 
 
@@ -63,13 +63,13 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
 
     for (int c = 0; c < CN; c++) {
         // const int* combo_ptr = cartesian_combo_list[c].data();
-		auto combo_element = generate_single_CN(c);
+		auto combo = generate_single_CN(c);
         auto sum = nda::dcomplex(0,0);
         for (int k = 0; k < kN; k++) {   
             generate_ith_momenta_cartesian_combo(k,kcombo_element);
             sum += compute_momenta_one_kCN_kernel(
                        kx_ext, ky_ext,
-                       combo_element,
+                       combo,
                        kcombo_element);
         }
 		
@@ -110,10 +110,9 @@ Bz_container mDLR::compute_momenta_kernel_bz(){
 	
 	return data_to_full_bz(M);
 	 
-}	
+}
 
-
-Bz_container mDLR::MPI_vdot_freq_momenta_kernel_M(Bz_container mk, nda::array<dcomplex,2> &fk){
+Bz_container mDLR::MPI_vdot_freq_momenta_kernel_M(Bz_container &mk, nda::array<dcomplex,2> &fk){
 	
 	int Nf = fk.shape()[0];
 	

@@ -23,17 +23,6 @@ int main(int argc, char** argv){
 	std::cout<<std::endl;
 
 	
-	
-	
-
-	
-	
-	
-	
-
-	
-	
-	
 	double NC = 161;
 	double beta   = params.beta;
     double eps    = params.eps;
@@ -47,20 +36,27 @@ int main(int argc, char** argv){
 	AmiBase ami;
 	//AmiBase::g_prod_t R0=construct_example2();
 	
-	double master_E = 5; double master_eps=1e-7;
+	double master_E = 4; double master_eps=1e-6;
 	double master_lambda = params.beta*master_E;
     auto dlr_rf = build_dlr_rf(master_lambda,master_eps );
     auto master_if_ops = imfreq_ops(master_lambda, dlr_rf, Fermion);
 	
-	
-	
+
 
 	ggm_mDLR  mult_mDLR( params, ggm,master_if_ops);
+	
+		
 	mult_mDLR.ggm_Fk_solver();
 	mult_mDLR.intialize_ggm_DLR_W();
 	std::vector<Bz_container> SE_list(mult_mDLR.graph_size);
+	// auto &Fk1 =mult_mDLR.Fk_ggm[0];
+	// SE_list[0] = mult_mDLR.generate_SE( mult_mDLR.mDLR_list[0],Fk1);
+	 
+	 
+	// auto &Fk2 =mult_mDLR.Fk_ggm[0];
+	// SE_list[0] = mult_mDLR.generate_SE( mult_mDLR.mDLR_list[0],Fk2);
 	for (int i =0; i< mult_mDLR.graph_size; i++){
-		SE_list[i] = mult_mDLR.generate_SE( mult_mDLR.mDLR_list[i], mult_mDLR.Fk_ggm[i]);	
+		SE_list[i] = mult_mDLR.generate_SE( mult_mDLR.mDLR_list[i], mult_mDLR.Fk_ggm[i]);		
 		std::string file_SE = std::format("../result/SE_graph_{}.txt", i+1);
 		mult_mDLR.mDLR_list[i].write_data_momenta(file_SE, SE_list[i], mult_mDLR.master_mfreq);	
 	}

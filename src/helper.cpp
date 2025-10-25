@@ -161,41 +161,11 @@ void mDLR::write_data_ij_momenta(const std::string& filename,
 
     file.close();
 std::cout << "Data written to " << filename << std::endl;
-}
-}
-
-
-AmiBase::g_prod_t construct_example2(){
-
-	AmiBase::g_prod_t g;
-
-	// Setting up G array
-	// defining alpha's /// std::vector<int>
-
-
-	AmiBase::alpha_t alpha_1={1,0,0};
-	AmiBase::alpha_t alpha_2={0,1,0};
-	AmiBase::alpha_t alpha_3={1,-1,1};
-
-	//defining epsilon's
-	AmiBase::epsilon_t epsilon_1={1,0,0};
-	AmiBase::epsilon_t epsilon_2={0,1,0};
-	AmiBase::epsilon_t epsilon_3={0,0,1};
-
-	AmiBase::g_struct g1(epsilon_1,alpha_1);
-	AmiBase::g_struct g2(epsilon_2,alpha_2);
-	AmiBase::g_struct g3(epsilon_3,alpha_3);
-
-	// AmiBase::g_prod_t R0={g1,g2,g3};
-
-	// OR
-	AmiBase::g_prod_t R0;
-	R0.push_back(g1);
-	R0.push_back(g2);
-	R0.push_back(g3);
-	return R0;
+	}
 
 }
+
+
 
 AmiBase::g_prod_t mDLR::create_R0_from_graph() {
 	AmiBase::g_prod_t R0;
@@ -216,8 +186,7 @@ AmiBase::g_prod_t mDLR::create_R0_from_graph() {
 		R0.push_back(g);	
 	}
 		
-	return R0;
-	
+	return R0;	
 	
 }
 
@@ -233,32 +202,7 @@ std::vector<std::complex<double>> convertToComplex(const std::vector<double> vec
 }
 
 
-nda::array<dcomplex,1> mDLR::evaluate_auxillary_weights(nda::array<double,1> &energy) {
-	nda::array<dcomplex ,1> weights;
-	std::vector<nda::array<dcomplex,1>> G_dlr_list;
-	std::vector<nda::array<dcomplex,1>> G_dlr_w_list;
-	for (int i =0; i< N;i++){
-		auto dlr_R0 =  multiple_dlr_structs[i];
-		
-		auto gdlr_R0 = generate_nda_Gdlr_from_energy(dlr_R0.if_ops, energy[i]);
-		auto weights = dlr_R0.if_ops.vals2coefs(beta, gdlr_R0);
-		G_dlr_list.push_back(gdlr_R0);
-		G_dlr_w_list.push_back(weights);
-	}
-	
-	
-	nda::array<dcomplex,1> full_weights (CN);
-	for (int i=0; i < CN;i++){
-		auto combo  = generate_single_CN(i);
-	    auto result = dcomplex(1,0);
-		for (int j =0; j< N ; j++){
-			result = result * G_dlr_w_list[j](combo[j]);
-		}
-		full_weights(i) = result;	
-	}
-	
-	return full_weights;
-}
+
 
 
 double mDLR::hubbard_dispersion(double kx, double ky,double mu){
@@ -272,7 +216,7 @@ double fermi_distribution(double energy, double beta ){
 }
 
 void mDLR::fill_dlro_pole_info(){
-	
+	    total_num =1;
 		for (auto dlr_R0 : multiple_dlr_structs){
 		total_num =total_num*dlr_R0.pole_num;
 		num_pole_each_dlr.push_back(dlr_R0.pole_num);	
@@ -404,18 +348,43 @@ Bz_container sum_containers(const std::vector<Bz_container>& all)
 {
     if (all.empty()) return {};
 
-    // Start from the first container as a base
+
     Bz_container result = all.front();
 
-    // Iterate over the remaining containers and accumulate elementwise
     for (size_t n = 1; n < all.size(); ++n) {
         const auto& cont = all[n];
         for (size_t i = 0; i < cont.size(); ++i) {
             for (size_t j = 0; j < cont[i].size(); ++j) {
-                result[i][j] += cont[i][j];  // nda::array supports operator+=
-            }
+                result[i][j] += cont[i][j];  
         }
     }
-
-    return result;
+	}
+	return result;
 }
+
+// nda::array<dcomplex,1> mDLR::evaluate_auxillary_weights(nda::array<double,1> &energy) {
+// 	nda::array<dcomplex ,1> weights;
+// 	std::vector<nda::array<dcomplex,1>> G_dlr_list;
+// 	std::vector<nda::array<dcomplex,1>> G_dlr_w_list;
+// 	for (int i =0; i< N;i++){
+// 		auto dlr_R0 =  multiple_dlr_structs[i];
+		
+// 		auto gdlr_R0 = generate_nda_Gdlr_from_energy(dlr_R0.if_ops, energy[i]);
+// 		auto weights = dlr_R0.if_ops.vals2coefs(beta, gdlr_R0);
+// 		G_dlr_list.push_back(gdlr_R0);
+// 		G_dlr_w_list.push_back(weights);
+// 	}
+	
+	
+// 	nda::array<dcomplex,1> full_weights (CN);
+// 	for (int i=0; i < CN;i++){
+// 		auto const& combo  = cartesian_combo_list[i];
+// 	    auto result = dcomplex(1,0);
+// 		for (int j =0; j< N ; j++){
+// 			result = result * G_dlr_w_list[j](combo[j]);
+// 		}
+// 		full_weights(i) = result;	
+// 	}
+	
+// 	return full_weights;
+// }

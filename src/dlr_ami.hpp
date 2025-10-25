@@ -3,7 +3,7 @@
 #include "ami_calc.hpp"
 #include "amigraph.hpp"
 #include <cassert>
-#include <experimental/filesystem>
+#include <filesystem>
 #include <cmath>
 #include <fstream>
 #include <iostream>
@@ -99,8 +99,7 @@ class mDLR{
 	double two_pi     ;
     double inv_two_pi ;
     double inv_dk     ;
-    double* kvals_ptr;
-	std::vector<int> kcombo_element;
+    std::vector<int> kcombo_element;
 	
 
 	public:
@@ -124,10 +123,6 @@ class mDLR{
 	nda::array<double,1> master_poles;
 	nda::array<dcomplex,1> fd_master_poles;
 	std::vector<std::vector<nda::array<dcomplex,1>>> master_dlrW_in_square; //master dlr weight
-	// std::vector<std::vector<int>> cartesian_combo_list; /// contains the cartesian product indices for poles
- ///co
-	
-	std::vector<std::vector<double>> auxillary_energy_list;
 	mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl, double _tp, AmiGraph::graph_t _graph,cppdlr::imfreq_ops _master_if_ops );
 	//////// methods ////////////
 	
@@ -138,12 +133,13 @@ class mDLR{
 	void fill_dlro_pole_info();
 	void fill_dlro_momenta_info();
 	void create_multiple_gstruct();
-	void generate_cartesian_list();
+	// void generate_cartesian_list();
 	std::vector<int> generate_single_CN(int index);
-	void generate_auxillary_energy_list();
-	AmiBase::energy_t generate_auxillary_energy(std::vector<int> &combo);
+	// void generate_auxillary_energy_list();
+	AmiBase::energy_t generate_auxillary_energy(std::vector<int> &combo) ;
 	nda::array<dcomplex,1> evaluate_auxillary_energies(nda::dcomplex &imfreq);
-	nda::array<dcomplex,1> evaluate_auxillary_weights(nda::array<double,1> &energy);
+	
+	// nda::array<dcomplex,1> evaluate_auxillary_weights( nda::array<double,1> &energy);
 	
 	
 	
@@ -162,8 +158,8 @@ class mDLR{
 	Bz_container G_from_DLR_SE_M_DMFT(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
 	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
 	Bz_container compute_momenta_kernel_bz();
-	Bz_container vdot_freq_momenta_kernel_M(const std::vector<std::vector<nda::array<dcomplex,1>>> mk, nda::array<dcomplex,2> &fk);
-	Bz_container MPI_vdot_freq_momenta_kernel_M(Bz_container mk, nda::array<dcomplex,2> &fk);
+	Bz_container vdot_freq_momenta_kernel_M( std::vector<std::vector<nda::array<dcomplex,1>>> &mk,  std::vector<nda::array<dcomplex,1>> &fk);
+	Bz_container MPI_vdot_freq_momenta_kernel_M(Bz_container &mk, nda::array<dcomplex,2> &fk);
 	nda::array<nda::dcomplex,1>  LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,  double mu);
 	Bz_container SE_mixer(Bz_container SE_old, Bz_container SE_new, double alpha);
 	nda::array<dcomplex,1> fd_on_master_poles();

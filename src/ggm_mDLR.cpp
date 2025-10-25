@@ -7,9 +7,10 @@ ggm_mDLR::ggm_mDLR(const params_param& _params,
                    const cppdlr::imfreq_ops& _master_if_ops)
     : params(_params), ggm(_ggm), master_if_ops(_master_if_ops)
 {
+	//graphlist.reserve(3);
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     // std::cout << "Initializing ggm_mDLR\n";
- 
+    // std::cout << "ggm top-level size = " << ggm.size() << std::endl;
     ggm_to_graphlist();
     // std::cout << "Constructing the mDLR objects for " << graphlist.size() << " graphs\n";
     graphlist_to_mDLRlist();
@@ -23,14 +24,14 @@ ggm_mDLR::ggm_mDLR(const params_param& _params,
 	
 	// std::cout << " \n \n DLR master frequencies are :" << master_nodes <<std::endl;
 	reshape_Fk_ggm();
-	// Fk_ggm.resize(graph_size)
-	std::cout << "ggm top-level size = " << graph_size << std::endl;
+	
 }
 	
 	
 void ggm_mDLR::ggm_to_graphlist(){
 	// std::cout<< "Loading graphs \n";
 	// std::cout << "the  ggm size is :"<< ggm.size();
+	int count =0;
 	for (int i = params.ord_min; i < params.ord_max+1; ++i){
 	 for (int j= 0; j< ggm[i].size(); ++j){
 		 for (int k=0; k <ggm[i][j].graph_vec.size();++k){
@@ -40,6 +41,7 @@ void ggm_mDLR::ggm_to_graphlist(){
 			 graphlist_names.push_back(name);
 			 graphlist.push_back(graph);
 			 // std::cout<< "Sampling graph " << name << std::endl;
+			 count++;
 			}
 		}
 	}
@@ -56,24 +58,12 @@ void ggm_mDLR::graphlist_to_mDLRlist(){
 }
 
 
-// void ggm_mDLR::reshape_Fk_ggm(){
-	// Fk_ggm.resize(graph_size);
-	// for (int i =0; i < graph_size; i++){
-		// Fk_ggm[i].resize(master_mfreq.size());
-		// for (int j=0;j< master_mfreq.size();j++){
-			// Fk_ggm[i][j].resize(mDLR_list[i]);			
-		// }		
-	// }	
-// }
-
-
 void ggm_mDLR::reshape_Fk_ggm(){
 	Fk_ggm.resize(graph_size);
 	for (int i =0; i < graph_size; i++){
 		 Fk_ggm[i] = nda::array<dcomplex, 2>(master_mfreq.size(), mDLR_list[i].MPI_obj.count);
 	}
 }
-
 
 void ggm_mDLR::ggm_Fk_solver(){
 	auto t0 = std::chrono::high_resolution_clock::now();
@@ -107,7 +97,6 @@ Bz_container ggm_mDLR::generate_SE(mDLR &_mDLR, nda::array<dcomplex,2> &fk  ){
 	if (rank ==0) {std::cout << "Momenta kernel computed \n";}
     return _mDLR.MPI_vdot_freq_momenta_kernel_M(momenta_kernel, fk);
 }
-
 	
 	
 

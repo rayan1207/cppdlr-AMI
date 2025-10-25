@@ -1,35 +1,49 @@
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.20)
 project(mini_ami VERSION 0.1 LANGUAGES CXX)
 
-# --------------------
-# C++ Standard
-# --------------------
-set(CMAKE_CXX_STANDARD 23)
+# ---- C++ standard ----
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# --------------------
-# Build Type & Flags
-# --------------------
+# ---- Build type ----
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE RelWithDebInfo)
 endif()
-add_compile_options(-O3)
-add_compile_definitions(USE_MPI)
 
-# --------------------
-# External Dependencies
-# --------------------
-find_package(Boost 1.71 REQUIRED COMPONENTS filesystem system)
+# --------------------------
+# Dependencies (use packages)
+# --------------------------
+find_package(MPI REQUIRED)
+find_package(Boost 1.71 REQUIRED)           # header-only is fine
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
-find_package(BLAS REQUIRED)
-find_package(LAPACK REQUIRED)
-find_package(OpenMP REQUIRED)
 
+# cppdlr brings nda, h5, OpenBLAS/LAPACK, fmt, etc. transitively.
+# Make sure CMAKE_PREFIX_PATH includes your cppdlr install (or source cppdlrvars.sh).
+find_package(cppdlr REQUIRED CONFIG)
 
-# --------------------
+# --------------------------
+# Your local libraries (AMI stack)
+# Set overridable roots; defaults match your current layout.
+# You can -DXXX_ROOT=/path override these at configure time.
+# --------------------------
+set(AMIGRAPH_ROOT   "${CMAKE_CURRENT_SOURCE_DIR}/../libamigraph/install" CACHE PATH "amigraph install root")
+set(AMICALC_ROOT    "${CMAKE_CURRENT_SOURCE_DIR}/../libamicalc/install"  CACHE PATH "amicalc install root")
+set(AMI_ROOT        "${CMAKE_CURRENT_SOURCE_DIR}/../../../libami/install" CACHE PATH "ami install root")
+
+# Include dirs
+set(AMIGRAPH_INCLUDE "${AMIGRAPH_ROOT}/include")
+set(AMICALC_INCLUDE  "${AMICALC_ROOT}/include")
+set(AMI_INCLUDE      "${AMI_ROOT}/include")
+
+# Find the actual dylibs without hard-coding full names
+find_library(AMIGRAPH_LIB amigraph PATHS "${AMIGRAPH_ROOT}/lib" REQUIRED)
+find_library(AMICALC_LIB  amicalc  PATHS "${AMICALC_ROOT}/lib"  REQUIRED)
+find_library(AMI_LIB      ami      PATHS "${AMI_ROOT}/lib"      REQUIRED)
+
+# --------------------------
 # Executable
-# --------------------
+# --------------------------
 add_executable(${PROJECT_NAME}
   src/mini_main.cpp
   src/dlr_ami.hpp
@@ -38,53 +52,42 @@ add_executable(${PROJECT_NAME}
   src/momenta_sampler.cpp
   src/ggm_mDLR.cpp
 )
-# Link OpenMP after target is defined
-target_link_libraries(mini_ami PRIVATE OpenMP::OpenMP_CXX)
-target_compile_options(${PROJECT_NAME} PRIVATE
-  -O3
-  -march=native
-  -funroll-loops
-  -ffast-math
-)
-# --------------------
-# Include Directories
-# --------------------
+
+target_compile_definitions(${PROJECT_NAME} PRIVATE USE_MPI)
+
 target_include_directories(${PROJECT_NAME} PRIVATE
   ${Boost_INCLUDE_DIRS}
   ${EIGEN3_INCLUDE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/../../../libami/install/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/../libamicalc/install/include
-  ${CMAKE_CURRENT_SOURCE_DIR}/../libamigraph/install/include
-  /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/include
+  ${MPI_INCLUDE_PATH}
+  ${AMIGRAPH_INCLUDE}
+  ${AMICALC_INCLUDE}
+  ${AMI_INCLUDE}
 )
 
-# --------------------
-# Link Libraries
-# --------------------
+# Link: use imported targets; let cppdlr pull its deps.
 target_link_libraries(${PROJECT_NAME} PRIVATE
-  # Ami stack (in dependency order)
-  ${CMAKE_CURRENT_SOURCE_DIR}/../libamigraph/install/lib/libamigraph.so
-  ${CMAKE_CURRENT_SOURCE_DIR}/../libamicalc/install/lib/libamicalc.so
-  ${CMAKE_CURRENT_SOURCE_DIR}/../../../libami/install/lib/libami.so
-
-  # cppdlr C API static archives
-  /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/lib/libcppdlr_c.a
-  /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/lib/libnda_c.a
-  /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/lib/libh5_c.a
-  /mnt/c/Users/Rayan/Research/leblanc_codes/AMI/cppdlr/lib/libfmt.a
-
-  # BLAS and LAPACK
-  ${BLAS_LIBRARIES}
-  ${LAPACK_LIBRARIES}
-
-  # Standard and Boost
-  m
-  stdc++fs
-  Boost::filesystem
-  Boost::system
+  cppdlr::cppdlr_c
+  MPI::MPI_CXX
+  Boost::boost
+  Eigen3::Eigen
+  ${AMIGRAPH_LIB}
+  ${AMICALC_LIB}
+  ${AMI_LIB}
 )
 
-# --------------------
-# Installation
-# --------------------
+# --------------------------
+# RPATH (so it runs without DYLD hacks)
+# --------------------------
+# If you sourced cppdlrvars.sh, CPPDLR_ROOT is defined.
+if(DEFINED ENV{CPPDLR_ROOT})
+  list(APPEND CMAKE_BUILD_RPATH "$ENV{CPPDLR_ROOT}/lib")
+  list(APPEND CMAKE_INSTALL_RPATH "$ENV{CPPDLR_ROOT}/lib")
+endif()
+# Add your local libs to rpath too
+list(APPEND CMAKE_BUILD_RPATH "${AMIGRAPH_ROOT}/lib" "${AMICALC_ROOT}/lib" "${AMI_ROOT}/lib")
+list(APPEND CMAKE_INSTALL_RPATH "${AMIGRAPH_ROOT}/lib" "${AMICALC_ROOT}/lib" "${AMI_ROOT}/lib")
+
+set(CMAKE_MACOSX_RPATH ON)
+
+# ---- Install ----
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)

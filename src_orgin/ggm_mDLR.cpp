@@ -9,7 +9,7 @@ ggm_mDLR::ggm_mDLR(const params_param& _params,
 {
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
     // std::cout << "Initializing ggm_mDLR\n";
-    // std::cout << "ggm top-level size = " << ggm.size() << std::endl;
+ 
     ggm_to_graphlist();
     // std::cout << "Constructing the mDLR objects for " << graphlist.size() << " graphs\n";
     graphlist_to_mDLRlist();
@@ -23,7 +23,8 @@ ggm_mDLR::ggm_mDLR(const params_param& _params,
 	
 	// std::cout << " \n \n DLR master frequencies are :" << master_nodes <<std::endl;
 	reshape_Fk_ggm();
-	
+	// Fk_ggm.resize(graph_size)
+	std::cout << "ggm top-level size = " << graph_size << std::endl;
 }
 	
 	
@@ -66,21 +67,55 @@ void ggm_mDLR::reshape_Fk_ggm(){
 }
 
 
+// void ggm_mDLR::reshape_Fk_ggm(){
+// 	Fk_ggm.resize(graph_size);
+// 	for (int i =0; i < graph_size; i++){
+// 		 Fk_ggm[i] = nda::array<dcomplex, 2>(master_mfreq.size(), mDLR_list[i].MPI_obj.count);
+// 	}
+// }
+
+
+// void ggm_mDLR::ggm_Fk_solver(){
+// 	auto t0 = std::chrono::high_resolution_clock::now();
+// 	for (int i =0; i < graph_size; i++){
+// 	if (rank ==0){
+// 	std::cout << " Computing Frequency kernel for the Graph: " << graphlist_names[i] << std::endl;}
+// 	auto& mDLR = mDLR_list[i];
+// 		for (int j=0; j < master_mfreq.size();j++){
+// 			if (rank==0){std::cout<< "Computing -> " << j+1 <<"/" << master_mfreq.size() << " frequency point\n";}
+				
+// 				Fk_ggm[i](j,nda::range::all) = mDLR.evaluate_auxillary_energies(master_mfreq(j));
+// 			}
+// 			auto t1 = std::chrono::high_resolution_clock::now();
+// 			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
+// 			if (rank==0){
+// 				std::cout << " Consturctin of frequency kernel took: " <<duration.count() << " ms \n";}
+// 				t0 = t1;
+// 		}
+// 	}
+
+
 void ggm_mDLR::ggm_Fk_solver(){
+	auto t0 = std::chrono::high_resolution_clock::now();
 	for (int i =0; i < graph_size; i++){
 	if (rank ==0){
 	std::cout << " Computing Frequency kernel for the Graph: " << graphlist_names[i] << std::endl;}
 	auto& mDLR = mDLR_list[i];
 		for (int j=0; j < master_mfreq.size();j++){
-			if (rank==0){
-				std::cout<< "Computing -> " << j <<"/" << master_mfreq.size() << " frequency point\n";}	
+			if (rank==0){std::cout<< "Computing -> " << j+1 <<"/" << master_mfreq.size() << " frequency point\n";}
+				
 				auto frequency_kernel= mDLR.evaluate_auxillary_energies(master_mfreq(j)); 
-				Fk_ggm[i][j] = std::move(frequency_kernel);
+               Fk_ggm[i][j] = std::move(frequency_kernel);
 			}
-			
+			auto t1 = std::chrono::high_resolution_clock::now();
+			auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
+			if (rank==0){
+				std::cout << " Consturctin of frequency kernel took: " <<duration.count() << " ms \n";}
+				t0 = t1;
 		}
 	}
-	
+		
+				
 void ggm_mDLR::intialize_ggm_DLR_W(){
 	for (auto &mDLR : mDLR_list){
 		mDLR.populate_master_dlrW_from_G0(params.mu);
@@ -91,6 +126,7 @@ void ggm_mDLR::intialize_ggm_DLR_W(){
 	
 Bz_container ggm_mDLR::generate_SE(mDLR &_mDLR, std::vector<nda::array<dcomplex,1>> &fk  ){                  
 	auto momenta_kernel = _mDLR.compute_momenta_kernel_bz();
+	if (rank ==0) {std::cout << "Momenta kernel computed \n";}
     return _mDLR.MPI_vdot_freq_momenta_kernel_M(momenta_kernel, fk);
 }
 

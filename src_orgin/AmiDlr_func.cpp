@@ -69,9 +69,9 @@ mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,doubl
 	MPI_obj =create_MPI_obj(total_num);
 	// std::cout<< "Done\n";
 	// std::cout << " Generating cartesian list from auxillary poless from G DLR rep \n";
-	generate_cartesian_list();
-	std::cout<<std::endl;
-	CN = cartesian_combo_list.size();
+	// generate_cartesian_list();
+	// std::cout<<std::endl;
+	CN = MPI_obj.count;
 	std::cout<<std::endl;
 
 	dk = 2*M_PI/(kl);
@@ -91,7 +91,7 @@ mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,doubl
 	std::cout << " Populating the auxillary energy lists from cartesian list \n";
 	}
 	
-	generate_auxillary_energy_list();
+	// generate_auxillary_energy_list();
     master_pole_num = master_if_ops.get_ifnodes().size();
 	master_poles = master_if_ops.get_rfnodes()/beta;
 	fd_master_poles = fd_on_master_poles();
@@ -136,33 +136,56 @@ void mDLR::create_DLR_master_if_ops(){
 
 
 
-void mDLR::generate_cartesian_list(){
-	cartesian_combo_list.reserve(MPI_obj.count);
-	for (int i=MPI_obj.start; i < MPI_obj.end;i++){
-		std::vector<int> tmp;
-		int previous = 1;
-		for (int j =0;j<  num_pole_each_dlr.size();j++){
-			tmp.push_back( i/previous %( num_pole_each_dlr[j] ));
-			previous = previous*num_pole_each_dlr[j];    
-		}
-		cartesian_combo_list.emplace_back(std::move(tmp));		
-	}
+// void mDLR::generate_cartesian_list(){
+	// cartesian_combo_list.reserve(MPI_obj.count);
+	// for (int i=MPI_obj.start; i < MPI_obj.end;i++){
+		// std::vector<int> tmp;
+		// int previous = 1;
+		// for (int j =0;j<  num_pole_each_dlr.size();j++){
+			// tmp.push_back( i/previous %( num_pole_each_dlr[j] ));
+			// previous = previous*num_pole_each_dlr[j];    
+		// }
+		// cartesian_combo_list.emplace_back(std::move(tmp));		
+	// }
 	
+// }
+
+std::vector<int> mDLR::generate_single_CN(int index){
+    int i = MPI_obj.start +index;
+	std::vector<int> combo(N);
+	int previous = 1;
+	for (int j =0;j<  num_pole_each_dlr.size();j++){
+		combo[j]= i/previous %( num_pole_each_dlr[j] );
+		previous = previous*num_pole_each_dlr[j];    
+	}
+    return combo;	
 }
 
 
-void mDLR::generate_auxillary_energy_list(){
-	auxillary_energy_list.reserve(cartesian_combo_list.size());
-	for (auto const& combo : cartesian_combo_list){
-		std::vector<std::vector<double>> tmp;
-		for (int i = 0; i< N;i++){
+// void mDLR::generate_auxillary_energy_list(){
+	// auxillary_energy_list.reserve(cartesian_combo_list.size());
+	// for (auto const& combo : cartesian_combo_list){
+		// std::vector<std::vector<double>> tmp;
+		// for (int i = 0; i< N;i++){
+			// tmp.emplace_back(multiple_dlr_structs[i].evec[combo[i]]);		
+		// }
+		// auto summed_tmp = sumVectors(tmp);
+		// auxillary_energy_list.emplace_back(std::move(summed_tmp));
+	// }
+	// //print2d(auxillary_energy_list);
+// }
+
+AmiBase::energy_t mDLR::generate_auxillary_energy(std::vector<int> &combo) {
+	std::vector<std::vector<double>> tmp;
+
+	for (int i = 0; i< N;i++){
 			tmp.emplace_back(multiple_dlr_structs[i].evec[combo[i]]);		
 		}
-		auto summed_tmp = sumVectors(tmp);
-		auxillary_energy_list.emplace_back(std::move(summed_tmp));
-	}
-	//print2d(auxillary_energy_list);
+
+	auto summed_tmp = sumVectors(tmp);
+	return  convertToComplex(summed_tmp);	
 }
+
 
 
 nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
@@ -174,7 +197,9 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
 	
 	
 	for (int i =0; i<CN;i++){
-		AmiBase::energy_t energy =  convertToComplex(auxillary_energy_list[i]);
+		// AmiBase::energy_t energy =  convertToComplex(auxillary_energy_list[i]);
+		auto  combo = generate_single_CN(i);
+		AmiBase::energy_t energy =  generate_auxillary_energy(combo);
 		AmiBase::ami_vars external(energy, frequency,beta);
 	
 	// Storage objects for S,P,R 
@@ -196,8 +221,6 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
 
 	}
 	return frequency_kernel;
-	
-
 }
 
 nda::array<dcomplex,1> mDLR::generate_nda_Gdlr_from_energy( cppdlr::imfreq_ops &ops,
@@ -276,7 +299,7 @@ void mDLR::transfer_master_DLR_weights_to_dlrR0_elements(){
 }
 
 
-Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::array<dcomplex,1>> fk){
+Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container mk, nda::array<dcomplex,2> &fk){
 	
 	
 	Bz_container result(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(fk.size())));
@@ -285,7 +308,7 @@ Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container mk, std::vector<nda::
 			auto const &momenta_kernel = mk[i][j];
 			
 			for (int k; k<fk.size();k++){
-				result[i][j](k) = prefactor*std::pow(Uval,ord)*nda::dotc(fk[k],momenta_kernel)/(std::pow((double) kl*kl,ord));
+				result[i][j](k) = prefactor*std::pow(Uval,ord)*nda::dotc(fk(k,nda::range::all),momenta_kernel)/(std::pow((double) kl*kl,ord));
 			}			
 		}	
 	}
