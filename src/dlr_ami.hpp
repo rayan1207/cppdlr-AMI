@@ -41,10 +41,10 @@ AmiBase::ami_vars construct_ext_example2();
 
 inline AmiGraph g(AmiBase::Sigma, 0);
 
-
 //////params loader functions/////////////
 using Bz_container =  std::vector<std::vector<nda::array<dcomplex,1>>>;
 using Fk_container =  std::vector<nda::array<dcomplex,2>>;
+namespace fs = std::filesystem;
 Bz_container sum_containers(const std::vector<Bz_container>& all);
 struct params_param {
 	double Uval;
@@ -62,6 +62,7 @@ struct params_param {
 	double mu_L;
 	double mu_R;
 	int DCA;
+	int patch_N;
 };
 
 std::string trim(const std::string& str);
@@ -201,8 +202,16 @@ Fk_container  Fk_ggm;
 void reshape_Fk_ggm();
 void ggm_Fk_solver();
 void intialize_ggm_DLR_W();
+Bz_container generate_summed_SE(int iter,bool write);
+void transfer_ggm_DLR_W(Bz_container &GF);
+void ScPT_solver(int max_iters);
+
+
+
+
 Bz_container generate_SE(mDLR &_mDLR, nda::array<dcomplex,2> &fk);	
-	
+Bz_container cSE; ///converged SE
+Bz_container cGF; ///converged GF
 };
 
 

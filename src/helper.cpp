@@ -64,12 +64,14 @@ void params_loader(const std::string& filename, params_param& params) {
              params.mu_R = std::stod(paramValue);
 		else if (paramName == "DCA")
 			 params.DCA = std::stoi(paramValue);
+		else if (paramName == "patch_N")
+			 params.patch_N= std::stoi(paramValue);
     }
 	
-
     inputFile.close();
 	std::cout << "Loaded params file with values: " << " Beta="  << params.beta << ", Emax="<<  params.Emax 
-	<< ", eps = " << params.eps << ", L= " << params.L<< ", mu= " << params.mu << ", tp= "<< params.tp << " and SCS iteration = " << params.iter << "min and max " <<params.ord_min << " " << params.ord_max;
+	<< ", eps = " << params.eps << ", L= " << params.L<< ", mu= " << params.mu << ", tp= "<< params.tp << " and SCS iteration = " << params.iter << "min and max " <<params.ord_min << " " << params.ord_max
+	<< "patch_N = " << params.patch_N << std::endl;
 }
 
 
@@ -80,6 +82,8 @@ void mDLR::write_data_momenta(const std::string& filename,
                             nda::array<dcomplex,1>& mfreq  )
 {
     // Extract the NDA 1D array for the (i,j) momenta
+
+
 	if (MPI_obj.rank == 0){
     int size = data[0][0].size();
 
@@ -356,8 +360,8 @@ Bz_container sum_containers(const std::vector<Bz_container>& all)
         for (size_t i = 0; i < cont.size(); ++i) {
             for (size_t j = 0; j < cont[i].size(); ++j) {
                 result[i][j] += cont[i][j];  
-        }
-    }
+        	}
+   	 	}
 	}
 	return result;
 }

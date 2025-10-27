@@ -9,8 +9,8 @@ inline void mDLR::generate_ith_momenta_cartesian_combo(int i, std::vector<int>& 
     
     for (int j = 0; j < 2*ord; ++j) {
         int base     = num_k_each_dlr[j];
-        result[j]    = q % base;  // one modulo
-        q           /= base;      // one division
+        result[j]    = q % base;  
+        q           /= base;      
     }
 }
 
@@ -125,7 +125,7 @@ Bz_container mDLR::MPI_vdot_freq_momenta_kernel_M(Bz_container &mk, nda::array<d
 		for (int j=0;j<kl;j++){
 			auto const &momenta_kernel = mk[i][j];
 			for (int k=0; k<Nf; k++){
-				local_result[(i*kl+j)*Nf+k] = prefactor*std::pow(Uval,ord)*nda::dotc(fk(k,nda::range::all),momenta_kernel)/(std::pow((double) kl*kl,ord));
+				local_result[(i*kl+j)*Nf+k] = prefactor*std::pow(Uval,ord)*nda::dot(fk(k,nda::range::all),momenta_kernel)/(std::pow((double) kl*kl,ord));
 			}			
 		}	
 	}

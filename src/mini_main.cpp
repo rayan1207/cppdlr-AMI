@@ -10,6 +10,18 @@ int main(int argc, char** argv){
 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	
+	if (rank==0){
+	fs::remove_all("data");
+    std::string folder_name1 = "data/Summed_data";
+	std::string folder_name2 = "data/Individual_data";
+	fs::create_directories(folder_name1);
+	fs::create_directories(folder_name2);
+	
+}
+
+
+
+
 
 	params_param params;
 	std::string loader_file = "../loader/params.txt";
@@ -21,7 +33,6 @@ int main(int argc, char** argv){
 	AmiGraph::gg_matrix_t ggm;
 	g.read_ggmp(params.graph,ggm, params.ord_max);
 	std::cout<<std::endl;
-	double NC = 161;
 	double beta   = params.beta;
     double eps    = params.eps;
 	int kl = params.L;
@@ -40,25 +51,13 @@ int main(int argc, char** argv){
     auto dlr_rf = build_dlr_rf(master_lambda,master_eps );
     auto master_if_ops = imfreq_ops(master_lambda, dlr_rf, Fermion);
 
-	
+
 
 	ggm_mDLR  mult_mDLR( params, ggm,master_if_ops);
 	mult_mDLR.ggm_Fk_solver();
 	mult_mDLR.intialize_ggm_DLR_W();
-	std::vector<Bz_container> SE_list(mult_mDLR.graph_size);
-	for (int i =0; i< mult_mDLR.graph_size; i++){
-	
-		SE_list[i] = mult_mDLR.generate_SE( mult_mDLR.mDLR_list[i], mult_mDLR.Fk_ggm[i]);	
-		auto name = mult_mDLR.graphlist_names[i];
-		std::string file_SE = std::format("../result/SE_{}.txt", name);
-		mult_mDLR.mDLR_list[i].write_data_momenta(file_SE, SE_list[i], mult_mDLR.master_mfreq);	
-	}
-	
-
-
-	// std::cout << "It's complete" << std::endl;
+	mult_mDLR.ScPT_solver(iter);
 	// //// temporary lets print SE
-
 	MPI_Finalize();
 
 	
@@ -343,3 +342,34 @@ int main(int argc, char** argv){
 
 	
 // }
+
+
+    // auto poles = master_if_ops.get_rfnodes()/beta;
+    // auto nodes = master_if_ops.get_ifnodes();
+	// auto energy = nda::dcomplex(3,0);
+    // size_t n = nodes.size();
+	// nda::array<dcomplex,1> glist (n);
+	// nda::array<dcomplex,1> glist_r (n);
+	// nda::array<dcomplex,1> mfreq (n);
+
+	// for (int i =0;i < n;i++){
+	// 	auto f= dcomplex(0,(2*nodes[i]+1)*M_PI/beta);
+	// 	mfreq(i) = f;
+	// 	glist(i) = 1/(f- energy);
+	// }
+
+	// //std::cout << "Mfreq values are :" << mfreq <<std::endl << "glist values are :" << glist << std::endl;
+
+	// auto weights= master_if_ops.vals2coefs(beta,glist);
+
+	// for (int i =0;i < n;i++){
+	// 	for (int j =0; j< poles.size();j++){
+	//      glist_r(i) += weights[j]/(mfreq(i) -poles(j));
+	// 	}		
+	// }
+
+    // for (int i =0;i < n;i++){
+	// std::cout << "mfreq :" << mfreq(i) << "gdata :" << glist(i) << "recovered gdata:" << glist_r(i) <<std::endl;
+	// }
+
+

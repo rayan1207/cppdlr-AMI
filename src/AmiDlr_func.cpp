@@ -26,7 +26,7 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 		//std::cout << all_poles[i] << std::endl;
 		std::vector<double> tmp;
 		tmp.reserve(eps_size);
-		for (auto element : dlro.ginfo.eps_ ){ tmp.emplace_back(element* all_poles[i]);}///could negative
+		for (auto element : dlro.ginfo.eps_ ){ tmp.emplace_back(-element* all_poles[i]);}
 		dlro.evec.emplace_back(tmp);	
 	}
 	
@@ -62,6 +62,8 @@ mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,doubl
 	N = R0.size();
 	ord = g.graph_order(graph);
 	prefactor =  g.get_prefactor(graph,ord);
+
+	std::cout<<  "prefactor for this graph is" << prefactor;
 	
 
 	create_multiple_gstruct();
@@ -175,7 +177,7 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
 	std::complex<double> calc_result=ami.evaluate(test_amiparms,R_array, P_array, S_array,  external);
 	//std::cout<<"Result was "<< calc_result<<std::endl;
 	
-	frequency_kernel(i) = dcomplex(-1,0)*calc_result;
+	frequency_kernel(i) = calc_result;
 
 	}
 	return frequency_kernel;
@@ -268,7 +270,7 @@ Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container &mk, std::vector<nda:
 			auto const &momenta_kernel = mk[i][j];
 			
 			for (int k; k<fk.size();k++){
-				result[i][j](k) = prefactor*std::pow(Uval,ord)*nda::dotc(fk[k],momenta_kernel)/(std::pow((double) kl*kl,ord));
+				result[i][j](k) = prefactor*std::pow(Uval,ord)*nda::dot(fk[k],momenta_kernel)/(std::pow((double) kl*kl,ord));
 			}			
 		}	
 	}
