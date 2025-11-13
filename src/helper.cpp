@@ -366,6 +366,9 @@ Bz_container sum_containers(const std::vector<Bz_container>& all)
 	return result;
 }
 
+
+
+
 // nda::array<dcomplex,1> mDLR::evaluate_auxillary_weights(nda::array<double,1> &energy) {
 // 	nda::array<dcomplex ,1> weights;
 // 	std::vector<nda::array<dcomplex,1>> G_dlr_list;

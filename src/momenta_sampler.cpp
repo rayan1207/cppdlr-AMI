@@ -81,9 +81,12 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
 
 Bz_container mDLR::compute_momenta_kernel_bz(){
 	// int n = (kl+1)/2;
-	
 	if (MPI_obj.rank == 0){std::cout<< "Computing momenta kernel \n" ;}
+
 	int n = kl/2 + 1;
+
+
+
 	auto reduced_kgrid = nda::array<double,1> (n);
 	
 	Bz_container M(n,std::vector<nda::array<dcomplex,1>>(n));
@@ -106,7 +109,7 @@ Bz_container mDLR::compute_momenta_kernel_bz(){
 	auto t1 = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
 	if (MPI_obj.rank==0){std::cout << " computation of momenta kernel took: " <<duration.count() << " ms \n";}
-	triangle_to_square(M);
+	triangle_to_square(M); 
 	
 	return data_to_full_bz(M);
 	 

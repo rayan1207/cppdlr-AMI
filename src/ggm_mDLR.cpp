@@ -1,5 +1,5 @@
 #include "dlr_ami.hpp"
-using namespace cppdlr;
+
 
 
 ggm_mDLR::ggm_mDLR(const params_param& _params,
@@ -85,6 +85,7 @@ void ggm_mDLR::intialize_ggm_DLR_W(){
 	for (auto &mDLR : mDLR_list){
 		mDLR.populate_master_dlrW_from_G0(params.mu);
 	    mDLR.transfer_master_DLR_weights_to_dlrR0_elements();
+		
 	}	
 }
 

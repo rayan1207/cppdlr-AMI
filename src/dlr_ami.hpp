@@ -1,6 +1,9 @@
 #ifndef DLR_AMI_HPP
 #define DLR_AMI_HPP
-#include "ami_calc.hpp"
+//#include "ami_calc.hpp"
+#include "ami_base.hpp"
+#include "tami_graph.hpp"
+#include "tami_base.hpp"
 #include "amigraph.hpp"
 #include <cassert>
 #include <filesystem>
@@ -17,9 +20,6 @@
 #include <chrono>
 #include <thread>
 #include <sstream>
-#include <boost/random/sobol.hpp>
-#include <boost/random/uniform_01.hpp>
-#include <boost/random/variate_generator.hpp>
 #include <typeinfo> 
 #include <string>
 #include <utility> 
@@ -35,12 +35,13 @@
 #include <format>
 #include <string>
 
-
 AmiBase::g_prod_t construct_example2();
 AmiBase::ami_vars construct_ext_example2();
 
 inline AmiGraph g(AmiBase::Sigma, 0);
-
+static constexpr double PHI = 0.6180339887498948482;
+inline std::random_device rd;  // Non-deterministic (hardware) seed
+inline std::mt19937 gen(rd());
 //////params loader functions/////////////
 using Bz_container =  std::vector<std::vector<nda::array<dcomplex,1>>>;
 using Fk_container =  std::vector<nda::array<dcomplex,2>>;
@@ -114,6 +115,7 @@ class mDLR{
 	double dk;
 	double prefactor;
 	int ord;
+	std::vector<double> Emax_list;
 	int total_num=1;
 	std::vector< int> num_pole_each_dlr;
 	std::vector< int> num_k_each_dlr;
@@ -230,8 +232,7 @@ std::vector<std::vector<T>> data_to_full_bz(const std::vector<std::vector<T>>& M
 template<typename T>
 std::vector<T> sumVectors(const std::vector<std::vector<T>>& vecs);
 nda::array<dcomplex,1> recover_G_from_poles_n_weights(dlr_obj& dlr_R0, nda::array<dcomplex,1> weights, std::vector<std::complex<double>> imfreqs);
-
-
+void broadcast_Emax_list(std::vector<double> &Emax_list, MPI_Comm comm);
 double fermi_distribution(double energy, double beta );
 
 

@@ -23,7 +23,8 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 	
 	for (int i = 0; i< dlro.pole_num; i++){          /// filling in pole locations 
 		dlro.pole_locs.emplace_back(all_poles[i]);	
-		//std::cout << all_poles[i] << std::endl;
+		std::cout << all_poles[i] << std::endl;
+		
 		std::vector<double> tmp;
 		tmp.reserve(eps_size);
 		for (auto element : dlro.ginfo.eps_ ){ tmp.emplace_back(-element* all_poles[i]);}
@@ -53,22 +54,19 @@ MPI_INFO create_MPI_obj(int total_num){
 }
 ///////part of mdlr ///////////////////////////////////////////
 mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,double _tp, AmiGraph::graph_t _graph,cppdlr::imfreq_ops _master_if_ops ):beta(_beta),Uval(_Uval),eps(_eps),Emax(_Emax),kl(_kl),tp (_tp), graph(_graph),master_if_ops(_master_if_ops){
-	
 	auto t0 = std::chrono::high_resolution_clock::now();
 	g.label_systematic(graph);
 	R0 = create_R0_from_graph();
-	
-
+    g.reset_epsilons(R0);
 	N = R0.size();
 	ord = g.graph_order(graph);
 	prefactor =  g.get_prefactor(graph,ord);
-
+	Emax_list.resize(N);
 	std::cout<<  "prefactor for this graph is" << prefactor;
-	
-
 	create_multiple_gstruct();
 	fill_dlro_pole_info();
 	fill_dlro_momenta_info();
+	//total_num =1000; ///test 
 	MPI_obj =create_MPI_obj(total_num);
 	CN = MPI_obj.count;
 	std::cout<<std::endl;
@@ -103,15 +101,37 @@ mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,doubl
 	auto t1 = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
 	std::cout << " Construction of mDLR took time: " <<duration.count() << " ms \n";}
+
+	//print1d(num_pole_each_dlr);
+	//auto combo = generate_single_CN(CN-1);
+	//print1d(combo);
 }
 
 
 
 
 void mDLR::create_multiple_gstruct(){
+	int rank;
+   	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+    double step =0.25;
+    if (rank ==0) {
+	 std::uniform_real_distribution<> dist(0.01, 0.1);
+	 std::uniform_real_distribution<> dist1(0.9, 1.2);
+	 for (int i =0; i < R0.size(); i++){
+		double new_Emax = Emax -   dist1(gen)*(step * (i+1)) + dist(gen);
+		Emax_list[i] = new_Emax;
+	 	}
+	}
+
+	MPI_Bcast(Emax_list.data(), R0.size(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
 	for (int i =0; i< R0.size(); i++){
-		double new_Emax = Emax - static_cast<double>(i)/1.8;
-		multiple_dlr_structs.push_back(create_dlr_obj(beta,eps, new_Emax, R0[i]));
+		multiple_dlr_structs.push_back(create_dlr_obj(beta,eps, Emax_list[i], R0[i]));
+		std::cout << "Emax value is : " << Emax_list[i]<< std::endl;
+		std::cout << "Alpha and epsilon are ";
+		print1d(R0[i].alpha_); std::cout << " and " ; print1d(R0[i].eps_); std::cout << std::endl;
+		
 	}
 }
 
@@ -156,7 +176,9 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
 	for(int i=0;i<ord;i++){ frequency.push_back(std::complex<double>(0,0));}
 	frequency.push_back(imfreq);
 	
+
 	
+
 	for (int i =0; i<CN;i++){
 		auto combo = generate_single_CN(i);
 		AmiBase::energy_t energy = generate_auxillary_energy(combo);
@@ -174,8 +196,14 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
 
 	//Construction Stage
 	ami.construct(test_amiparms, R0, R_array, P_array, S_array);
+	// ami.drop_bosonic_diverge =true;
+	// ami.drop_matsubara_poles =true;
 	std::complex<double> calc_result=ami.evaluate(test_amiparms,R_array, P_array, S_array,  external);
 	//std::cout<<"Result was "<< calc_result<<std::endl;
+	if (std::isnan(calc_result.real()) || std::isnan(calc_result.imag())){
+		print1d(energy);
+		calc_result= std::complex<double>(0,0);
+	}
 	
 	frequency_kernel(i) = calc_result;
 
