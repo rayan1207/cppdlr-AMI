@@ -57,7 +57,7 @@ ax.set_title(r'Order 4 (L = 2): $CK$ Wall-time scaling ')
 ax.plot(cpu_o4_L4, Fk_fixed_L4o4, marker="o", linewidth=1.8, markersize=5,
         label=r'$K$ (measured)', color="tab:blue")
 ax.plot(cpu_o4_L4, CT_fixed_L4o4, marker="s", linewidth=1.8, markersize=5,
-        label=r'$C$ (measured)', color="tab:orange")
+is         label=r'$C$ (measured)', color="tab:orange")
 # Ideals
 ax.plot(cpu_o4_L4, fk_ideal, linestyle="--", linewidth=1.2, label=r' $K$ ideal (1/p)', color="tab:blue", alpha=0.6)
 ax.plot(cpu_o4_L4, ck_ideal, linestyle="--", linewidth=1.2, label=r' $C$ ideal (1/p)', color="tab:orange", alpha=0.6)

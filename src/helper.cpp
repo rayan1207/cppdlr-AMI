@@ -54,10 +54,16 @@ void params_loader(const std::string& filename, params_param& params) {
 			params.target_n = std::stod(paramValue);
 		else if (paramName == "graph")
              params.graph = paramValue;	
+		else if (paramName == "graph_2p")
+             params.graph_2p = paramValue;	
 		else if (paramName == "ord_max")
              params.ord_max = std::stoi(paramValue);
         else if (paramName == "ord_min")
              params.ord_min = std::stoi(paramValue);
+		else if (paramName == "ord_max_2p")
+             params.ord_max_2p = std::stoi(paramValue);
+        else if (paramName == "ord_min_2p")
+             params.ord_min_2p = std::stoi(paramValue);
 		else if (paramName == "mu_L")
              params.mu_L = std::stod(paramValue);
 		else if (paramName == "mu_R")
@@ -66,12 +72,19 @@ void params_loader(const std::string& filename, params_param& params) {
 			 params.DCA = std::stoi(paramValue);
 		else if (paramName == "patch_N")
 			 params.patch_N= std::stoi(paramValue);
+		else if (paramName == "compute_2p")
+			 params.compute_2p= std::stoi(paramValue);
+		else if (paramName == "type_2p")
+			 params.type_2p= std::stoi(paramValue);
+		else if (paramName == "gfunc")
+			 params.gfunc= std::stoi(paramValue);
     }
 	
     inputFile.close();
 	std::cout << "Loaded params file with values: " << " Beta="  << params.beta << ", Emax="<<  params.Emax 
 	<< ", eps = " << params.eps << ", L= " << params.L<< ", mu= " << params.mu << ", tp= "<< params.tp << " and SCS iteration = " << params.iter << "min and max " <<params.ord_min << " " << params.ord_max
-	<< "patch_N = " << params.patch_N << std::endl;
+	<< "patch_N = " << params.patch_N <<  ". ord_max_2p= " << params.ord_max_2p <<  ", ord_min_2p" << params.ord_min_2p << std::endl<<  ", gloc_sigma =" << params.graph << ", gloc_2p = " << params.graph_2p << std::endl
+	<< "compute_2p = " << params.compute_2p << " type_2p = "  << params.type_2p << " gfunc = " << params.gfunc <<  std::endl;
 }
 
 
@@ -82,7 +95,8 @@ void mDLR::write_data_momenta(const std::string& filename,
                             nda::array<dcomplex,1>& mfreq  )
 {
     // Extract the NDA 1D array for the (i,j) momenta
-
+    size_t k1_l = data.size();
+	size_t k2_l = data[0].size();
 
 	if (MPI_obj.rank == 0){
     int size = data[0][0].size();
@@ -93,10 +107,12 @@ void mDLR::write_data_momenta(const std::string& filename,
         return;
     }
 
+
+
     // Optional: write header
     //file << "# wn    qx     qy     Re       Im\n";
-    for (int i =0; i<kl;++i){
-		for (int j =0; j<kl;++j){		
+    for (int i =0; i<k1_l;++i){
+		for (int j =0; j<k2_l;++j){		
 			for (int f = 0; f < size; ++f) {
 				double wn_imag = mfreq[f].imag();
 				double qx = kvals[i];
@@ -118,81 +134,36 @@ void mDLR::write_data_momenta(const std::string& filename,
     file.close();
     std::cout << "Data written to " << filename << std::endl;}
 }
+
+
 	
 	
-	
-void mDLR::write_data_ij_momenta(const std::string& filename,
-                            Bz_container& data,
-                            nda::array<dcomplex,1>& mfreq,
-                            std::pair<int, int> ij)
-
-{
-	if (MPI_obj.rank == 0){
-    // Extract the NDA 1D array for the (i,j) momenta
-    auto array1d = data[ij.first][ij.second];
-    int size = array1d.size();
-
-    std::ofstream file(filename);
-    if (!file.is_open()) {
-        std::cerr << "Failed to open file: " << filename << std::endl;
-        return;
-    }
-
-    // Optional: write header
-    file << "# wn_imag    qx     qy     Re[G]       Im[G]\n";
-
-    for (int i = 0; i < size; ++i) {
-        double wn_imag = mfreq[i].imag();
-        double qx = kvals[ij.first];
-        double qy = kvals[ij.second];
-        double re = array1d[i].real();
-        double im = array1d[i].imag();
-
-        // Print to console
-        std::cout << wn_imag << "  "
-                  << qx << "  "
-                  << qy << "  "
-                  << re << "  "
-                  << im << std::endl;
-
-        // Write to file
-        file << wn_imag << "  "
-             << qx << "  "
-             << qy << "  "
-             << re << "  "
-             << im << "\n";
-    }
-
-    file.close();
-std::cout << "Data written to " << filename << std::endl;
-	}
-
-}
 
 
 
-AmiBase::g_prod_t mDLR::create_R0_from_graph() {
-	AmiBase::g_prod_t R0;
-	AmiGraph::edge_vector_t fermionic_edge;
-	g.find_internal_fermionic_edges(graph,fermionic_edge);
-	int n = fermionic_edge.size();
 
-	std::cout << " Constructing an R0 element with: \n"; 
-	for (int i =0; i < n;i++){
-		AmiBase::alpha_t alpha = graph[fermionic_edge[i]].g_struct_.alpha_;
-		AmiBase::epsilon_t epsilon = graph[fermionic_edge[i]].g_struct_.eps_;
-		// std::cout << " i = " << i << std::endl;
-		// print1d(alpha);
-		// print1d(epsilon);
+// AmiBase::g_prod_t mDLR::create_R0_from_graph() {
+// 	AmiBase::g_prod_t R0;
+// 	AmiGraph::edge_vector_t fermionic_edge;
+// 	g.find_internal_fermionic_edges(graph,fermionic_edge);
+// 	int n = fermionic_edge.size();
+
+// 	std::cout << " Constructing an R0 element with: \n"; 
+// 	for (int i =0; i < n;i++){
+// 		AmiBase::alpha_t alpha = graph[fermionic_edge[i]].g_struct_.alpha_;
+// 		AmiBase::epsilon_t epsilon = graph[fermionic_edge[i]].g_struct_.eps_;
+// 		// std::cout << " i = " << i << std::endl;
+// 		// print1d(alpha);
+// 		// print1d(epsilon);
 		
 		
-		AmiBase::g_struct g(epsilon,alpha);
-		R0.push_back(g);	
-	}
+// 		AmiBase::g_struct g(epsilon,alpha);
+// 		R0.push_back(g);	
+// 	}
 		
-	return R0;	
+// 	return R0;	
 	
-}
+// }
 
 std::vector<std::complex<double>> convertToComplex(const std::vector<double> vec) {
     std::vector<std::complex<double>> cplx_vec;
@@ -228,13 +199,10 @@ void mDLR::fill_dlro_pole_info(){
 }
 
 void mDLR::fill_dlro_momenta_info(){
-	
-
-	kN = std::pow(std::pow(kl,2),ord);
-	for (int i = 0; i< 2*ord;i++){
+	for (int i = 0; i< 2*DOF;i++){
 		num_k_each_dlr.push_back(kl);	
 	}
-	kcombo_element.resize(2*ord);		
+	kcombo_element.resize(2*DOF);		
 }
 
 nda::array<dcomplex,1> mDLR::LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu) {
@@ -256,9 +224,71 @@ nda::array<dcomplex,1> mDLR::LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dc
 double mDLR::compute_density_from_SE(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu){
 	auto local_G = LocalG_from_DLR_SE_M(SE,mfreq,mu);
 	auto local_weights = master_if_ops.vals2coefs(beta,local_G);
-    auto density = nda::dotc(local_weights,fd_master_poles).real();
+    auto density = nda::dot(local_weights,fd_master_poles).real();
 	return 2.0*density;
 }
+// double mDLR::compute_density_from_SE(Bz_container &SE,
+//                                      nda::array<dcomplex,1> &mfreq, // master grid
+//                                      double mu)
+// {
+//     // --- 0. Build local G on the *master* Matsubara grid ---
+//     // mfreq is assumed to correspond to master_if_ops.get_ifnodes().
+//     auto local_G_master = LocalG_from_DLR_SE_M(SE, mfreq, mu);
+
+//     // --- 1. Get DLR weights for local G in the *master* DLR basis ---
+//     // master_if_ops and master_poles are members of mDLR
+//     auto w_master = master_if_ops.vals2coefs(beta, local_G_master);
+//     // master_poles: nda::array<double,1> of size master_pole_num
+//     // corresponds to master_if_ops.get_rfnodes()/beta
+
+//     // --- 2. Define a separate "density DLR" basis (Emax, eps for density only) ---
+//     double d_Emax = 10.0;      // tune this
+//     double d_eps  = 1e-10;     // tune this
+
+//     double lambda_d = beta * d_Emax;
+//     auto dlr_rf_d   = build_dlr_rf(lambda_d, d_eps);
+//     cppdlr::imfreq_ops d_if_ops(lambda_d, dlr_rf_d, Fermion);
+
+//     // --- 3. Build the density-DLR Matsubara grid ---
+//     auto d_nodes = d_if_ops.get_ifnodes();              // integer nodes
+//     int  Nd      = d_nodes.size();
+
+//     nda::array<dcomplex,1> d_mfreq(Nd);
+//     for (int i = 0; i < Nd; ++i) {
+//         int    n  = d_nodes(i);
+//         double wn = (2 * n + 1) * M_PI / beta;         // fermionic Matsubara
+//         d_mfreq(i) = dcomplex(0.0, wn);
+//     }
+
+//     // --- 4. Reconstruct local G on the *density* grid using master poles+weights ---
+//     // G_dens(iω') = sum_j w_master(j) / ( iω' - ε_master(j) )
+//     nda::array<dcomplex,1> local_G_dens = nda::zeros<dcomplex>(Nd);
+//     for (int i = 0; i < Nd; ++i) {
+//         dcomplex iw = d_mfreq(i);
+//         dcomplex val(0.0, 0.0);
+//         for (int j = 0; j < master_pole_num; ++j) {
+//             val += w_master(j) / ( iw - dcomplex(master_poles(j), 0.0) );
+//         }
+//         local_G_dens(i) = val;
+//     }
+
+//     // --- 5. Get DLR weights in the *density* basis ---
+//     auto w_dens = d_if_ops.vals2coefs(beta, local_G_dens);
+
+//     // --- 6. Build Fermi factors on the density poles ---
+//     auto density_poles = d_if_ops.get_rfnodes() / beta;   // ε_ℓ for density DLR
+//     int  Np            = density_poles.size();
+//     nda::array<dcomplex,1> fd_density(Np);
+
+//     for (int i = 0; i < Np; ++i) {
+//         double e = density_poles(i);
+//         fd_density(i) = dcomplex(fermi_distribution(e, beta), 0.0);
+//     }
+
+//     // --- 7. Contract weights with Fermi factors: n = 2 * Σ_ℓ w_ℓ f(ε_ℓ) ---
+//     double density = nda::dot(w_dens, fd_density).real();
+//     return 2.0 * density;
+// }
 
 nda::array<dcomplex,1> mDLR::fd_on_master_poles(){
 	auto fd_master_poles = nda::array<dcomplex,1>(master_pole_num);
@@ -282,7 +312,7 @@ double mDLR::non_interacting_density(nda::array<dcomplex,1> &mfreq,double mu){
 	   }
 	local_G /= prefactor;
 	auto local_weights = master_if_ops.vals2coefs(beta,local_G);
-    auto density = nda::dotc(local_weights,fd_master_poles).real();
+    auto density = nda::dot(local_weights,fd_master_poles).real();
 	return 2.0*density;
 		
 }
@@ -307,7 +337,7 @@ double mDLR::adjust_chemical_potential_bisc(params_param &params, Bz_container &
 	for (int i =0; i < max;i++){
 		c = (a+b)/2.0;
 		double fc = params.target_n - compute_density_from_SE(SE,mfreq,c);
-		if ( std::abs(fa-fb)< 1e-6){
+		if ( std::abs(fa-fb)< 1e-7){
 			std::cout << "  Correct chemical potential is found on " << i << "-th iteration "<< std::endl;
 			std::cout << " Adjusted mu = " << c << std::endl;
 			
@@ -367,6 +397,201 @@ Bz_container sum_containers(const std::vector<Bz_container>& all)
 }
 
 
+bool SE_converged_abs(const Bz_container &Sigma_old,
+                      const Bz_container &Sigma_new,
+                      double abs_tol)
+{
+    double max_abs_diff = 0.0;
+
+    for (std::size_t ix = 0; ix < Sigma_new.size(); ++ix) {
+        for (std::size_t iy = 0; iy < Sigma_new[ix].size(); ++iy) {
+            const auto &se_old = Sigma_old[ix][iy];
+            const auto &se_new = Sigma_new[ix][iy];
+
+            for (std::size_t n = 0; n < se_new.size(); ++n) {
+                double diff = std::abs(se_new(n) - se_old(n));
+                if (diff > max_abs_diff)
+                    max_abs_diff = diff;
+            }
+        }
+    }
+
+    return max_abs_diff < abs_tol;
+}
+nda::array<dcomplex,1> mDLR::prepare_AC_chi_data(  cppdlr::imfreq_ops &bosonic_if_ops, nda::array<dcomplex,1> &chi,int size){
+	double beta = params.beta;
+	auto recovered_chi = nda::zeros<dcomplex> (size);
+	auto dlr_poles = bosonic_if_ops.get_rfnodes()/beta;
+	auto weights= bosonic_if_ops.vals2coefs(beta,chi);
+	for (int i=0; i < size;i++){
+		auto iw = dcomplex(0,2*i*M_PI/beta);
+		for (int j=0; j < weights.size(); j++){
+			double  input = beta*dlr_poles[j]/2;
+			recovered_chi(i) +=weights(j)*std::tanh(input)/(iw - dlr_poles[j]);		
+		}			
+	}
+	return recovered_chi;
+}
+
+
+nda::array<dcomplex,1> mDLR::prepare_AC_sigma_data(   nda::array<dcomplex,1> &G,int size){
+	double beta = params.beta;
+	auto recovered_G = nda::zeros<dcomplex> (size);
+	auto dlr_poles =master_if_ops.get_rfnodes()/beta;
+	auto weights= master_if_ops.vals2coefs(beta,G);
+	for (int i=0; i < size;i++){
+		auto iw = dcomplex(0,(2*i+1)*M_PI/beta);
+		for (int j=0; j < weights.size(); j++){
+			recovered_G(i) +=weights(j)/(iw - dlr_poles[j]);		
+		}			
+	}
+	return recovered_G;
+}
+
+
+void mDLR::write_data_momenta_AC_chi( const std::string& filename,cppdlr::imfreq_ops &bosonic_if_ops,
+                            Bz_container& bosonic_data,
+                             int size)
+{
+    // Extract the NDA 1D array for the (i,j) momenta
+    size_t k1_l = bosonic_data.size();
+	size_t k2_l = bosonic_data[0].size();
+
+	if (MPI_obj.rank == 0){
+
+
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return;
+    }
+
+
+    file << std::fixed << std::setprecision(10);
+    // Optional: write header
+    //file << "# wn    qx     qy     Re       Im\n";
+    for (int i =0; i<k1_l;++i){
+		for (int j =0; j<k2_l;++j){	
+			auto ph = 	bosonic_data[i][j];
+			auto result =prepare_AC_chi_data(bosonic_if_ops,ph, size);
+			for (int f = 0; f < size; ++f) {
+				double wn_imag = f;
+				double qx = kvals[i];
+				double qy = kvals[j];
+				double re = result(f).real();
+				double im = result(f).imag();
+
+			
+				// Write to file
+				file << wn_imag << "  "
+					 << qx << "  "
+					 << qy << "  "
+					 << re << "  "
+					 << im << "\n";
+					}
+		}
+		
+	}
+
+    file.close();
+    std::cout << "Data written to " << filename << std::endl;}
+}
+
+
+void mDLR::write_data_momenta_AC_sigma( const std::string& filename,
+                            Bz_container& fermionic_data,
+                             int size)
+{
+    // Extract the NDA 1D array for the (i,j) momenta
+    size_t k1_l = fermionic_data.size();
+	size_t k2_l = fermionic_data[0].size();
+
+	if (MPI_obj.rank == 0){
+ 
+
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return;
+    }
+
+
+    file << std::fixed << std::setprecision(10);
+    // Optional: write header
+    //file << "# wn    qx     qy     Re       Im\n";
+    for (int i =0; i<k1_l;++i){
+		for (int j =0; j<k2_l;++j){	
+			auto sigma = 	fermionic_data[i][j];
+			auto result =prepare_AC_sigma_data(sigma, size);
+			for (int f = 0; f < size; ++f) {
+				double wn_imag = (2*f+1)*M_PI/beta;
+				double qx = kvals[i];
+				double qy = kvals[j];
+				double re = result(f).real();
+				double im = result(f).imag();
+
+			
+				// Write to file
+				file << wn_imag << "  "
+					 << qx << "  "
+					 << qy << "  "
+					 << re << "  "
+					 << im << "\n";
+					}
+		}
+		
+	}
+
+    file.close();
+    std::cout << "Data written to " << filename << std::endl;}
+}
+
+
+void mDLR::write_data_momenta_AC_sigma_ij( const std::string& filename,
+                            Bz_container& fermionic_data,
+                             int size,std::pair<int, int> ind)
+{
+    // Extract the NDA 1D array for the (i,j) momenta
+    size_t k1_l = fermionic_data.size();
+	size_t k2_l = fermionic_data[0].size();
+
+	if (MPI_obj.rank == 0){
+ 
+
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return;
+    }
+
+ 
+    file << std::fixed << std::setprecision(10);
+    // Optional: write header
+    //file << "# wn    qx     qy     Re       Im\n";
+            int i = ind.first; int j= ind.second;
+			auto sigma = 	fermionic_data[i][j];
+			auto result =prepare_AC_sigma_data(sigma, size);
+			for (int f = 0; f < size; ++f) {
+				double wn_imag = (2*f+1)*M_PI/beta;
+				double qx = kvals[i];
+				double qy = kvals[j];
+				double re = result(f).real();
+				double im = result(f).imag();
+
+			
+				// Write to file
+				file << wn_imag << "  "
+					 << qx << "  "
+					 << qy << "  "
+					 << re << "  "
+					 << im << "\n";
+		
+		
+	}
+
+    file.close();
+    std::cout << "Data written to " << filename << std::endl;}
+}
 
 
 // nda::array<dcomplex,1> mDLR::evaluate_auxillary_weights(nda::array<double,1> &energy) {

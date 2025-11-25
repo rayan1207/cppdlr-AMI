@@ -9,7 +9,7 @@ beta =10
 U = 1
 # Load all data into a list
 
-for i in [1,2,3,5,7,9,11,13,15,19]:
+for i in [1,]:
     fname = f"{i}i_shot_{kind}.txt"
     try:
         data = np.loadtxt(fname, comments="#")
@@ -27,7 +27,7 @@ qx_val = 0
 qy_val = np.pi
 
 # Use np.isclose to filter
-df_filtered = df[np.isclose(df["qx"], qx_val) & np.isclose(df["qy"], qy_val) &  (df["wn"] > 0) &  (df["wn"] <10 )]
+df_filtered = df[np.isclose(df["qx"], qx_val) & np.isclose(df["qy"], qy_val) &  (df["wn"] > 0) ]
 
 # ==== plot ====
 
@@ -39,6 +39,7 @@ for i in sorted(df_filtered["iter"].unique()):
     sub = df_filtered[df_filtered["iter"] == i]
     ax1.plot(sub["wn"], sub["Re"],".-", label=f"i={i}")
     ax2.plot(sub["wn"], sub["Im"], ".-", label=f"i={i}")
+    
 
         
 

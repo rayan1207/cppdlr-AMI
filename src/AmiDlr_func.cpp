@@ -46,29 +46,45 @@ MPI_INFO create_MPI_obj(int total_num){
 	MPI_obj.count = MPI_obj.chunk + (MPI_obj.rank < MPI_obj.remainder ? 1 : 0);
 	MPI_obj.end   = MPI_obj.start + MPI_obj.count; 
 	
-	auto s = std::format("created a DLR with rank={}, with start_index={}, and end_index={}, perfoming {}/{} of  Freq kernel  \n",MPI_obj.rank,
-	MPI_obj.start, MPI_obj.end, MPI_obj.count, total_num);
-	std::cout << s;
+	// auto s = std::format("created a DLR with rank={}, with start_index={}, and end_index={}, perfoming {}/{} of  Freq kernel  \n",MPI_obj.rank,
+	// MPI_obj.start, MPI_obj.end, MPI_obj.count, total_num);
+	std::printf(  "created a DLR with rank=%d, with start_index=%d, and end_index=%d, " "perfoming %d/%d of Freq kernel\n",
+    MPI_obj.rank, MPI_obj.start, MPI_obj.end, MPI_obj.count, total_num);
+ 
 	
 	return MPI_obj;
 }
 ///////part of mdlr ///////////////////////////////////////////
-mDLR::mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl,double _tp, AmiGraph::graph_t _graph,cppdlr::imfreq_ops _master_if_ops ):beta(_beta),Uval(_Uval),eps(_eps),Emax(_Emax),kl(_kl),tp (_tp), graph(_graph),master_if_ops(_master_if_ops){
+mDLR::mDLR(const params_param& _params, AmiBase::graph_type _baseType, AmiGraph::graph_t& _graph,cppdlr::imfreq_ops& _master_if_ops ): params (_params), baseType (_baseType), graph(_graph),master_if_ops(_master_if_ops){
+	AmiGraph g(baseType, 0);
+	beta = params.beta; Uval = params.Uval; eps =params.eps; Emax =params.Emax; kl = params.L; tp =params.tp;
 	auto t0 = std::chrono::high_resolution_clock::now();
 	g.label_systematic(graph);
-	R0 = create_R0_from_graph();
+	g.graph_to_R0(graph,R0);
     g.reset_epsilons(R0);
 	N = R0.size();
 	ord = g.graph_order(graph);
-	prefactor =  g.get_prefactor(graph,ord);
+    prefactor = g.get_prefactor(graph,ord);
+    if (baseType ==AmiBase::Pi_phuu){
+	g.get_cond_kkp(kkp ,graph);
+	print2d(kkp);
+	}
+	if (baseType == AmiBase::Pi_ppuu){
+		g.get_pp_kkp(kkp,graph);
+		print2d(kkp);
+	}
+
+
+	DOF = (baseType==AmiBase::Sigma) ? ord : (ord+1);
 	Emax_list.resize(N);
-	std::cout<<  "prefactor for this graph is" << prefactor;
+	std::cout<<  "prefactor  amd loop for this graph  is : " << prefactor <<std::endl;
 	create_multiple_gstruct();
 	fill_dlro_pole_info();
 	fill_dlro_momenta_info();
 	//total_num =1000; ///test 
 	MPI_obj =create_MPI_obj(total_num);
 	CN = MPI_obj.count;
+	kN = std::pow(std::pow(kl,2),DOF);
 	std::cout<<std::endl;
 
 	dk = 2*M_PI/(kl);
@@ -114,7 +130,7 @@ void mDLR::create_multiple_gstruct(){
 	int rank;
    	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    double step =0.25;
+    double step =0.20;
     if (rank ==0) {
 	 std::uniform_real_distribution<> dist(0.01, 0.1);
 	 std::uniform_real_distribution<> dist1(0.9, 1.2);
@@ -201,7 +217,52 @@ nda::array<dcomplex,1> mDLR::evaluate_auxillary_energies(nda::dcomplex &imfreq){
 	std::complex<double> calc_result=ami.evaluate(test_amiparms,R_array, P_array, S_array,  external);
 	//std::cout<<"Result was "<< calc_result<<std::endl;
 	if (std::isnan(calc_result.real()) || std::isnan(calc_result.imag())){
-		print1d(energy);
+		//print1d(energy);
+		calc_result= std::complex<double>(0,0);
+	}
+	
+	frequency_kernel(i) = calc_result;
+
+	}
+	return frequency_kernel;
+	
+
+}
+
+
+
+
+nda::array<dcomplex,1> mDLR::evaluate_auxillary_ph_energies(nda::dcomplex &imfreq){
+	nda::array<dcomplex,1> frequency_kernel(CN);
+	AmiBase ami;
+	AmiBase::frequency_t frequency;
+	for(int i=0;i<ord+1;i++){ frequency.push_back(std::complex<double>(0,0));}
+	frequency.push_back(imfreq);
+	
+
+	for (int i =0; i<CN;i++){
+		auto combo = generate_single_CN(i);
+		AmiBase::energy_t energy = generate_auxillary_energy(combo);
+		AmiBase::ami_vars external(energy, frequency,beta);
+	
+	// Storage objects for S,P,R 
+	AmiBase::S_t S_array;
+	AmiBase::P_t P_array;
+	AmiBase::R_t R_array;
+
+	// Integration/Evaluation parameters
+	double E_REG=0; // Numerical regulator for small energies.  If inf/nan results try E_REG=1e-8 
+	int N_INT=ord+1;  // Number of Matsubara sums to perform
+	AmiBase::ami_parms test_amiparms(N_INT, E_REG,baseType);
+
+	//Construction Stage
+	ami.construct(test_amiparms, R0, R_array, P_array, S_array);
+	// ami.drop_bosonic_diverge =true;
+	// ami.drop_matsubara_poles =true;
+	std::complex<double> calc_result=ami.evaluate(test_amiparms,R_array, P_array, S_array,  external);
+	//std::cout<<"Result was "<< calc_result<<std::endl;
+	if (std::isnan(calc_result.real()) || std::isnan(calc_result.imag()) ){
+		//print1d(energy);
 		calc_result= std::complex<double>(0,0);
 	}
 	
@@ -229,18 +290,34 @@ nda::array<dcomplex,1> mDLR::generate_nda_Gdlr_from_energy( cppdlr::imfreq_ops &
     return G;
 }
 
-void mDLR::populate_master_dlrW_from_G0(double mu){
+void mDLR::populate_master_dlrW(){
 	auto nodes = master_if_ops.get_ifnodes();
 	nda::array<dcomplex,1> mfreq(nodes.size());
 	for (int i =0;i< kl;i++){
 		for (int j=0;j<kl;j++){
-        double e = hubbard_dispersion(kvals[i],kvals[j],mu);
+        double e = hubbard_dispersion(kvals[i],kvals[j],params.mu);
 		
 		auto master_gdlr = generate_nda_Gdlr_from_energy(master_if_ops,e);
 		auto weights= master_if_ops.vals2coefs(beta,master_gdlr);
 		master_dlrW_in_square[i][j]=weights;
 		}	
 	}	
+}
+
+void mDLR::populate_master_dlrW(Bz_container &G){
+	master_dlrW_in_square.clear();
+	master_dlrW_in_square.resize(kl);
+	for (size_t i = 0; i < kl; ++i){
+	master_dlrW_in_square[i].resize(kl);}
+	
+	for (int i =0;i< kl;i++){
+		for (int j=0;j<kl;j++){
+		auto master_gdlr = G[i][j];
+		auto weights= master_if_ops.vals2coefs(beta,master_gdlr);
+		master_dlrW_in_square[i][j]=weights;
+		}	
+	}	
+	
 }
 
 
@@ -289,21 +366,7 @@ void mDLR::transfer_master_DLR_weights_to_dlrR0_elements(){
 }
 
 
-Bz_container mDLR::vdot_freq_momenta_kernel_M(Bz_container &mk, std::vector<nda::array<dcomplex,1>> &fk){
-	
-	
-	Bz_container result(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(fk.size())));
-	for (int i =0;i<kl;i++){
-		for (int j=0;j<kl;j++){
-			auto const &momenta_kernel = mk[i][j];
-			
-			for (int k; k<fk.size();k++){
-				result[i][j](k) = prefactor*std::pow(Uval,ord)*nda::dot(fk[k],momenta_kernel)/(std::pow((double) kl*kl,ord));
-			}			
-		}	
-	}
-	return result;	
-}
+
 
 
 

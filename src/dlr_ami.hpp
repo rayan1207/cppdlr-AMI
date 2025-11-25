@@ -32,13 +32,11 @@
 #include <iomanip>
 #include <cppdlr/cppdlr.hpp>
 #include <omp.h>
-#include <format>
 #include <string>
-
 AmiBase::g_prod_t construct_example2();
 AmiBase::ami_vars construct_ext_example2();
 
-inline AmiGraph g(AmiBase::Sigma, 0);
+
 static constexpr double PHI = 0.6180339887498948482;
 inline std::random_device rd;  // Non-deterministic (hardware) seed
 inline std::mt19937 gen(rd());
@@ -64,6 +62,12 @@ struct params_param {
 	double mu_R;
 	int DCA;
 	int patch_N;
+	int ord_max_2p;
+	int ord_min_2p;
+	std::string graph_2p;
+	int compute_2p;
+	int type_2p;
+	int gfunc;
 };
 
 std::string trim(const std::string& str);
@@ -107,11 +111,15 @@ class mDLR{
 	public:
 	MPI_INFO MPI_obj;
 	std::vector<dlr_obj> multiple_dlr_structs;
-	double beta; double eps; double tp; double Emax;double Uval; AmiGraph::graph_t graph; AmiBase::g_prod_t R0; cppdlr::imfreq_ops master_if_ops;
+	AmiBase::graph_type baseType;
+	double beta; double eps; double tp; double Emax; double Uval; AmiGraph::graph_t graph; AmiBase::g_prod_t R0; cppdlr::imfreq_ops master_if_ops;
 	size_t N; ///num of greens function
 	size_t CN; ///total number of cartesian, pole_num1* pole_num2* ...pole numN 
 	size_t kl;///total number of momentum k grid;
 	size_t kN;///total number of cartesian momenta, kl_1^2* kl_2^2.....
+	std::vector<AmiBase::alpha_t> kkp;
+	int DOF;
+	params_param params;
 	double dk;
 	double prefactor;
 	int ord;
@@ -119,14 +127,12 @@ class mDLR{
 	int total_num=1;
 	std::vector< int> num_pole_each_dlr;
 	std::vector< int> num_k_each_dlr;
-
-	
 	std::vector<double> kvals;/// kgrid vals
 	size_t master_pole_num;/// number of poles in master DLR
 	nda::array<double,1> master_poles;
 	nda::array<dcomplex,1> fd_master_poles;
 	std::vector<std::vector<nda::array<dcomplex,1>>> master_dlrW_in_square; //master dlr weight
-	mDLR(double _beta,double _Uval, double _eps, double _Emax,size_t _kl, double _tp, AmiGraph::graph_t _graph,cppdlr::imfreq_ops _master_if_ops );
+	mDLR(const params_param& _params,AmiBase::graph_type _baseType, AmiGraph::graph_t& _graph,cppdlr::imfreq_ops& _master_if_ops );
 	//////// methods ////////////
 	
 	AmiBase::g_prod_t create_R0_from_graph();
@@ -141,28 +147,33 @@ class mDLR{
 	// void generate_auxillary_energy_list();
 	AmiBase::energy_t generate_auxillary_energy(std::vector<int> &combo) ;
 	nda::array<dcomplex,1> evaluate_auxillary_energies(nda::dcomplex &imfreq);
+	nda::array<dcomplex,1> evaluate_auxillary_ph_energies(nda::dcomplex &imfreq);
 	
 	// nda::array<dcomplex,1> evaluate_auxillary_weights( nda::array<double,1> &energy);
 	
 	
+
 	
-	
-	void populate_master_dlrW_from_G0(double mu);
+	void populate_master_dlrW();
+	void populate_master_dlrW(Bz_container &G);
 	void reshape_dlrW_square_per_kgrid();
 	nda::array<dcomplex,1> recover_dlro_G_from_master_weights(nda::array<dcomplex,1> &master_weights, std::vector<std::complex<double>> &dlro_if);
 	void transfer_master_DLR_weights_to_dlrR0_elements();
 	inline void generate_ith_momenta_cartesian_combo(int i, std::vector<int>& result );
-	
+	nda::dcomplex gfunc(double kx, double ky);
+	nda::dcomplex  apply_ggkp(double kx_ext, double ky_ext, const std::vector<int> &kcombo);
 	
 	inline nda::dcomplex compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,std::vector<int> &combo,const std::vector<int> &kcombo);
 	nda::array<nda::dcomplex,1> compute_momenta_kernel_qext(double kx_ext,double ky_ext);
+	nda::array<nda::dcomplex,1> compute_momenta_kernel_2p_qext(double kx_ext,double ky_ext);
 	nda::dcomplex patch_avg_one_GF(double Kx,double Ky, double Nc, double mu, nda::dcomplex iw, nda::dcomplex SE_K  );	
     Bz_container G_from_DLR_SE_M_DCA(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu,double NC);
 	Bz_container G_from_DLR_SE_M_DMFT(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
 	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
 	Bz_container compute_momenta_kernel_bz();
-	Bz_container vdot_freq_momenta_kernel_M( std::vector<std::vector<nda::array<dcomplex,1>>> &mk,  std::vector<nda::array<dcomplex,1>> &fk);
+	Bz_container compute_momenta_kernel_2p_bz();
 	Bz_container MPI_vdot_freq_momenta_kernel_M(Bz_container &mk, nda::array<dcomplex,2> &fk);
+	Bz_container MPI_vdot_freq_momenta_kernel(nda::array<dcomplex,1> &momenta_kernel , nda::array<dcomplex,2> &fk);
 	nda::array<nda::dcomplex,1>  LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,  double mu);
 	Bz_container SE_mixer(Bz_container SE_old, Bz_container SE_new, double alpha);
 	nda::array<dcomplex,1> fd_on_master_poles();
@@ -171,10 +182,15 @@ class mDLR{
 	double non_interacting_density(nda::array<dcomplex,1> &mfreq,double mu);
 	void repopulate_master_dlrW_from_G(Bz_container &G );
 	void write_data_momenta(const std::string& filename,Bz_container& data, nda::array<dcomplex,1>& mfreq);
-	void write_data_ij_momenta(const std::string& filename,
-                            Bz_container& data,
-                            nda::array<dcomplex,1>& mfreq,
-                            std::pair<int, int> ij);
+
+
+	nda::array<dcomplex,1> prepare_AC_chi_data(cppdlr::imfreq_ops &bosonic_if_ops, nda::array<dcomplex,1> &chi,int size);
+	nda::array<dcomplex,1> prepare_AC_sigma_data(   nda::array<dcomplex,1> &G,int size);
+	void write_data_momenta_AC_chi( const std::string& filename,cppdlr::imfreq_ops &bosonic_if_ops, Bz_container& bosonic_data,int size);
+	void write_data_momenta_AC_sigma( const std::string& filename,Bz_container& fermionic_data,int size);
+    void write_data_momenta_AC_sigma_ij( const std::string& filename,
+                            Bz_container& fermionic_data,
+                             int size,std::pair<int, int> ind);
 							
 							
 };
@@ -186,7 +202,7 @@ private:
 int rank;
 
 public:
- ggm_mDLR(const params_param& _params,
+ ggm_mDLR(const params_param& _params,AmiBase::graph_type _baseType,
              const AmiGraph::gg_matrix_t& _ggm,
              const cppdlr::imfreq_ops& _master_if_ops);
 params_param params; 
@@ -200,20 +216,28 @@ void ggm_to_graphlist();
 void graphlist_to_mDLRlist();
 nda::array<dcomplex,1> master_mfreq;
 Fk_container  Fk_ggm;
-
+AmiBase::graph_type baseType;
 void reshape_Fk_ggm();
 void ggm_Fk_solver();
+void ggm_Fk_2p_solver(nda::array<dcomplex,1> &master_bfreq);
 void intialize_ggm_DLR_W();
+void intialize_ggm_DLR_W(Bz_container &GF);
 Bz_container generate_summed_SE(int iter,bool write);
 void transfer_ggm_DLR_W(Bz_container &GF);
-void ScPT_solver(int max_iters);
-
-
-
-
+void ScPT_solver(int max_iters, Bz_container &final_SE, Bz_container &final_GF);
 Bz_container generate_SE(mDLR &_mDLR, nda::array<dcomplex,2> &fk);	
-Bz_container cSE; ///converged SE
-Bz_container cGF; ///converged GF
+
+
+Bz_container generate_2p_bz(mDLR &_mDLR, nda::array<dcomplex,2> &fk );
+Bz_container generate_summed_2p_bz(nda::array<dcomplex,1> &master_bfreq);
+void single_shot_2p_solver_bz(nda::array<dcomplex,1> &master_bfreq, Bz_container &chi);
+
+Bz_container generate_2p_qext(double qx, double qy,mDLR &_mDLR, nda::array<dcomplex,2> &fk );
+Bz_container generate_summed_2p_qext(double qx, double qy,nda::array<dcomplex,1> &master_bfreq);
+void single_shot_2p_solver_qext(double qx, double qy,nda::array<dcomplex,1> &master_bfreq, Bz_container &chi);
+
+
+
 };
 
 
@@ -234,7 +258,7 @@ std::vector<T> sumVectors(const std::vector<std::vector<T>>& vecs);
 nda::array<dcomplex,1> recover_G_from_poles_n_weights(dlr_obj& dlr_R0, nda::array<dcomplex,1> weights, std::vector<std::complex<double>> imfreqs);
 void broadcast_Emax_list(std::vector<double> &Emax_list, MPI_Comm comm);
 double fermi_distribution(double energy, double beta );
-
+bool SE_converged_abs(const Bz_container &Sigma_old, const Bz_container &Sigma_new, double abs_tol);
 
 
 
