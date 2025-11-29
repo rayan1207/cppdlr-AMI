@@ -163,6 +163,8 @@ void ggm_mDLR::ScPT_solver(int max_iters, Bz_container &final_SE, Bz_container &
 	while (iter_idx < max_iters ) {
 
 	auto SE_new = generate_summed_SE(iter_idx,true);
+	if (params.mu ==0){    mDLR_list[0].denoise_FS_points(SE_new);}
+	mDLR_list[0].symmetrize_fermionic_DLR_Bz(SE_new);
 	// 2) Mix old SE with new SE 
 	SE = ( iter_idx < 2) ? SE_new : mDLR_list[0].SE_mixer(SE_old,SE_new, alpha);
 	double density = mDLR_list[0].compute_density_from_SE(SE, master_mfreq, mu);
@@ -281,6 +283,9 @@ void ggm_mDLR::single_shot_2p_solver_qext(double qx, double qy,nda::array<dcompl
 	mDLR_list[0].write_data_momenta(file_ph, chi, master_bfreq);
 	
 }
+
+
+
 
 
 

@@ -23,7 +23,7 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 	
 	for (int i = 0; i< dlro.pole_num; i++){          /// filling in pole locations 
 		dlro.pole_locs.emplace_back(all_poles[i]);	
-		std::cout << all_poles[i] << std::endl;
+		//std::cout << all_poles[i] << std::endl;
 		
 		std::vector<double> tmp;
 		tmp.reserve(eps_size);
@@ -65,6 +65,12 @@ mDLR::mDLR(const params_param& _params, AmiBase::graph_type _baseType, AmiGraph:
 	N = R0.size();
 	ord = g.graph_order(graph);
     prefactor = g.get_prefactor(graph,ord);
+
+	
+
+
+
+
     if (baseType ==AmiBase::Pi_phuu){
 	g.get_cond_kkp(kkp ,graph);
 	print2d(kkp);
@@ -126,29 +132,57 @@ mDLR::mDLR(const params_param& _params, AmiBase::graph_type _baseType, AmiGraph:
 
 
 
-void mDLR::create_multiple_gstruct(){
-	int rank;
-   	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+// void mDLR::create_multiple_gstruct(){
+// 	int rank;
+//    	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
-    double step =0.20;
-    if (rank ==0) {
-	 std::uniform_real_distribution<> dist(0.01, 0.1);
-	 std::uniform_real_distribution<> dist1(0.9, 1.2);
-	 for (int i =0; i < R0.size(); i++){
-		double new_Emax = Emax -   dist1(gen)*(step * (i+1)) + dist(gen);
-		Emax_list[i] = new_Emax;
-	 	}
-	}
+//     double step =0.20;
+//     if (rank ==0) {
+// 	 std::uniform_real_distribution<> dist(0.01, 0.1);
+// 	 std::uniform_real_distribution<> dist1(0.9, 1.2);
+// 	 for (int i =0; i < R0.size(); i++){
+// 		double new_Emax = Emax -   dist1(gen)*(step * (i+1)) + dist(gen);
+// 		Emax_list[i] = new_Emax;
+// 	 	}
+// 	}
 
-	MPI_Bcast(Emax_list.data(), R0.size(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
+// 	MPI_Bcast(Emax_list.data(), R0.size(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
-	for (int i =0; i< R0.size(); i++){
-		multiple_dlr_structs.push_back(create_dlr_obj(beta,eps, Emax_list[i], R0[i]));
-		std::cout << "Emax value is : " << Emax_list[i]<< std::endl;
-		std::cout << "Alpha and epsilon are ";
-		print1d(R0[i].alpha_); std::cout << " and " ; print1d(R0[i].eps_); std::cout << std::endl;
+// 	for (int i =0; i< R0.size(); i++){
+// 		multiple_dlr_structs.push_back(create_dlr_obj(beta,eps, Emax_list[i], R0[i]));
+// 		std::cout << "Emax value is : " << Emax_list[i]<< std::endl;
+// 		std::cout << "Alpha and epsilon are ";
+// 		print1d(R0[i].alpha_); std::cout << " and " ; print1d(R0[i].eps_); std::cout << std::endl;
 		
-	}
+// 	}
+// }
+
+void mDLR::create_multiple_gstruct(){
+        int rank;
+        MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+
+    double step =0.35;
+    if (rank ==0) {
+         std::uniform_real_distribution<> dist(-0.125, 0.125);
+         std::uniform_real_distribution<> dist1(0.96, 1.04);
+         for (int i =0; i < R0.size(); i++){
+                double new_Emax = Emax -static_cast<double>(i)*step*dist1(gen) +  dist(gen);
+                Emax_list[i] = new_Emax;
+                }
+        }
+
+        std::vector<double> Emax_list1 = {6.548, 6.022, 5.679, 5.3983, 5.2239, 4.481, 4.07};
+
+        MPI_Bcast(Emax_list.data(), R0.size(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
+
+        for (int i =0; i< R0.size(); i++){
+                multiple_dlr_structs.push_back(create_dlr_obj(beta,eps, Emax_list1[i], R0[i]));
+                //if (rank==0){
+                //std::cout << "Emax value is : " << Emax_list[i]<< std::endl;
+                //std::cout << "Alpha and epsilon are ";
+                //print1d(R0[i].alpha_); std::cout << " and " ; print1d(R0[i].eps_); std::cout << std::endl;}
+
+        }
 }
 
 void mDLR::create_DLR_master_if_ops(){
@@ -465,7 +499,7 @@ nda::dcomplex  mDLR::patch_avg_one_GF(double Kx,double Ky, double Nc, double mu,
 	double ky_top = Ky + dk/2;
 	double ky_bottom = Ky-dk/2;
 
-	double dK = dk/(Nc-1);
+	double dK = dk/(Nc);
 	auto GF_loc = nda::dcomplex(0,0);
 	
 	for (int i = 0; i < Nc; i++){

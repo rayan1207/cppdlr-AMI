@@ -547,6 +547,78 @@ void mDLR::write_data_momenta_AC_sigma( const std::string& filename,
 }
 
 
+
+void mDLR::denoise_FS_points(Bz_container &SE){
+	int klx = SE.size();
+	int kly = SE[0].size();
+
+	for (int i=0;i < klx;i++){
+		for (int j=0;j<kly;j++){
+			 auto e =  std::abs(hubbard_dispersion(kvals[i],kvals[j],params.mu));
+			if (e < 1e-8){
+				 auto &Sigma_k = SE[i][j];
+				for (auto &z : Sigma_k ){ z = dcomplex(0, z.imag());
+				}
+			}
+		}
+	}
+}
+
+
+void mDLR::symmetrize_fermionic_DLR_array (  nda::array<dcomplex,1> &data ){
+	double beta = params.beta;
+	auto weights= master_if_ops.vals2coefs(beta,data);
+	auto master_nodes = master_if_ops.get_ifnodes();
+
+	double abs_max = nda::max_element(nda::abs(master_nodes));
+	int start = -abs_max;
+	int end = abs_max;
+	int count = end -start;
+	auto expanded_data = nda::zeros<dcomplex> (count);
+	auto dlr_poles = master_if_ops.get_rfnodes()/beta;
+	  auto expanded_nodes = nda::arange(start, end + 1);
+
+	 for (int i = 0; i < expanded_nodes.size(); ++i) {
+        int n = expanded_nodes(i);
+        dcomplex iw(0.0, (2.0 * n + 1.0) * M_PI / beta);
+        for (int j = 0; j < weights.size(); ++j) {
+            expanded_data(i) += weights(j) / (iw - dlr_poles(j));
+        }
+    }
+
+    // flip + conj + symmetrize
+    auto expanded_data_hc = nda::zeros<dcomplex>(count);
+    for (int i = 0; i < count; ++i) { 
+        int indx = count - 1 - i;
+        expanded_data_hc(i) = std::conj(expanded_data(indx));
+    }
+    expanded_data = 0.5 * (expanded_data + expanded_data_hc);
+
+    // map back to master_nodes
+    for (int j = 0; j < master_nodes.size(); ++j) {
+        int n = master_nodes(j);
+        int i = n - start;
+        data(j) = expanded_data(i);
+    }
+}
+
+
+
+
+void mDLR::symmetrize_fermionic_DLR_Bz(Bz_container &SE){
+	int klx = SE.size();
+	int kly = SE[0].size();
+
+	for (int i=0;i < klx;i++){
+		for (int j=0;j<kly;j++){
+			 auto &Sigma_k = SE[i][j];
+			 symmetrize_fermionic_DLR_array(Sigma_k);		 
+		}
+	}
+}
+
+
+
 void mDLR::write_data_momenta_AC_sigma_ij( const std::string& filename,
                             Bz_container& fermionic_data,
                              int size,std::pair<int, int> ind)
@@ -565,7 +637,7 @@ void mDLR::write_data_momenta_AC_sigma_ij( const std::string& filename,
     }
 
  
-    file << std::fixed << std::setprecision(10);
+    file << std::fixed << std::setprecision(12);
     // Optional: write header
     //file << "# wn    qx     qy     Re       Im\n";
             int i = ind.first; int j= ind.second;

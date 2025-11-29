@@ -191,6 +191,9 @@ class mDLR{
     void write_data_momenta_AC_sigma_ij( const std::string& filename,
                             Bz_container& fermionic_data,
                              int size,std::pair<int, int> ind);
+	void denoise_FS_points(Bz_container &SE);
+	void symmetrize_fermionic_DLR_array (nda::array<dcomplex,1> &data );
+	void symmetrize_fermionic_DLR_Bz(Bz_container &SE);
 							
 							
 };

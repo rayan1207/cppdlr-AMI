@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 order = "o4"
-g="g1"
+g="g0"
 kind = "SE"       
 tot = 21
 all_data = []
@@ -12,7 +12,7 @@ U = 1
 for i in [0,1,2]:
 # for i in [1,13,14]:
     # fname = f"data/Summed_data/{i}i_shot_{kind}.txt"
-    fname = f"det/data/Individual_data/SE_{order}_{g}_n{i}_i1.txt"
+    fname = f"U2/data/Individual_data/SE_{order}_{g}_n{i}_i5.txt"
     # fname = "data/Summed_data/Summed_sigma_ac.txt"
     try:
         data = np.loadtxt(fname, comments="#")
@@ -26,7 +26,7 @@ for i in [0,1,2]:
 df = pd.DataFrame(all_data, columns=["iter", "wn", "qx", "qy", "Re", "Im"])
 
 # ==== user input ====
-qx_val = 0
+qx_val = np.pi
 qy_val = np.pi
 
 # Use np.isclose to filter

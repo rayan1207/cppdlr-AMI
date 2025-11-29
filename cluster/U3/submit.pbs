@@ -1,0 +1,10 @@
+#!/bin/bash
+#SBATCH --job-name=scpt_trial
+#SBATCH --account=rrg-jleblanc
+#SBATCH --time=3:00:00
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=192
+#SBATCH --mem=750G                     
+
+
+ time srun /home/rfarid/links/projects/def-jleblanc/rfarid/leblanc_codes/AMI/cppdlr-AMI/build/scpt

@@ -23,7 +23,7 @@ int main(int argc, char** argv){
 
 
 	params_param params;
-	std::string loader_file = "../loader/params.txt";
+	std::string loader_file = "params.txt";
 	params_loader(loader_file,params);
 	
 	
