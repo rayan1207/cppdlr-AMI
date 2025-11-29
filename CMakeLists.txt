@@ -24,26 +24,25 @@ find_package(MPI REQUIRED)
 find_package(Boost 1.89 CONFIG REQUIRED)
 find_package(Eigen3 3.3 REQUIRED NO_MODULE)
 find_package(cppdlr REQUIRED CONFIG)
-find_package(Torch REQUIRED PATHS "${Torch_DIR}" NO_DEFAULT_PATH)
-message(STATUS "Using Conda Torch at: ${Torch_DIR}")
+
+
 # ===========================
 #   Local AMI stack
 # ===========================
 set(AMIGRAPH_ROOT   "${CMAKE_CURRENT_SOURCE_DIR}/../libamigraph/install" CACHE PATH "amigraph install root")
 set(AMICALC_ROOT    "${CMAKE_CURRENT_SOURCE_DIR}/../libamicalc/install"  CACHE PATH "amicalc install root")
 set(AMI_ROOT        "${CMAKE_CURRENT_SOURCE_DIR}/../../../libami/install" CACHE PATH "ami install root")
-set(TORCHAMI_ROOT "/Users/rayan/Documents/torchami/install" CACHE PATH "torchami install root")
+
 
 set(AMIGRAPH_INCLUDE "${AMIGRAPH_ROOT}/include")
 set(AMICALC_INCLUDE  "${AMICALC_ROOT}/include")
 set(AMI_INCLUDE      "${AMI_ROOT}/include")
-set(TORCHAMI_INCLUDE "${TORCHAMI_ROOT}/include")
+
 
 find_library(AMIGRAPH_LIB amigraph PATHS "${AMIGRAPH_ROOT}/lib" REQUIRED)
 find_library(AMICALC_LIB  amicalc  PATHS "${AMICALC_ROOT}/lib"  REQUIRED)
 find_library(AMI_LIB      ami      PATHS "${AMI_ROOT}/lib"      REQUIRED)
-find_library(TORCHAMI_LIB torchami PATHS "${TORCHAMI_ROOT}/lib" REQUIRED)
-find_library(TAMIGRAPH_LIB tamigraph PATHS "${TORCHAMI_ROOT}/lib" REQUIRED)
+
 
 # ===========================
 #   Executable
@@ -68,9 +67,7 @@ target_include_directories(${PROJECT_NAME} BEFORE PRIVATE
   ${AMIGRAPH_INCLUDE}
  ${AMICALC_INCLUDE}
   ${AMI_INCLUDE}
-  ${TORCHAMI_INCLUDE}
-  ${TORCHAMI_INCLUDE}/tami_graph_src
-  ${TORCHAMI_INCLUDE}/tami_base_src
+
 )
 
 # ===========================
@@ -84,9 +81,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   ${AMIGRAPH_LIB}
   ${AMICALC_LIB}
   ${AMI_LIB}
-  ${TORCHAMI_LIB}
-  ${TAMIGRAPH_LIB}
-  ${TORCH_LIBRARIES}
 )
 
 # ===========================
@@ -101,15 +95,13 @@ list(APPEND CMAKE_BUILD_RPATH
   "${AMIGRAPH_ROOT}/lib"
   "${AMICALC_ROOT}/lib"
   "${AMI_ROOT}/lib"
-  "${TORCHAMI_ROOT}/lib"
-  "${TORCH_LIB_DIR}"
+
 )
 list(APPEND CMAKE_INSTALL_RPATH
   "${AMIGRAPH_ROOT}/lib"
   "${AMICALC_ROOT}/lib"
   "${AMI_ROOT}/lib"
-  "${TORCHAMI_ROOT}/lib"
-  "${TORCH_LIB_DIR}"
+
 )
 
 set(CMAKE_MACOSX_RPATH ON)
@@ -119,9 +111,3 @@ set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 #   Install
 # ===========================
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
-
-message(STATUS "TORCH_INCLUDE_DIRS = ${TORCH_INCLUDE_DIRS}")
-message(STATUS "TORCH_LIBRARIES    = ${TORCH_LIBRARIES}")
-message(STATUS "TORCH_LIB_DIR      = ${TORCH_LIB_DIR}")
-message(STATUS "TORCHAMI_INCLUDE   = ${TORCHAMI_INCLUDE}")
-message(STATUS "TORCHAMI_LIB       = ${TORCHAMI_LIB}")

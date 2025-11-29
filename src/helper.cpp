@@ -564,43 +564,46 @@ void mDLR::denoise_FS_points(Bz_container &SE){
 	}
 }
 
+void mDLR::symmetrize_fermionic_DLR_array(nda::array<dcomplex, 1> &data) {
+    double beta = params.beta;
 
-void mDLR::symmetrize_fermionic_DLR_array (  nda::array<dcomplex,1> &data ){
-	double beta = params.beta;
-	auto weights= master_if_ops.vals2coefs(beta,data);
-	auto master_nodes = master_if_ops.get_ifnodes();
+    auto weights      = master_if_ops.vals2coefs(beta, data);
+    auto master_nodes = master_if_ops.get_ifnodes();
 
-	double abs_max = nda::max_element(nda::abs(master_nodes));
-	int start = -abs_max;
-	int end = abs_max;
-	int count = end -start;
-	auto expanded_data = nda::zeros<dcomplex> (count);
-	auto dlr_poles = master_if_ops.get_rfnodes()/beta;
-	  auto expanded_nodes = nda::arange(start, end + 1);
+    auto abs_nodes = nda::abs(master_nodes);
+    auto abs_max   = nda::max_element(abs_nodes);
 
-	 for (int i = 0; i < expanded_nodes.size(); ++i) {
+    int start = -static_cast<int>(abs_max);
+    int end   =  static_cast<int>(abs_max);
+
+    auto expanded_nodes = nda::arange(start, end + 1);
+    int count = expanded_nodes.size();
+
+    auto expanded_data = nda::zeros<dcomplex>(count);
+    auto dlr_poles     = master_if_ops.get_rfnodes() / beta;
+
+    for (int i = 0; i < count; ++i) {
         int n = expanded_nodes(i);
         dcomplex iw(0.0, (2.0 * n + 1.0) * M_PI / beta);
+
+        dcomplex f_pos = 0.0;
+        dcomplex f_neg = 0.0;
+
         for (int j = 0; j < weights.size(); ++j) {
-            expanded_data(i) += weights(j) / (iw - dlr_poles(j));
+            f_pos += weights(j) / ( iw - dlr_poles(j));
+            f_neg += weights(j) / (-iw - dlr_poles(j));
         }
+
+        expanded_data(i) = 0.5 * (f_pos + std::conj(f_neg));
     }
 
-    // flip + conj + symmetrize
-    auto expanded_data_hc = nda::zeros<dcomplex>(count);
-    for (int i = 0; i < count; ++i) { 
-        int indx = count - 1 - i;
-        expanded_data_hc(i) = std::conj(expanded_data(indx));
-    }
-    expanded_data = 0.5 * (expanded_data + expanded_data_hc);
-
-    // map back to master_nodes
     for (int j = 0; j < master_nodes.size(); ++j) {
         int n = master_nodes(j);
         int i = n - start;
         data(j) = expanded_data(i);
     }
 }
+
 
 
 

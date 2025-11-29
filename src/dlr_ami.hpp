@@ -2,8 +2,6 @@
 #define DLR_AMI_HPP
 //#include "ami_calc.hpp"
 #include "ami_base.hpp"
-#include "tami_graph.hpp"
-#include "tami_base.hpp"
 #include "amigraph.hpp"
 #include <cassert>
 #include <filesystem>
