@@ -46,7 +46,7 @@ MPI_INFO create_MPI_obj(int total_num){
 	MPI_obj.count = MPI_obj.chunk + (MPI_obj.rank < MPI_obj.remainder ? 1 : 0);
 	MPI_obj.end   = MPI_obj.start + MPI_obj.count; 
 	
-	// auto s = std::format("created a DLR with rank={}, with start_index={}, and end_index={}, perfoming {}/{} of  Freq kernel  \n",MPI_obj.rank,
+	// auto s = std::format("created a  DLR with rank={}, with start_index={}, and end_index={}, perfoming {}/{} of  Freq kernel  \n",MPI_obj.rank,
 	// MPI_obj.start, MPI_obj.end, MPI_obj.count, total_num);
 	std::printf(  "created a DLR with rank=%d, with start_index=%d, and end_index=%d, " "perfoming %d/%d of Freq kernel\n",
     MPI_obj.rank, MPI_obj.start, MPI_obj.end, MPI_obj.count, total_num);
@@ -176,7 +176,7 @@ void mDLR::create_multiple_gstruct(){
         MPI_Bcast(Emax_list.data(), R0.size(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
 
         for (int i =0; i< R0.size(); i++){
-                multiple_dlr_structs.push_back(create_dlr_obj(beta,eps, Emax_list1[i], R0[i]));
+                multiple_dlr_structs.push_back(create_dlr_obj(beta,eps, Emax_list[i], R0[i]));
                 //if (rank==0){
                 //std::cout << "Emax value is : " << Emax_list[i]<< std::endl;
                 //std::cout << "Alpha and epsilon are ";
@@ -500,27 +500,40 @@ nda::dcomplex  mDLR::patch_avg_one_GF(double Kx,double Ky, double Nc, double mu,
 	double ky_bottom = Ky-dk/2;
 
 	double dK = dk/(Nc);
-	auto GF_loc = nda::dcomplex(0,0);
+	auto GF_bar = nda::dcomplex(0,0);
 	
 	for (int i = 0; i < Nc; i++){
 		for (int j = 0; j < Nc; j++){
 			//std::cout << "kx : " << kx_bottom+ i*dK << " ky : "<< ky_bottom+j*dK <<std::endl;
-			GF_loc += 1/(iw - hubbard_dispersion(kx_bottom+ i*dK,ky_bottom+j*dK,mu) - SE_K);	
+			GF_bar += 1/(iw - hubbard_dispersion(kx_bottom+ i*dK,ky_bottom+j*dK,mu) - SE_K);	
 		}
 		
 	}
 	
-	GF_loc = GF_loc/nda::dcomplex(Nc*Nc,0);
-	
-	nda::dcomplex g0_inv = 1/GF_loc + SE_K;
-	
-	
-	
-	return 1/g0_inv;
-	
+	GF_bar = GF_bar/nda::dcomplex(Nc*Nc,0);
 
-
+	return GF_bar;
+	
 }
+
+
+
+
+Bz_container mDLR::generate_weiss_G(nda::array<dcomplex,1> &mfreq, Bz_container &SE, Bz_container &GF_bar){
+	if (MPI_obj.rank == 0){
+	std::cout << " Generating Weiss field "<<std::endl;}
+	Bz_container G_weiss(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(mfreq.size())));
+	for (int i =0; i<kl; i++) {
+		for (int j =0; j <kl; j++){
+			nda::array<dcomplex,1> g0_inv = 1/GF_bar[i][j] + SE[i][j];
+			G_weiss[i][j] = 1/g0_inv;
+		}	
+	}	
+	return G_weiss;	
+}
+
+
+
 
 
 

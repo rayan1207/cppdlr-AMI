@@ -65,13 +65,13 @@ nda::dcomplex mDLR::gfunc(double kx, double ky){
 	if (params.gfunc==1){
 		return  nda::dcomplex(std::sin(kx),0);
 	}
-	if (params.gfunc==1){
+	if (params.gfunc==2){
 		return  nda::dcomplex(std::cos(kx)-std::cos(ky),0);
 	}
-	if (params.gfunc==2){
+	if (params.gfunc==3){
 		return  nda::dcomplex(std::cos(kx)+std::cos(ky),0);
 	}
-	if (params.gfunc==3){
+	if (params.gfunc==4){
 		return  nda::dcomplex(std::sin(kx)*std::sin(ky),0);
 	}
 	else {

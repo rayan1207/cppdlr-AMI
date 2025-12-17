@@ -47,7 +47,7 @@ int main(int argc, char** argv){
 
 	
 	
-	double master_E = 10; double master_eps=1e-10;
+	double master_E = 10; double master_eps=params.eps;
 	double master_lambda = params.beta*master_E;
     auto dlr_rf = build_dlr_rf(master_lambda,master_eps );
     auto master_if_ops = imfreq_ops(master_lambda, dlr_rf, Fermion);
@@ -60,23 +60,27 @@ int main(int argc, char** argv){
 	mult_mDLR.ggm_Fk_solver();
 	mult_mDLR.intialize_ggm_DLR_W();
 	mult_mDLR.ScPT_solver(iter,scSE,scGF);
+
+
+
 	std::string file_name_AC = "data/Summed_data/Summed_sigma_ac.txt";
-	auto p = std::pair<int,int>(0,2);
-	mult_mDLR.mDLR_list[0].write_data_momenta_AC_sigma_ij( file_name_AC,scGF,2000,p);
+	auto p = std::pair<int,int>(0,0);
+	mult_mDLR.mDLR_list[0].write_data_momenta_AC_sigma_ij( file_name_AC,scGF,6000,p);
    
     AmiBase::graph_type basetype_2p;
 	if (params.compute_2p == 1) {
 
 		if (params.type_2p == 0 ){
+	    std::cout << "computing particle hole channel in 2p sector" << std::endl;
 		basetype_2p =AmiBase::Pi_phuu;  }
 
 		if (params.type_2p == 1 ){
 		basetype_2p =AmiBase::Pi_ppuu;  }
 
-		else {
-			std::cout << " Wrong 2p type type with :" <<  params.type_2p << std::endl;
+		// else {
+		// 	std::cout << " Wrong 2p type type with :" <<  params.type_2p << std::endl;
 
-		}
+		// }
 
 
 			if (rank==0){
@@ -111,10 +115,11 @@ int main(int argc, char** argv){
 		ggm_mDLR  mult_ph_mDLR( params,basetype_2p, ggm_ph,master_if_ops);
 		mult_ph_mDLR.ggm_Fk_2p_solver(bfreq_list);
 		mult_ph_mDLR.intialize_ggm_DLR_W(scGF);
+		
 		//mult_ph_mDLR.transfer_ggm_DLR_W(scGF);
 		mult_ph_mDLR.single_shot_2p_solver_qext(0,0,bfreq_list, chi);
 		std::string file_name_AC = "data_ph/Summed_data/single_shot_AC_ph.txt";
-		mult_ph_mDLR.mDLR_list[0].write_data_momenta_AC_chi( file_name_AC,master_bf_ops,chi,2000);
+		mult_ph_mDLR.mDLR_list[0].write_data_momenta_AC_chi( file_name_AC,master_bf_ops,chi,4000);
 
 
 

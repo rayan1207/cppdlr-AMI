@@ -168,6 +168,7 @@ class mDLR{
     Bz_container G_from_DLR_SE_M_DCA(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu,double NC);
 	Bz_container G_from_DLR_SE_M_DMFT(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
 	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
+	Bz_container generate_weiss_G(nda::array<dcomplex,1> &mfreq, Bz_container &SE, Bz_container &GF_bar);
 	Bz_container compute_momenta_kernel_bz();
 	Bz_container compute_momenta_kernel_2p_bz();
 	Bz_container MPI_vdot_freq_momenta_kernel_M(Bz_container &mk, nda::array<dcomplex,2> &fk);

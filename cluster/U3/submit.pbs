@@ -2,7 +2,7 @@
 #SBATCH --job-name=scpt_trial
 #SBATCH --account=rrg-jleblanc
 #SBATCH --time=3:00:00
-#SBATCH --nodes=4
+#SBATCH --nodes=6
 #SBATCH --ntasks-per-node=192
 #SBATCH --mem=750G                     
 

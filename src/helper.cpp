@@ -467,7 +467,7 @@ void mDLR::write_data_momenta_AC_chi( const std::string& filename,cppdlr::imfreq
     }
 
 
-    file << std::fixed << std::setprecision(10);
+    file << std::fixed << std::setprecision(17);
     // Optional: write header
     //file << "# wn    qx     qy     Re       Im\n";
     for (int i =0; i<k1_l;++i){
@@ -640,7 +640,7 @@ void mDLR::write_data_momenta_AC_sigma_ij( const std::string& filename,
     }
 
  
-    file << std::fixed << std::setprecision(12);
+    file << std::fixed << std::setprecision(17);
     // Optional: write header
     //file << "# wn    qx     qy     Re       Im\n";
             int i = ind.first; int j= ind.second;

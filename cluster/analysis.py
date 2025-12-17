@@ -7,11 +7,11 @@ kind = "SE"
 tot = 21
 all_data = []
 beta =10
-U = 1
+U = 6
 # Load all data into a list
-for i in [1,2,4,5,6,7,8]:
+for i in [0,2,]:
 # for i in [1,13,14]:
-    fname = f"U4_1/data/Summed_data/{i}i_shot_{kind}.txt"
+    fname = f"DCA/U{U}/data/Summed_data/{i}i_shot_{kind}.txt"
     # fname = "DCA/data/Summed_data/single_shot_AC_ph.txt"
     # fname = "data/Summed_data/Summed_sigma_ac.txt"
     try:
@@ -26,11 +26,11 @@ for i in [1,2,4,5,6,7,8]:
 df = pd.DataFrame(all_data, columns=["iter", "wn", "qx", "qy", "Re", "Im"])
 
 # ==== user input ====
-qx_val =0
+qx_val = 0
 qy_val = np.pi
 
 # Use np.isclose to filter
-df_filtered = df[np.isclose(df["qx"], qx_val) & np.isclose(df["qy"], qy_val) &  (df["wn"] >= 0) ]
+df_filtered = df[np.isclose(df["qx"], qx_val) & np.isclose(df["qy"], qy_val)  ]
 # df_filtered = df[np.isclose(df["qx"], qx_val) & np.isclose(df["qy"], qy_val) ]
 # ==== plot ====
 
@@ -41,7 +41,8 @@ fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 6), sharex=True)
 for i in sorted(df_filtered["iter"].unique()):
     sub = df_filtered[df_filtered["iter"] == i]
     ax1.plot(sub["wn"], sub["Re"],".-", label=f"i={i}")
-    ax2.plot(sub["wn"], sub["Im"], ".-", label=f"i={i}")
+    ax2.plot(sub["wn"], sub["Im"]/(U**2), ".-", label=f"i={i}")
+    # ax2.set_ylim(-0.010,0)
 
         
 

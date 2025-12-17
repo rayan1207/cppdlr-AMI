@@ -110,10 +110,11 @@ Bz_container ggm_mDLR::generate_summed_SE(int iter,bool write){
 	std::vector<Bz_container> SE_list(graph_size);
 	for (int i =0; i< graph_size; i++){
 		auto SE =  generate_SE( mDLR_list[i], Fk_ggm[i]);
+		mDLR_list[0].denoise_FS_points(SE);
 
 		if (write){
 		auto name = graphlist_names[i];
-		std::string file_SE ="data/Individual_data/SE_" + name + "_i" + std::to_string(params.iter) + ".txt";
+		std::string file_SE ="data/Individual_data/SE_" + name + "_i" + std::to_string(i) + ".txt";
 		mDLR_list[i].write_data_momenta(file_SE,SE, master_mfreq);	
 		SE_list[i] = std::move(SE);}
 		
@@ -163,10 +164,14 @@ void ggm_mDLR::ScPT_solver(int max_iters, Bz_container &final_SE, Bz_container &
 	while (iter_idx < max_iters ) {
 
 	auto SE_new = generate_summed_SE(iter_idx,true);
-	if (params.mu ==0){    mDLR_list[0].denoise_FS_points(SE_new);}
-	mDLR_list[0].symmetrize_fermionic_DLR_Bz(SE_new);
+	// if (params.mu ==0){    mDLR_list[0].denoise_FS_points(SE_new);}
+	//mDLR_list[0].symmetrize_fermionic_DLR_Bz(SE_new);
 	// 2) Mix old SE with new SE 
-	SE = ( iter_idx < 2) ? SE_new : mDLR_list[0].SE_mixer(SE_old,SE_new, alpha);
+	SE = ( iter_idx < 1) ? SE_new : mDLR_list[0].SE_mixer(SE_old,SE_new, alpha);
+	mDLR_list[0].denoise_FS_points(SE);
+	mDLR_list[0].symmetrize_fermionic_DLR_Bz(SE);
+	mDLR_list[0].denoise_FS_points(SE);
+	
 	double density = mDLR_list[0].compute_density_from_SE(SE, master_mfreq, mu);
 	double mu_new = (std::abs(params.target_n - density) < 1e-3)
 						? mu
@@ -181,12 +186,15 @@ void ggm_mDLR::ScPT_solver(int max_iters, Bz_container &final_SE, Bz_container &
 
 	
 	Bz_container GF;
-	if (params.DCA ==1){
-		GF = mDLR_list[0].G_from_DLR_SE_M_DCA(SE, master_mfreq, mu_new,params.patch_N);
-			}
-	else {
-		GF = mDLR_list[0].G_from_DLR_SE_M(SE, master_mfreq, mu_new);
-			}
+	GF = mDLR_list[0].G_from_DLR_SE_M(SE, master_mfreq, mu_new);
+	// if (params.DCA ==1){
+	// 	GF = mDLR_list[0].G_from_DLR_SE_M_DCA(SE, master_mfreq, mu_new,params.patch_N);
+	// 		}
+	// else {
+	// 	GF = mDLR_list[0].G_from_DLR_SE_M(SE, master_mfreq, mu_new);
+	// 		}
+
+	
 
 	
 	std::string file_SE = "data/Summed_data/" + std::to_string(iter_idx) + "i_shot_SE.txt";
@@ -194,8 +202,18 @@ void ggm_mDLR::ScPT_solver(int max_iters, Bz_container &final_SE, Bz_container &
 
 	mDLR_list[0].write_data_momenta(file_SE, SE, master_mfreq);
 	mDLR_list[0].write_data_momenta(file_GF, GF, master_mfreq);
+	Bz_container GF_bar;
+	Bz_container GF_weiss;
+    if (params.DCA==1){
+		GF_bar = mDLR_list[0].G_from_DLR_SE_M_DCA(SE, master_mfreq, mu_new,params.patch_N);
+		GF_weiss = mDLR_list[0].generate_weiss_G(master_mfreq,SE, GF_bar);
+		transfer_ggm_DLR_W(GF_weiss);
+	}
 
-    transfer_ggm_DLR_W(GF);
+	else {
+		transfer_ggm_DLR_W(GF);
+	}
+   
 	converged = SE_converged_abs(SE,
                       SE_old,
                       TOLERANCE);
@@ -242,7 +260,7 @@ Bz_container ggm_mDLR::generate_summed_2p_bz(nda::array<dcomplex,1> &master_bfre
 	for (int i =0; i< graph_size; i++){
 		auto ph =  generate_2p_bz( mDLR_list[i], Fk_ggm[i]);
 		auto name = graphlist_names[i];
-		std::string file_ph ="data_ph/Individual_data/ph_" + name + "_i" + std::to_string(params.iter) + ".txt";
+		std::string file_ph ="data_ph/Individual_data/ph_" + name + "_i" + std::to_string(i) + ".txt";
 		mDLR_list[i].write_data_momenta(file_ph,ph,master_bfreq);	
 	ph_list[i] = std::move(ph);
 		
