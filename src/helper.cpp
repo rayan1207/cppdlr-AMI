@@ -76,8 +76,11 @@ void params_loader(const std::string& filename, params_param& params) {
 			 params.compute_2p= std::stoi(paramValue);
 		else if (paramName == "type_2p")
 			 params.type_2p= std::stoi(paramValue);
+		else if (paramName == "type_1p")
+			 params.type_1p= std::stoi(paramValue);
 		else if (paramName == "gfunc")
 			 params.gfunc= std::stoi(paramValue);
+		
     }
 	
     inputFile.close();
@@ -205,7 +208,7 @@ void mDLR::fill_dlro_momenta_info(){
 	kcombo_element.resize(2*DOF);		
 }
 
-nda::array<dcomplex,1> mDLR::LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu) {
+nda::array<dcomplex,1> mDLR::LocalG_from_DLR_SE_M(Bz_container &SE, nda::array<dcomplex,1> &mfreq,double mu) {
 	   dcomplex prefactor = dcomplex(kl*kl,0);
 	   int mfreq_size = mfreq.size();
 	   auto  local_G = nda::zeros<dcomplex>(mfreq_size);
@@ -227,6 +230,34 @@ double mDLR::compute_density_from_SE(Bz_container &SE,nda::array<dcomplex,1> &mf
     auto density = nda::dot(local_weights,fd_master_poles).real();
 	return 2.0*density;
 }
+
+
+nda::array<dcomplex,1> average_Bz_container(Bz_container &C){
+	int size = C[0][0].size();
+	int kl = C.size();
+	 auto  avg_C = nda::zeros<dcomplex>(size);
+	 for (int i = 0; i < kl ;i++){
+			   for( int j =0; j< kl;j++){
+				   avg_C +=   C[i][j];
+			   } 
+			} 
+	  return avg_C/dcomplex(kl*kl,0);
+}
+
+
+Bz_container mDLR::embed_localSE_to_SE_K( Bz_container &SE_K,Bz_container  &sSE_local ){
+    int Nf_size = SE_K[0][0].size();
+	nda::array<dcomplex,1> wSE_local =  average_Bz_container(SE_K);
+	Bz_container result(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(Nf_size)));
+
+	for (int i =0; i < SE_K.size(); i++) {
+		for (int j =0; j < SE_K[i].size(); j++) {
+			result[i][j] = SE_K[i][j] + sSE_local[i][j]  - wSE_local;
+		}
+	}
+	return result;
+}
+
 // double mDLR::compute_density_from_SE(Bz_container &SE,
 //                                      nda::array<dcomplex,1> &mfreq, // master grid
 //                                      double mu)
@@ -467,7 +498,7 @@ void mDLR::write_data_momenta_AC_chi( const std::string& filename,cppdlr::imfreq
     }
 
 
-    file << std::fixed << std::setprecision(17);
+    file << std::fixed << std::setprecision(16);
     // Optional: write header
     //file << "# wn    qx     qy     Re       Im\n";
     for (int i =0; i<k1_l;++i){
@@ -516,7 +547,7 @@ void mDLR::write_data_momenta_AC_sigma( const std::string& filename,
     }
 
 
-    file << std::fixed << std::setprecision(10);
+    file << std::fixed << std::setprecision(16);
     // Optional: write header
     //file << "# wn    qx     qy     Re       Im\n";
     for (int i =0; i<k1_l;++i){
@@ -555,11 +586,25 @@ void mDLR::denoise_FS_points(Bz_container &SE){
 	for (int i=0;i < klx;i++){
 		for (int j=0;j<kly;j++){
 			 auto e =  std::abs(hubbard_dispersion(kvals[i],kvals[j],params.mu));
-			if (e < 1e-8){
+			if (e < 1e-3){
 				 auto &Sigma_k = SE[i][j];
 				for (auto &z : Sigma_k ){ z = dcomplex(0, z.imag());
 				}
 			}
+		}
+	}
+}
+
+
+
+void mDLR::set_re_zero(Bz_container &SE){
+	int klx = SE.size();
+	int kly = SE[0].size();
+
+	for (int i=0;i < klx;i++){
+		for (int j=0;j<kly;j++){
+				 auto &Sigma_k = SE[i][j];
+				for (auto &z : Sigma_k ){ z = dcomplex(0, z.imag());}
 		}
 	}
 }
@@ -640,7 +685,7 @@ void mDLR::write_data_momenta_AC_sigma_ij( const std::string& filename,
     }
 
  
-    file << std::fixed << std::setprecision(17);
+    file << std::fixed << std::setprecision(16);
     // Optional: write header
     //file << "# wn    qx     qy     Re       Im\n";
             int i = ind.first; int j= ind.second;

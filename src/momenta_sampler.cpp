@@ -123,6 +123,23 @@ nda::dcomplex  mDLR::apply_ggkp(double kx_ext, double ky_ext, const std::vector<
     return kernel;
 }
 
+ nda::array<nda::dcomplex,1> mDLR::compute_local_momenta_kernel()
+{
+    nda::array<nda::dcomplex,1> kernel = nda::zeros<nda::dcomplex>(CN);
+
+    for (int c = 0; c < CN; c++) {
+		auto combo = generate_single_CN(c);
+		nda::dcomplex val(1.0, 0.0);
+		for (int i = 0; i < N; ++i) {
+			const auto& wlist =
+			multiple_dlr_structs[i].dlrW_local;
+			val *=   wlist[ combo[i] ];
+		}
+	kernel(c) =val;
+	}
+    return kernel;
+}
+
  nda::array<nda::dcomplex,1> mDLR::compute_momenta_kernel_2p_qext(double kx_ext,double ky_ext)
 {
     nda::array<nda::dcomplex,1> kernel = nda::zeros<nda::dcomplex>(CN);
@@ -281,4 +298,39 @@ Bz_container mDLR::MPI_vdot_freq_momenta_kernel_M(Bz_container &mk, nda::array<d
 	
 	result[0][0] = global_result;
 	return result;	
+}
+
+
+
+ Bz_container mDLR::MPI_vdot_freq_momenta_kernel_local(nda::array<dcomplex,1> &momenta_kernel , nda::array<dcomplex,2> &fk){
+	
+	int Nf = fk.shape()[0];
+	std::vector<dcomplex> local_result;
+	std::vector<dcomplex> global_result;
+	local_result.resize(Nf);
+	global_result.resize(Nf);
+	
+
+	for (int k=0; k<Nf; k++){
+				local_result[k] = prefactor*std::pow(Uval,ord)*nda::dot(fk(k,nda::range::all),momenta_kernel);
+			}			
+
+	//MPI_Barrier(MPI_COMM_WORLD);
+	MPI_Allreduce(local_result.data(), global_result.data(), Nf, MPI_DOUBLE_COMPLEX,MPI_SUM,MPI_COMM_WORLD);
+    // nda::array<dcomplex,1> result(Nf);
+
+
+
+	Bz_container result(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(Nf)));
+	
+
+	for (int i =0;i<kl;i++){
+		for (int j=0;j<kl;j++){
+			auto  &out = result[i][j];
+			out = global_result;			
+		}	
+	}
+	
+	
+	return result;
 }

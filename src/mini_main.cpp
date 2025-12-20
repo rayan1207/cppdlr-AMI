@@ -30,8 +30,13 @@ int main(int argc, char** argv){
 	////////////   Load the graphs here //////////////////
 	AmiBase::graph_type sigma=AmiBase::Sigma;
 	AmiGraph gs(sigma, 0);
+	AmiGraph::gg_matrix_t ggm_first;
+	gs.read_ggmp(params.graph,ggm_first, 2);
+
 	AmiGraph::gg_matrix_t ggm;
 	gs.read_ggmp(params.graph,ggm, params.ord_max);
+
+
 	std::cout<<std::endl;
 	double beta   = params.beta;
     double eps    = params.eps;
@@ -47,19 +52,63 @@ int main(int argc, char** argv){
 
 	
 	
-	double master_E = 10; double master_eps=params.eps;
+	double master_E = 10; double master_eps=1e-10;
 	double master_lambda = params.beta*master_E;
     auto dlr_rf = build_dlr_rf(master_lambda,master_eps );
     auto master_if_ops = imfreq_ops(master_lambda, dlr_rf, Fermion);
 	auto master_bf_ops = imfreq_ops(master_lambda, dlr_rf, Boson);
+///////////// guesss //////////////////
 
-   	Bz_container scGF;
+
+ if (rank==0){ std::cout << "QUICK GF2 Calculations for DCA guess \n";}
+   	Bz_container guess_scGF;
+   	Bz_container guess_scSE;
+
+	ggm_mDLR  mult_mDLR_first( params,sigma, ggm_first,master_if_ops);
+	mult_mDLR_first.ggm_Fk_solver();
+	mult_mDLR_first.initialize_ggm_DLR_W();
+	mult_mDLR_first.ScPT_solver(iter,guess_scSE,guess_scGF,false);
+
+ if (rank==0){ std::cout << "\n\n First G obtained succcessfully  \n\n";}
+
+
+////////// main 1p cal /////////
+
+if (rank ==0) { std::cout << "Beginning higher IPT calculation \n\n";}
+	Bz_container scGF;
    	Bz_container scSE;
-
 	ggm_mDLR  mult_mDLR( params,sigma, ggm,master_if_ops);
 	mult_mDLR.ggm_Fk_solver();
-	mult_mDLR.intialize_ggm_DLR_W();
-	mult_mDLR.ScPT_solver(iter,scSE,scGF);
+
+	if (params.type_1p ==0){
+		
+		if (rank ==0) { std::cout << "Using Full K resolved IPT \n\n";}
+		mult_mDLR.initialize_ggm_DLR_W(guess_scGF);
+		mult_mDLR.ScPT_solver(iter,scSE,scGF,true);}
+	if (params.type_1p ==1){
+    
+		if (rank ==0) { std::cout << "Using DMFT  IPT \n\n";}
+		auto guess_scGF_local =  average_Bz_container(guess_scGF);
+		//std::cout << guess_scGF_local;
+		mult_mDLR.initialize_local_ggm_DLR_W(guess_scGF_local);
+		mult_mDLR.ScPT_DMFT_solver(iter,scSE,scGF,true);
+
+		}
+
+	if (params.type_1p ==2){
+		if (rank ==0) { std::cout << "Using SEET  IPT \n\n";}
+		mult_mDLR.initialize_ggm_DLR_W(guess_scGF);
+		auto guess_scGF_local =  average_Bz_container(guess_scGF);
+		mult_mDLR.initialize_local_ggm_DLR_W(guess_scGF_local);
+		mult_mDLR.ScPT_LSEET_solver(iter,scSE,scGF,true);}
+
+
+if (rank==0){ std::cout << " Done\n";}
+
+
+
+
+
 
 
 
@@ -114,7 +163,7 @@ int main(int argc, char** argv){
 		
 		ggm_mDLR  mult_ph_mDLR( params,basetype_2p, ggm_ph,master_if_ops);
 		mult_ph_mDLR.ggm_Fk_2p_solver(bfreq_list);
-		mult_ph_mDLR.intialize_ggm_DLR_W(scGF);
+		mult_ph_mDLR.initialize_ggm_DLR_W(scGF);
 		
 		//mult_ph_mDLR.transfer_ggm_DLR_W(scGF);
 		mult_ph_mDLR.single_shot_2p_solver_qext(0,0,bfreq_list, chi);

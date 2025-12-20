@@ -66,6 +66,7 @@ struct params_param {
 	int compute_2p;
 	int type_2p;
 	int gfunc;
+	int type_1p;
 };
 
 std::string trim(const std::string& str);
@@ -79,13 +80,13 @@ void params_loader(const std::string& filename, params_param& params);
 /////////// DLR stuff //////////////
 struct dlr_obj{
 	cppdlr::imfreq_ops if_ops;
-	//Eigen::VectorXcd im_freqs;
     std::vector<std::complex<double>> im_freqs;
 	std::vector<double> pole_locs;
 	AmiBase::g_struct ginfo;
 	int pole_num;
 	std::vector<std::vector<double>> evec;
 	std::vector<std::vector<nda::array<dcomplex,1>>> dlrW_in_square;
+	nda::array<dcomplex,1> dlrW_local;
 	
 };
 
@@ -130,6 +131,7 @@ class mDLR{
 	nda::array<double,1> master_poles;
 	nda::array<dcomplex,1> fd_master_poles;
 	std::vector<std::vector<nda::array<dcomplex,1>>> master_dlrW_in_square; //master dlr weight
+	nda::array<dcomplex,1> master_dlrW_local;
 	mDLR(const params_param& _params,AmiBase::graph_type _baseType, AmiGraph::graph_t& _graph,cppdlr::imfreq_ops& _master_if_ops );
 	//////// methods ////////////
 	
@@ -154,25 +156,40 @@ class mDLR{
 	
 	void populate_master_dlrW();
 	void populate_master_dlrW(Bz_container &G);
+
+	void populate_local_master_dlrW();
+	void populate_local_master_dlrW(nda::array<dcomplex,1>& G_loc);
+
+
 	void reshape_dlrW_square_per_kgrid();
 	nda::array<dcomplex,1> recover_dlro_G_from_master_weights(nda::array<dcomplex,1> &master_weights, std::vector<std::complex<double>> &dlro_if);
+	
 	void transfer_master_DLR_weights_to_dlrR0_elements();
+	void transfer_local_master_DLR_weights_to_dlrR0_elements();
+
+
+
+
+
 	inline void generate_ith_momenta_cartesian_combo(int i, std::vector<int>& result );
 	nda::dcomplex gfunc(double kx, double ky);
 	nda::dcomplex  apply_ggkp(double kx_ext, double ky_ext, const std::vector<int> &kcombo);
 	
 	inline nda::dcomplex compute_momenta_one_kCN_kernel(double kx_ext,double ky_ext,std::vector<int> &combo,const std::vector<int> &kcombo);
 	nda::array<nda::dcomplex,1> compute_momenta_kernel_qext(double kx_ext,double ky_ext);
+	nda::array<nda::dcomplex,1> compute_local_momenta_kernel();
 	nda::array<nda::dcomplex,1> compute_momenta_kernel_2p_qext(double kx_ext,double ky_ext);
 	nda::dcomplex patch_avg_one_GF(double Kx,double Ky, double Nc, double mu, nda::dcomplex iw, nda::dcomplex SE_K  );	
-    Bz_container G_from_DLR_SE_M_DCA(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu,double NC);
-	Bz_container G_from_DLR_SE_M_DMFT(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
 	Bz_container G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu);
+	Bz_container G_from_DLR_SE_M_DCA(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu,double NC);
+	Bz_container embed_localSE_to_SE_K( Bz_container &SE_K,Bz_container  &sSE_local );
+
 	Bz_container generate_weiss_G(nda::array<dcomplex,1> &mfreq, Bz_container &SE, Bz_container &GF_bar);
 	Bz_container compute_momenta_kernel_bz();
 	Bz_container compute_momenta_kernel_2p_bz();
 	Bz_container MPI_vdot_freq_momenta_kernel_M(Bz_container &mk, nda::array<dcomplex,2> &fk);
 	Bz_container MPI_vdot_freq_momenta_kernel(nda::array<dcomplex,1> &momenta_kernel , nda::array<dcomplex,2> &fk);
+	Bz_container MPI_vdot_freq_momenta_kernel_local(nda::array<dcomplex,1> &momenta_kernel , nda::array<dcomplex,2> &fk);
 	nda::array<nda::dcomplex,1>  LocalG_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,  double mu);
 	Bz_container SE_mixer(Bz_container SE_old, Bz_container SE_new, double alpha);
 	nda::array<dcomplex,1> fd_on_master_poles();
@@ -181,8 +198,6 @@ class mDLR{
 	double non_interacting_density(nda::array<dcomplex,1> &mfreq,double mu);
 	void repopulate_master_dlrW_from_G(Bz_container &G );
 	void write_data_momenta(const std::string& filename,Bz_container& data, nda::array<dcomplex,1>& mfreq);
-
-
 	nda::array<dcomplex,1> prepare_AC_chi_data(cppdlr::imfreq_ops &bosonic_if_ops, nda::array<dcomplex,1> &chi,int size);
 	nda::array<dcomplex,1> prepare_AC_sigma_data(   nda::array<dcomplex,1> &G,int size);
 	void write_data_momenta_AC_chi( const std::string& filename,cppdlr::imfreq_ops &bosonic_if_ops, Bz_container& bosonic_data,int size);
@@ -191,6 +206,7 @@ class mDLR{
                             Bz_container& fermionic_data,
                              int size,std::pair<int, int> ind);
 	void denoise_FS_points(Bz_container &SE);
+	void set_re_zero(Bz_container &SE);
 	void symmetrize_fermionic_DLR_array (nda::array<dcomplex,1> &data );
 	void symmetrize_fermionic_DLR_Bz(Bz_container &SE);
 							
@@ -212,6 +228,7 @@ AmiGraph::gg_matrix_t ggm;
 std::vector<AmiGraph::graph_t> graphlist;
 std::vector<std::string> graphlist_names;
 std::vector<mDLR> mDLR_list;
+std::vector<int> ord_list;
 size_t graph_size;
 cppdlr::imfreq_ops master_if_ops;
 void ggm_to_graphlist();
@@ -222,12 +239,21 @@ AmiBase::graph_type baseType;
 void reshape_Fk_ggm();
 void ggm_Fk_solver();
 void ggm_Fk_2p_solver(nda::array<dcomplex,1> &master_bfreq);
-void intialize_ggm_DLR_W();
-void intialize_ggm_DLR_W(Bz_container &GF);
-Bz_container generate_summed_SE(int iter,bool write);
+void initialize_ggm_DLR_W();
+void initialize_ggm_DLR_W(Bz_container &GF);
+void initialize_local_ggm_DLR_W(nda::array<dcomplex,1> &G_loc);
+void initialize_local_ggm_DLR_W();
+void transfer_local_ggm_DLR_W(nda::array<dcomplex,1>& G_loc);
 void transfer_ggm_DLR_W(Bz_container &GF);
-void ScPT_solver(int max_iters, Bz_container &final_SE, Bz_container &final_GF);
+
+Bz_container generate_summed_SE(int iter,std::string type,bool write,int max_ord);
+
+void ScPT_solver(int max_iters, Bz_container &final_SE, Bz_container &final_GF,bool write);
+void ScPT_DMFT_solver(int max_iters, Bz_container &final_SE, Bz_container &final_GF,bool write);
+void ScPT_LSEET_solver(int max_iters, Bz_container &final_SE, Bz_container &final_GF,bool write);
+
 Bz_container generate_SE(mDLR &_mDLR, nda::array<dcomplex,2> &fk);	
+Bz_container generate_SE_local(mDLR &_mDLR, nda::array<dcomplex,2> &fk  );
 
 
 Bz_container generate_2p_bz(mDLR &_mDLR, nda::array<dcomplex,2> &fk );
@@ -249,7 +275,7 @@ void single_shot_2p_solver_qext(double qx, double qy,nda::array<dcomplex,1> &mas
 dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0_element);
 
 MPI_INFO create_MPI_obj(int total_num);
-
+nda::array<dcomplex,1> average_Bz_container(Bz_container &C);
 std::vector<std::complex<double>> convertToComplex(const std::vector<double> vec);
 template<typename T>
 void triangle_to_square(std::vector<std::vector<T>>& M);

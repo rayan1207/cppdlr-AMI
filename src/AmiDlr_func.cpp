@@ -48,8 +48,8 @@ MPI_INFO create_MPI_obj(int total_num){
 	
 	// auto s = std::format("created a  DLR with rank={}, with start_index={}, and end_index={}, perfoming {}/{} of  Freq kernel  \n",MPI_obj.rank,
 	// MPI_obj.start, MPI_obj.end, MPI_obj.count, total_num);
-	std::printf(  "created a DLR with rank=%d, with start_index=%d, and end_index=%d, " "perfoming %d/%d of Freq kernel\n",
-    MPI_obj.rank, MPI_obj.start, MPI_obj.end, MPI_obj.count, total_num);
+	//std::printf(  "created a DLR with rank=%d, with start_index=%d, and end_index=%d, " "perfoming %d/%d of Freq kernel\n",
+   //MPI_obj.rank, MPI_obj.start, MPI_obj.end, MPI_obj.count, total_num);
  
 	
 	return MPI_obj;
@@ -338,6 +338,35 @@ void mDLR::populate_master_dlrW(){
 	}	
 }
 
+void mDLR::populate_local_master_dlrW(){
+	auto nodes = master_if_ops.get_ifnodes();
+	auto master_local_G = nda::zeros<dcomplex>(nodes.size());
+	nda::array<dcomplex,1> mfreq(nodes.size());
+	for (int i =0;i< kl;i++){
+		for (int j=0;j<kl;j++){
+        double e = hubbard_dispersion(kvals[i],kvals[j],params.mu);
+		
+		master_local_G += generate_nda_Gdlr_from_energy(master_if_ops,e);
+		}	
+	}
+	master_local_G /= static_cast<double> (kl*kl);
+	master_dlrW_local  = master_if_ops.vals2coefs(beta,master_local_G);
+		
+}
+
+void mDLR::populate_local_master_dlrW(nda::array<dcomplex,1>& G_loc){
+	master_dlrW_local = master_if_ops.vals2coefs(beta,G_loc);
+}
+
+void mDLR::transfer_local_master_DLR_weights_to_dlrR0_elements(){
+	for (auto &dlr_R0 : multiple_dlr_structs){
+		auto wn_list = dlr_R0.im_freqs;
+		auto dlr_R0_g = recover_dlro_G_from_master_weights(master_dlrW_local, wn_list);
+		dlr_R0.dlrW_local= dlr_R0.if_ops.vals2coefs(beta, dlr_R0_g);
+	}
+}
+
+
 void mDLR::populate_master_dlrW(Bz_container &G){
 	master_dlrW_in_square.clear();
 	master_dlrW_in_square.resize(kl);
@@ -405,6 +434,8 @@ void mDLR::transfer_master_DLR_weights_to_dlrR0_elements(){
 
 
 
+
+
 Bz_container mDLR::G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu){
 	Bz_container G(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(mfreq.size())));
 	for (int i =0; i<kl; i++) {
@@ -423,56 +454,7 @@ Bz_container mDLR::G_from_DLR_SE_M(Bz_container &SE,nda::array<dcomplex,1> &mfre
 
 
 
-Bz_container mDLR::G_from_DLR_SE_M_DMFT(Bz_container &SE,nda::array<dcomplex,1> &mfreq,double mu){
-	std::cout << "APPLYING DMFT SCHEMES\n";
-	
-	auto SE_loc = nda::zeros<dcomplex>(mfreq.size());
-	auto G_loc = nda::zeros<dcomplex>(mfreq.size());
-	
-	////create local SE
-	for (int f =0; f< mfreq.size();f++) {
-		for (int i =0; i<kl; i++) {
-			for (int j =0; j <kl; j++){
-				SE_loc(f) +=  SE[i][j](f);			
-			}
-		}	
-	}
-	
-	SE_loc = SE_loc/nda::dcomplex(kl*kl,0);
-	
-	
-	for (int i =0; i < mfreq.size();i++){
-		std::cout <<i<< " :" << mfreq(i) <<", " << SE_loc(i) << std::endl;
-	}
-	for (int f =0; f< mfreq.size();f++) {
-		for (int i =0; i<kl; i++) {
-			for (int j =0; j <kl; j++){
-				double kx = kvals[i]; double ky = kvals[j];
-				double e = hubbard_dispersion(kx,ky,mu);
-				G_loc(f) +=  1/( mfreq(f) - e- SE[i][j](f));			
-			}
-		}
-	}
-	
-	G_loc = G_loc/nda::dcomplex(kl*kl,0);
-	
-	
-	
-	
-	Bz_container G(kl,std::vector<nda::array<dcomplex,1>>(kl, nda::array<dcomplex,1>(mfreq.size())));
-	
-	for (int i =0; i<kl; i++) {
-		for (int j =0; j <kl; j++){
-			double kx = kvals[i]; double ky = kvals[j];
-			for (int f =0; f< mfreq.size();f++) {
-					G[i][j](f)=	1.0/(1.0/G_loc(f) - SE_loc(f));
-			}
-		}	
-	}
-	
-	return G;
 
-}
 
 
 
