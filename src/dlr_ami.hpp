@@ -31,6 +31,7 @@
 #include <cppdlr/cppdlr.hpp>
 #include <omp.h>
 #include <string>
+#include <map>
 AmiBase::g_prod_t construct_example2();
 AmiBase::ami_vars construct_ext_example2();
 
@@ -43,6 +44,9 @@ using Bz_container =  std::vector<std::vector<nda::array<dcomplex,1>>>;
 using Fk_container =  std::vector<nda::array<dcomplex,2>>;
 namespace fs = std::filesystem;
 Bz_container sum_containers(const std::vector<Bz_container>& all);
+using wedge_map = std::map<std::vector<int>, int >;
+
+
 struct params_param {
 	double Uval;
 	double beta;
@@ -67,6 +71,14 @@ struct params_param {
 	int type_2p;
 	int gfunc;
 	int type_1p;
+};
+
+struct wedge_bz_info {
+	double data_num;
+	std::vector<int> key_num;
+    std::vector<std::pair<double,double>> wedge_qext;
+	std::vector<wedge_map>  wedge_map_list;
+
 };
 
 std::string trim(const std::string& str);
@@ -209,8 +221,12 @@ class mDLR{
 	void set_re_zero(Bz_container &SE);
 	void symmetrize_fermionic_DLR_array (nda::array<dcomplex,1> &data );
 	void symmetrize_fermionic_DLR_Bz(Bz_container &SE);
-							
-							
+
+
+	//////////////// ggm reduced Bz summation functions (test) ////////
+	std::vector<int> compute_momenta_ind_each_GF(double kx_ext,double ky_ext, int k_ith );				
+	void fold_to_wedge_2D( int &x , int &y);	
+	wedge_bz_info generate_wedge_info();					
 };
 
 

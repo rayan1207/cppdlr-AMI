@@ -8,12 +8,12 @@ inline void mDLR::generate_ith_momenta_cartesian_combo(int i, std::vector<int>& 
     // int DOF = (baseType==AmiBase::Sigma) ? 2*ord : 2*(ord+1);
 	int q = i;
 
-
     for (int j = 0; j < 2*DOF; ++j) {
         int base     = num_k_each_dlr[j];
         result[j]    = q % base;  
         q           /= base;      
     }
+
 	
 }
 
@@ -56,6 +56,79 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
 
     return val;
 }
+
+std::vector<int> mDLR::compute_momenta_ind_each_GF(double kx_ext,double ky_ext, int k_ith )
+{
+
+	std::vector<int> kcombo(2*DOF);
+	generate_ith_momenta_cartesian_combo(k_ith, kcombo);
+	//std:: cout<< "kcombo is "; print1d(kcombo); std::cout << "num each" ; print1d(num_k_each_dlr);
+    std::vector<int> k_indices(N);
+    for (int i = 0; i < N; ++i) {
+
+        const auto& info      = multiple_dlr_structs[i].ginfo;
+		
+        auto alpha   = info.alpha_;
+        int   asz      = info.alpha_.size();
+        double qx = alpha[asz - 1] * kx_ext;
+        double qy = alpha[asz - 1] * ky_ext;
+        for (int j = 0; j < DOF; ++j) {
+            double a = static_cast<double>(alpha[j]);
+            qx += a * kvals[ kcombo[2*j    ] ];
+            qy += a * kvals[ kcombo[2*j + 1] ];
+        }
+
+
+        qx -= std::floor(qx* inv_two_pi) * two_pi;
+        qy -= std::floor(qy* inv_two_pi) * two_pi;
+
+        int idx1 = static_cast<int>(std::round(qx * inv_dk));
+        int idx2 = static_cast<int>(std::round(qy * inv_dk));
+		idx1 = (idx1 % kl + kl) % kl;
+		idx2 = (idx2 % kl + kl) % kl;
+		
+		// std::cout << "corresponding indx for this alpha";
+		// print1d(alpha);
+		// std::cout << "indx1 :" << idx1 << " indx2 :" << idx2 << std::endl;
+		fold_to_wedge_2D(idx1,idx2);
+		k_indices[i] = idx1 + (kl/2 + 1)*idx2;
+		
+		
+    
+    }
+
+    return k_indices;
+}
+
+
+ nda::array<nda::dcomplex,1> mDLR::compute_momenta_kernel_qext(double kx_ext,double ky_ext)
+{
+    nda::array<nda::dcomplex,1> kernel = nda::zeros<nda::dcomplex>(CN);
+
+    for (int c = 0; c < CN; c++) {
+        // const int* combo_ptr = cartesian_combo_list[c].data();
+		auto combo = generate_single_CN(c);
+        auto sum = nda::dcomplex(0,0);
+        for (int k = 0; k < kN; k++) {   
+            generate_ith_momenta_cartesian_combo(k,kcombo_element);
+            sum += compute_momenta_one_kCN_kernel(
+                       kx_ext, ky_ext,
+                       combo,
+                       kcombo_element);
+        }
+		
+        kernel(c) = sum;
+    }
+
+    return kernel;
+}
+
+void mDLR::fold_to_wedge_2D( int &x , int &y){
+	 x = (x <= kl/2 ) ? x : kl- x;
+	 y = (y <= kl/2 ) ? y : kl- y;
+	 if ( y > x ) std::swap(x,y);
+}
+
 
 
 nda::dcomplex mDLR::gfunc(double kx, double ky){
@@ -101,27 +174,10 @@ nda::dcomplex  mDLR::apply_ggkp(double kx_ext, double ky_ext, const std::vector<
 
 
 
- nda::array<nda::dcomplex,1> mDLR::compute_momenta_kernel_qext(double kx_ext,double ky_ext)
-{
-    nda::array<nda::dcomplex,1> kernel = nda::zeros<nda::dcomplex>(CN);
 
-    for (int c = 0; c < CN; c++) {
-        // const int* combo_ptr = cartesian_combo_list[c].data();
-		auto combo = generate_single_CN(c);
-        auto sum = nda::dcomplex(0,0);
-        for (int k = 0; k < kN; k++) {   
-            generate_ith_momenta_cartesian_combo(k,kcombo_element);
-            sum += compute_momenta_one_kCN_kernel(
-                       kx_ext, ky_ext,
-                       combo,
-                       kcombo_element);
-        }
-		
-        kernel(c) = sum;
-    }
 
-    return kernel;
-}
+
+
 
  nda::array<nda::dcomplex,1> mDLR::compute_local_momenta_kernel()
 {
@@ -334,3 +390,64 @@ Bz_container mDLR::MPI_vdot_freq_momenta_kernel_M(Bz_container &mk, nda::array<d
 	
 	return result;
 }
+
+wedge_bz_info mDLR::generate_wedge_info() {
+
+	wedge_bz_info wedge_bz_obj;
+
+	int n = kl/2 +1;
+	wedge_bz_obj.data_num = n*(n+1)/2;
+	
+	auto reduced_kgrid = nda::array<double,1> (n);
+	for (int i =0;i <n ;i++) reduced_kgrid(i) = dk*static_cast<double>(i);
+    wedge_bz_obj.wedge_qext.resize(n*(n+1)/2);
+	wedge_bz_obj.wedge_map_list.resize(n*(n+1)/2);
+	wedge_bz_obj.key_num.resize(n*(n+1)/2);
+	int it=0;
+	for (int i =0; i< n; i++){
+		for (int j=0;j<=i;j++){
+			double qx = reduced_kgrid(i);
+			double qy = reduced_kgrid(j);
+			wedge_bz_obj.wedge_qext[it]= std::make_pair(qx,qy);
+			auto &counts = wedge_bz_obj.wedge_map_list[it];
+            // std::cout << " kx: " << qx << " ky: " << qy << std::endl;
+				for (int i =0;i < kN; i++) {
+				auto tmp = compute_momenta_ind_each_GF(qx,qy, i );
+				//maprint1d(tmp);
+				counts[tmp]++;
+				}
+			it++;
+			int total_kN = 0;
+			int unique_key =0;
+
+			for (const auto&[key,val]: counts){
+				total_kN += val;
+				unique_key ++;
+			}
+			wedge_bz_obj.key_num[it]= unique_key;
+
+			// std::cout << " The size of KN:" << kN <<"  Recovered size " << total_kN << std::endl;
+			// std::cout << " The size of unique keys:  " << unique_key  << " Perecentange reduced :" << (double) total_kN/unique_key << "\n\n";
+
+		   }
+
+
+
+
+
+		}
+
+		return wedge_bz_obj;
+
+	}
+	
+
+
+
+
+
+
+    
+
+
+

@@ -1,9 +1,9 @@
 Uval=1
-beta=25
+beta=5
 L=2
 eps=1e-6
 iter=10
-Emax=40000
+Emax=8
 mu=0
 tp=0
 mu_L=-3.5
