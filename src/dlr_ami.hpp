@@ -71,12 +71,14 @@ struct params_param {
 	int type_2p;
 	int gfunc;
 	int type_1p;
+	int oct_SE;
 };
 
 struct wedge_bz_info {
 	double data_num;
 	std::vector<int> key_num;
     std::vector<std::pair<double,double>> wedge_qext;
+	std::vector<std::pair<int,int>> wedge_qext_indices;
 	std::vector<wedge_map>  wedge_map_list;
 
 };
@@ -133,6 +135,7 @@ class mDLR{
 	params_param params;
 	double dk;
 	double prefactor;
+	int red_kl;
 	int ord;
 	std::vector<double> Emax_list;
 	int total_num=1;
@@ -144,6 +147,7 @@ class mDLR{
 	nda::array<dcomplex,1> fd_master_poles;
 	std::vector<std::vector<nda::array<dcomplex,1>>> master_dlrW_in_square; //master dlr weight
 	nda::array<dcomplex,1> master_dlrW_local;
+	wedge_bz_info momenta_info;
 	mDLR(const params_param& _params,AmiBase::graph_type _baseType, AmiGraph::graph_t& _graph,cppdlr::imfreq_ops& _master_if_ops );
 	//////// methods ////////////
 	
@@ -226,8 +230,11 @@ class mDLR{
 	//////////////// ggm reduced Bz summation functions (test) ////////
 	std::vector<int> compute_momenta_ind_each_GF(double kx_ext,double ky_ext, int k_ith );				
 	void fold_to_wedge_2D( int &x , int &y);	
-	wedge_bz_info generate_wedge_info();					
-};
+	wedge_bz_info generate_wedge_info();	
+	inline nda::dcomplex compute_momenta_one_kCN_kernel(std::vector<int> &combo,const std::vector<int> &unique_key, int multiple);	
+	 nda::array<nda::dcomplex,1> compute_momenta_kernel_qext(const wedge_map &counts);	
+	 Bz_container compute_momenta_kernel_bz_red();
+}; 
 
 
 

@@ -20,7 +20,7 @@ dlr_obj create_dlr_obj(double beta, double eps, double Emax,AmiBase::g_struct R0
 	auto all_poles = dlro.if_ops.get_rfnodes()/beta;
 	dlro.pole_num = all_poles.size();
 	int eps_size = dlro.ginfo.eps_.size();
-	std::cout << "the size of pole :" << dlro.pole_num;
+	//std::cout << "the size of pole :" << dlro.pole_num;
 	for (int i = 0; i< dlro.pole_num; i++){          /// filling in pole locations 
 		dlro.pole_locs.emplace_back(all_poles[i]);	
 		//std::cout << all_poles[i] << std::endl;
@@ -92,7 +92,7 @@ mDLR::mDLR(const params_param& _params, AmiBase::graph_type _baseType, AmiGraph:
 	CN = MPI_obj.count;
 	kN = std::pow(std::pow(kl,2),DOF);
 	std::cout<<std::endl;
-
+    red_kl = kl/2 +1;
 	dk = 2*M_PI/(kl);
 	kvals.resize(kl);
 	for(size_t i=0; i<kl; i++){kvals[i] = dk* double(i);}
@@ -111,7 +111,7 @@ mDLR::mDLR(const params_param& _params, AmiBase::graph_type _baseType, AmiGraph:
     master_pole_num = master_if_ops.get_ifnodes().size();
 	master_poles = master_if_ops.get_rfnodes()/beta;
 	fd_master_poles = fd_on_master_poles();
-
+    momenta_info = generate_wedge_info();
 	master_dlrW_in_square.resize(kl);
 	for (size_t i = 0; i < kl; ++i)
 	master_dlrW_in_square[i].resize(kl);
@@ -124,7 +124,7 @@ mDLR::mDLR(const params_param& _params, AmiBase::graph_type _baseType, AmiGraph:
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
 	std::cout << " Construction of mDLR took time: " <<duration.count() << " ms \n";}
 
-	auto momenta_info = generate_wedge_info();
+	 
 
 	//print1d(num_pole_each_dlr);
 	//auto combo = generate_single_CN(CN-1);
@@ -173,9 +173,9 @@ void mDLR::create_multiple_gstruct(){
                 }
         }
 
-        // std::vector<double> Emax_list1 = {6.548, 6.022, 5.679, 5.3983, 5.2239, 4.481, 4.07};
+        std::vector<double> Emax_list1 = {6.548, 6.022, 5.679, 5.3983, 5.2239, 4.481, 4.07};
 
-		std::vector<double> Emax_list1 = {6.53, 6.52, 6.51, 5.3983, 5.2239, 4.481, 4.07};
+		// std::vector<double> Emax_list1 = {6.53, 6.52, 6.51, 5.3983, 5.2239, 4.481, 4.07};
 
         MPI_Bcast(Emax_list.data(), R0.size(), MPI_DOUBLE, 0, MPI_COMM_WORLD);
 

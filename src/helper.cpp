@@ -80,6 +80,8 @@ void params_loader(const std::string& filename, params_param& params) {
 			 params.type_1p= std::stoi(paramValue);
 		else if (paramName == "gfunc")
 			 params.gfunc= std::stoi(paramValue);
+		else if (paramName == "oct_SE")
+			 params.oct_SE= std::stoi(paramValue);
 		
     }
 	

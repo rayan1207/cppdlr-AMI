@@ -44,12 +44,12 @@ void ggm_mDLR::ggm_to_graphlist(){
 	 for (int j= 0; j< ggm[i].size(); ++j){
 		 for (int k=0; k <ggm[i][j].graph_vec.size();++k){
 
-			 std::cout <<i <<" " << j << " " << k <<std::endl;
+			// std::cout <<i <<" " << j << " " << k <<std::endl;
 			 std::string name = "o"+ std::to_string(i) +"_g"+std::to_string(j) +"_n"+std::to_string(k);
 			 AmiGraph::graph_t graph = ggm[i][j].graph_vec[k];
 			 graphlist_names.push_back(name);
 			 graphlist.push_back(graph);
-			 std::cout<< "Sampling graph " << name << std::endl;
+			// std::cout<< "Sampling graph " << name << std::endl;
 			 count++;
 			}
 		}
@@ -102,8 +102,15 @@ void ggm_mDLR::ggm_Fk_solver(){
 	
 	
 	
-Bz_container ggm_mDLR::generate_SE(mDLR &_mDLR, nda::array<dcomplex,2> &fk  ){                  
-	auto momenta_kernel = _mDLR.compute_momenta_kernel_bz();
+Bz_container ggm_mDLR::generate_SE(mDLR &_mDLR, nda::array<dcomplex,2> &fk  ){  
+    Bz_container momenta_kernel;
+	if (params.oct_SE==0)  {         
+	 momenta_kernel = _mDLR.compute_momenta_kernel_bz();}
+	else if (params.oct_SE==1)  {         
+	 momenta_kernel = _mDLR.compute_momenta_kernel_bz_red();}
+	else {
+		std::cerr<< "enter either 0 or 1";
+	}
 	if (rank ==0) {std::cout << "Momenta kernel computed \n";}
     return _mDLR.MPI_vdot_freq_momenta_kernel_M(momenta_kernel, fk);
 }
@@ -287,7 +294,7 @@ void ggm_mDLR::single_shot_2p_solver_qext(double qx, double qy,nda::array<dcompl
 
 
 void ggm_mDLR::ScPT_DMFT_solver(int max_iters, Bz_container &final_SE, Bz_container &final_GF,bool write){
-	double TOLERANCE = 1e-4;
+	double TOLERANCE = 1e-2;
 	int    BISECT_STEPS    = 10000;
     double alpha=0.45;
     std::string type ="local";
@@ -361,7 +368,7 @@ void ggm_mDLR::ScPT_DMFT_solver(int max_iters, Bz_container &final_SE, Bz_contai
 
 
 void ggm_mDLR::ScPT_solver(int max_iters, Bz_container &final_SE, Bz_container &final_GF,bool write){
-	double TOLERANCE = 1e-4;
+	double TOLERANCE = 1e-2;
 	int    BISECT_STEPS    = 10000;
     double alpha=0.45;
     std::string type = "nonlocal";
@@ -435,7 +442,7 @@ void ggm_mDLR::ScPT_solver(int max_iters, Bz_container &final_SE, Bz_container &
 
 
 void ggm_mDLR::ScPT_LSEET_solver(int max_iters, Bz_container &final_SE, Bz_container &final_GF,bool write){
-	double TOLERANCE = 1e-4;
+	double TOLERANCE = 1e-2;
 	int    BISECT_STEPS    = 10000;
     double alpha=0.3;
 	double mu =params.mu;

@@ -4,60 +4,60 @@
 #include "dlr_ami.hpp"
 using namespace cppdlr;
 
-// int main(int argc, char** argv){
-// 	int size, rank;
-// 	MPI_Init(&argc,&argv);
-// 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-// 	MPI_Comm_size(MPI_COMM_WORLD, &size);
+int main(int argc, char** argv){
+	int size, rank;
+	MPI_Init(&argc,&argv);
+	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	
-// 	if (rank==0){
-// 	fs::remove_all("data");
-//     std::string folder_name1 = "data/Summed_data";
-// 	std::string folder_name2 = "data/Individual_data";
-// 	fs::create_directories(folder_name1);
-// 	fs::create_directories(folder_name2);
-// }
+	if (rank==0){
+	fs::remove_all("data");
+    std::string folder_name1 = "data/Summed_data";
+	std::string folder_name2 = "data/Individual_data";
+	fs::create_directories(folder_name1);
+	fs::create_directories(folder_name2);
+}
 
 
 
 
 
-// 	params_param params;
-// 	std::string loader_file = "params.txt";
-// 	params_loader(loader_file,params);
-	
-	
-// 	////////////   Load the graphs here //////////////////
-// 	AmiBase::graph_type sigma=AmiBase::Sigma;
-// 	AmiGraph gs(sigma, 0);
-// 	AmiGraph::gg_matrix_t ggm_first;
-// 	gs.read_ggmp(params.graph,ggm_first, 2);
-
-// 	AmiGraph::gg_matrix_t ggm;
-// 	gs.read_ggmp(params.graph,ggm, params.ord_max);
-
-
-// 	std::cout<<std::endl;
-// 	double beta   = params.beta;
-//     double eps    = params.eps;
-// 	int kl = params.L;
-// 	double Emax = params.Emax;
-// 	double Uval = params.Uval;
-// 	double lambda = beta*Emax;
-// 	double mu = params.mu;
-// 	double tp = params.tp;
-// 	int iter = params.iter;
-	
-
-
+	params_param params;
+	std::string loader_file = "params.txt";
+	params_loader(loader_file,params);
 	
 	
-// 	double master_E = 10; double master_eps=1e-10;
-// 	double master_lambda = params.beta*master_E;
-//     auto dlr_rf = build_dlr_rf(master_lambda,master_eps );
-//     auto master_if_ops = imfreq_ops(master_lambda, dlr_rf, Fermion);
-// 	auto master_bf_ops = imfreq_ops(master_lambda, dlr_rf, Boson);
-// ///////////// guesss //////////////////
+	////////////   Load the graphs here //////////////////
+	AmiBase::graph_type sigma=AmiBase::Sigma;
+	AmiGraph gs(sigma, 0);
+	AmiGraph::gg_matrix_t ggm_first;
+	gs.read_ggmp(params.graph,ggm_first, 2);
+
+	AmiGraph::gg_matrix_t ggm;
+	gs.read_ggmp(params.graph,ggm, params.ord_max);
+
+
+	std::cout<<std::endl;
+	double beta   = params.beta;
+    double eps    = params.eps;
+	int kl = params.L;
+	double Emax = params.Emax;
+	double Uval = params.Uval;
+	double lambda = beta*Emax;
+	double mu = params.mu;
+	double tp = params.tp;
+	int iter = params.iter;
+	
+
+
+	
+	
+	double master_E = 5; double master_eps=1e-5;
+	double master_lambda = params.beta*master_E;
+    auto dlr_rf = build_dlr_rf(master_lambda,master_eps );
+    auto master_if_ops = imfreq_ops(master_lambda, dlr_rf, Fermion);
+	auto master_bf_ops = imfreq_ops(master_lambda, dlr_rf, Boson);
+///////////// guesss //////////////////
 
 
 //  if (rank==0){ std::cout << "QUICK GF2 Calculations for DCA guess \n";}
@@ -73,103 +73,103 @@ using namespace cppdlr;
 //  if (rank==0){ std::cout << "\n\n First G obtained succcessfully  \n\n";}
 
 
-// ////////// main 1p cal /////////
+////////// main 1p cal /////////
 
-// if (rank ==0) { std::cout << "Beginning higher IPT calculation \n\n";}
-// 	Bz_container scGF;
-//    	Bz_container scSE;
-// 	ggm_mDLR  mult_mDLR( params,sigma, ggm,master_if_ops);
-// 	mult_mDLR.ggm_Fk_solver();
+if (rank ==0) { std::cout << "Beginning higher IPT calculation \n\n";}
+	Bz_container scGF;
+   	Bz_container scSE;
+	ggm_mDLR  mult_mDLR( params,sigma, ggm,master_if_ops);
+	mult_mDLR.ggm_Fk_solver();
 
-// 	if (params.type_1p ==0){
+	if (params.type_1p ==0){
 		
-// 		if (rank ==0) { std::cout << "Using Full K resolved IPT \n\n";}
-// 		mult_mDLR.initialize_ggm_DLR_W(guess_scGF);
-// 		mult_mDLR.ScPT_solver(iter,scSE,scGF,true);}
-// 	if (params.type_1p ==1){
+		if (rank ==0) { std::cout << "Using Full K resolved IPT \n\n";}
+		mult_mDLR.initialize_ggm_DLR_W();
+		mult_mDLR.ScPT_solver(iter,scSE,scGF,true);}
+	if (params.type_1p ==1){
     
-// 		if (rank ==0) { std::cout << "Using DMFT  IPT \n\n";}
-// 		auto guess_scGF_local =  average_Bz_container(guess_scGF);
-// 		//std::cout << guess_scGF_local;
-// 		mult_mDLR.initialize_local_ggm_DLR_W(guess_scGF_local);
-// 		mult_mDLR.ScPT_DMFT_solver(iter,scSE,scGF,true);
+		if (rank ==0) { std::cout << "Using DMFT  IPT \n\n";}
+		// auto guess_scGF_local =  average_Bz_container();
+		//std::cout << guess_scGF_local;
+		mult_mDLR.initialize_local_ggm_DLR_W();
+		mult_mDLR.ScPT_DMFT_solver(iter,scSE,scGF,true);
 
-// 		}
+		}
 
-// 	if (params.type_1p ==2){
-// 		if (rank ==0) { std::cout << "Using SEET  IPT \n\n";}
-// 		mult_mDLR.initialize_ggm_DLR_W(guess_scGF);
-// 		auto guess_scGF_local =  average_Bz_container(guess_scGF);
-// 		mult_mDLR.initialize_local_ggm_DLR_W(guess_scGF_local);
-// 		mult_mDLR.ScPT_LSEET_solver(iter,scSE,scGF,true);}
-
-
-// if (rank==0){ std::cout << " Done\n";}
+	if (params.type_1p ==2){
+		if (rank ==0) { std::cout << "Using SEET  IPT \n\n";}
+		mult_mDLR.initialize_ggm_DLR_W();
+		// auto guess_scGF_local =  average_Bz_container(guess_scGF);
+		mult_mDLR.initialize_local_ggm_DLR_W();
+		mult_mDLR.ScPT_LSEET_solver(iter,scSE,scGF,true);}
 
 
+if (rank==0){ std::cout << " Done\n";}
 
 
 
 
 
 
-// 	std::string file_name_AC = "data/Summed_data/Summed_sigma_ac.txt";
-// 	auto p = std::pair<int,int>(0,0);
-// 	mult_mDLR.mDLR_list[0].write_data_momenta_AC_sigma_ij( file_name_AC,scGF,6000,p);
+
+
+	std::string file_name_AC = "data/Summed_data/Summed_sigma_ac.txt";
+	auto p = std::pair<int,int>(0,0);
+	mult_mDLR.mDLR_list[0].write_data_momenta_AC_sigma_ij( file_name_AC,scGF,6000,p);
    
-//     AmiBase::graph_type basetype_2p;
-// 	if (params.compute_2p == 1) {
+    AmiBase::graph_type basetype_2p;
+	if (params.compute_2p == 1) {
 
-// 		if (params.type_2p == 0 ){
-// 	    std::cout << "computing particle hole channel in 2p sector" << std::endl;
-// 		basetype_2p =AmiBase::Pi_phuu;  }
+		if (params.type_2p == 0 ){
+	    std::cout << "computing particle hole channel in 2p sector" << std::endl;
+		basetype_2p =AmiBase::Pi_phuu;  }
 
-// 		if (params.type_2p == 1 ){
-// 		basetype_2p =AmiBase::Pi_ppuu;  }
+		if (params.type_2p == 1 ){
+		basetype_2p =AmiBase::Pi_ppuu;  }
 
-// 		// else {
-// 		// 	std::cout << " Wrong 2p type type with :" <<  params.type_2p << std::endl;
+		// else {
+		// 	std::cout << " Wrong 2p type type with :" <<  params.type_2p << std::endl;
 
-// 		// }
-
-
-// 			if (rank==0){
-
-// 			fs::remove_all("data_ph");
-// 			std::string folder_name3 = "data_ph/Summed_data";
-// 			std::string folder_name4 = "data_ph/Individual_data";	
-// 			fs::create_directories(folder_name3);
-// 			fs::create_directories(folder_name4);	
-// 		}
+		// }
 
 
-// 		if (rank==0){ std::cout << " DOING STUFF for PH \n";}
-// 		AmiGraph::gg_matrix_t ggm_ph;
-// 		AmiGraph gp(basetype_2p, 0);
-// 		gp.read_ggmp(params.graph_2p,ggm_ph, params.ord_max_2p);
+			if (rank==0){
 
-// 		auto nodes =master_bf_ops.get_ifnodes();
-// 		nda::array<dcomplex,1> bfreq_list(nodes.size());
+			fs::remove_all("data_ph");
+			std::string folder_name3 = "data_ph/Summed_data";
+			std::string folder_name4 = "data_ph/Individual_data";	
+			fs::create_directories(folder_name3);
+			fs::create_directories(folder_name4);	
+		}
+
+
+		if (rank==0){ std::cout << " DOING STUFF for PH \n";}
+		AmiGraph::gg_matrix_t ggm_ph;
+		AmiGraph gp(basetype_2p, 0);
+		gp.read_ggmp(params.graph_2p,ggm_ph, params.ord_max_2p);
+
+		auto nodes =master_bf_ops.get_ifnodes();
+		nda::array<dcomplex,1> bfreq_list(nodes.size());
 		
 		
-// 		for (size_t i =0; i<nodes.size();i++){ 
-// 		bfreq_list(i)=dcomplex(0,(2*nodes[i])*M_PI/beta);
-// 		}
+		for (size_t i =0; i<nodes.size();i++){ 
+		bfreq_list(i)=dcomplex(0,(2*nodes[i])*M_PI/beta);
+		}
 	
 
-// 		if (rank ==0){
-// 			std::cout << bfreq_list << std::endl;
-// 		}
-//         Bz_container chi;
+		if (rank ==0){
+			std::cout << bfreq_list << std::endl;
+		}
+        Bz_container chi;
 		
-// 		ggm_mDLR  mult_ph_mDLR( params,basetype_2p, ggm_ph,master_if_ops);
-// 		mult_ph_mDLR.ggm_Fk_2p_solver(bfreq_list);
-// 		mult_ph_mDLR.initialize_ggm_DLR_W(scGF);
+		ggm_mDLR  mult_ph_mDLR( params,basetype_2p, ggm_ph,master_if_ops);
+		mult_ph_mDLR.ggm_Fk_2p_solver(bfreq_list);
+		mult_ph_mDLR.initialize_ggm_DLR_W(scGF);
 		
-// 		//mult_ph_mDLR.transfer_ggm_DLR_W(scGF);
-// 		mult_ph_mDLR.single_shot_2p_solver_qext(0,0,bfreq_list, chi);
-// 		std::string file_name_AC = "data_ph/Summed_data/single_shot_AC_ph.txt";
-// 		mult_ph_mDLR.mDLR_list[0].write_data_momenta_AC_chi( file_name_AC,master_bf_ops,chi,4000);
+		//mult_ph_mDLR.transfer_ggm_DLR_W(scGF);
+		mult_ph_mDLR.single_shot_2p_solver_qext(0,0,bfreq_list, chi);
+		std::string file_name_AC = "data_ph/Summed_data/single_shot_AC_ph.txt";
+		mult_ph_mDLR.mDLR_list[0].write_data_momenta_AC_chi( file_name_AC,master_bf_ops,chi,4000);
 
 
 
@@ -178,7 +178,7 @@ using namespace cppdlr;
 
 
 
-// }
+}
     
 
 
@@ -186,10 +186,10 @@ using namespace cppdlr;
 
 
 
-// 	MPI_Finalize();
+	MPI_Finalize();
 
 	
-// }
+}
 
 
 
@@ -257,116 +257,121 @@ using namespace cppdlr;
 //   kept_energy_frac = acc / total;
 // }
 
-int main(int argc, char** argv){
-	int size, rank;
-	MPI_Init(&argc,&argv);
-	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-	MPI_Comm_size(MPI_COMM_WORLD, &size);
+// int main(int argc, char** argv){
+// 	int size, rank;
+// 	MPI_Init(&argc,&argv);
+// 	MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+// 	MPI_Comm_size(MPI_COMM_WORLD, &size);
 	
 
-	params_param params;
-	std::string loader_file = "params.txt";
-	params_loader(loader_file,params);
-	AmiBase::graph_type sigma=AmiBase::Sigma;
+// 	params_param params;
+// 	std::string loader_file = "params.txt";
+// 	params_loader(loader_file,params);
+// 	AmiBase::graph_type sigma=AmiBase::Sigma;
 	
-	////////////   Load the graphs here //////////////////
+// 	////////////   Load the graphs here //////////////////
 	
-	AmiGraph::gg_matrix_t ggm;
-	AmiGraph gs(sigma, 0);
-	gs.read_ggmp(params.graph,ggm, params.ord_max);
-	std::cout<<std::endl;
-	
-	
-	
-	
-	AmiGraph::graph_t graph =ggm[params.ord_max][0].graph_vec[0];
+// 	AmiGraph::gg_matrix_t ggm;
+// 	AmiGraph gs(sigma, 0);
+// 	gs.read_ggmp(params.graph,ggm, params.ord_max);
+// 	std::cout<<std::endl;
 	
 	
 	
-	double NC = 161;
-	double beta   = params.beta;
-    double eps    = params.eps;
-	int kl = params.L;
-	double Emax = params.Emax;
-	double Uval = params.Uval;
-	double lambda = beta*Emax;
-	double mu = params.mu;
-	double tp = params.tp;
-	int iter = params.iter;
-	AmiBase ami;
-	//AmiBase::g_prod_t R0=construct_example2();
 	
-	double master_E = 5; double master_eps=1e-7;
-	double master_lambda = params.beta*master_E;
-    auto dlr_rf = build_dlr_rf(master_lambda,master_eps );
-    auto master_if_ops = imfreq_ops(master_lambda, dlr_rf, Fermion);
+// 	AmiGraph::graph_t graph =ggm[params.ord_max][0].graph_vec[0];
 	
-	mDLR multiple_DLR(params, sigma, graph,master_if_ops);
+	
+	
+// 	double NC = 161;
+// 	double beta   = params.beta;
+//     double eps    = params.eps;
+// 	int kl = params.L;
+// 	double Emax = params.Emax;
+// 	double Uval = params.Uval;
+// 	double lambda = beta*Emax;
+// 	double mu = params.mu;
+// 	double tp = params.tp;
+// 	int iter = params.iter;
+// 	AmiBase ami;
+// 	//AmiBase::g_prod_t R0=construct_example2();
+	
+// 	double master_E = 5; double master_eps=1e-7;
+// 	double master_lambda = params.beta*master_E;
+//     auto dlr_rf = build_dlr_rf(master_lambda,master_eps );
+//     auto master_if_ops = imfreq_ops(master_lambda, dlr_rf, Fermion);
+	
+// 	mDLR multiple_DLR(params, sigma, graph,master_if_ops);
 	
 
    
-	//////// Computing the frequency kernel ////////////////
-	if (rank ==0){
-	std::cout << "--__--__--__--__--__--__--__--__--__--__--"<< std::endl;
-	std::cout <<" Precomputing Computing the frequency kernel \n";
-	}
-	auto t0 = std::chrono::high_resolution_clock::now();
-	auto nodes = multiple_DLR.master_if_ops.get_ifnodes();
-	nda::array<dcomplex,1> mfreq(nodes.size());
+// 	//////// Computing the frequency kernel ////////////////
+// 	if (rank ==0){
+// 	std::cout << "--__--__--__--__--__--__--__--__--__--__--"<< std::endl;
+// 	std::cout <<" Precomputing Computing the frequency kernel \n";
+// 	}
+// 	auto t0 = std::chrono::high_resolution_clock::now();
+// 	auto nodes = multiple_DLR.master_if_ops.get_ifnodes();
+// 	nda::array<dcomplex,1> mfreq(nodes.size());
 	
 	
-	// for (size_t i =0; i<nodes.size();i++){ 
-	for (size_t i =0; i<nodes.size(); i++){ 
-	// mfreq[i]=dcomplex(0,(2*nodes[i]+1)*M_PI/beta);
-	mfreq[i]=dcomplex(0,M_PI/beta);
-	}
+// 	// for (size_t i =0; i<nodes.size();i++){ 
+// 	for (size_t i =0; i<nodes.size(); i++){ 
+// 	// mfreq[i]=dcomplex(0,(2*nodes[i]+1)*M_PI/beta);
+// 	mfreq[i]=dcomplex(0,M_PI/beta);
+// 	}
 	
 	
-	auto  frequency_kernel_list = nda::array<dcomplex, 2>(mfreq.size(), multiple_DLR.MPI_obj.count);
+// 	auto  frequency_kernel_list = nda::array<dcomplex, 2>(mfreq.size(), multiple_DLR.MPI_obj.count);
 	
-	// for (int i=0; i <nodes.size();i++){
-	// auto val = mfreq(i);
-	// if (rank ==0){
-	// std::cout << val <<std::endl;
-	// }
-	//  frequency_kernel_list(i,nda::range::all) =multiple_DLR.evaluate_auxillary_energies(val); 
+// 	// for (int i=0; i <nodes.size();i++){
+// 	// auto val = mfreq(i);
+// 	// if (rank ==0){
+// 	// std::cout << val <<std::endl;
+// 	// }
+// 	//  frequency_kernel_list(i,nda::range::all) =multiple_DLR.evaluate_auxillary_energies(val); 
 	
 	
-	// }
-	auto t1 = std::chrono::high_resolution_clock::now();
-	if (rank==0){
-		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
-		std::cout << " Consturctin of frequency kernel took: " <<duration.count() << " ms \n";
-	}
-    //auto something = multiple_DLR.generate_wedge_info();
-	// std::map<std::vector<int>, int > counts;
+// 	// }
+// 	auto t1 = std::chrono::high_resolution_clock::now();
+// 	if (rank==0){
+// 		auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
+// 		std::cout << " Consturctin of frequency kernel took: " <<duration.count() << " ms \n";
+// 	}
+//     auto something = multiple_DLR.generate_wedge_info();
+// 	// std::map<std::vector<int>, int > counts;
 
-	// int kN = multiple_DLR.kN;
-	// for (int i =0;i < kN; i++) {
-	// 	auto tmp = multiple_DLR.compute_momenta_ind_each_GF(0,M_PI, i );
-	// 	counts[tmp]++;
-	// }
-	// // for (int i =0;i < kN; i++) {
-	// // 	auto tmp = multiple_DLR.compute_momenta_ind_each_GF(M_PI/2,M_PI/4, i );
-	// // 	// std::cout << "i= " ; print1d(tmp); std::cout << "\n";
-	// // 	counts[tmp]++;
-	// // }
+// 	// int kN = multiple_DLR.kN;
+// 	// for (int i =0;i < kN; i++) {
+// 	// 	auto tmp = multiple_DLR.compute_momenta_ind_each_GF(0,M_PI, i );
+// 	// 	counts[tmp]++;
+// 	// }
+// 	// // for (int i =0;i < kN; i++) {
+// 	// // 	auto tmp = multiple_DLR.compute_momenta_ind_each_GF(M_PI/2,M_PI/4, i );
+// 	// // 	// std::cout << "i= " ; print1d(tmp); std::cout << "\n";
+// 	// // 	counts[tmp]++;
+// 	// // }
 
-    // int total_kN = 0;
-	// int unique_key =0;
-	// for (const auto&[key,val]: counts){
-	// 	std::cout << "Vector { ";
-    //     for (int x : key) std::cout << x << " ";
-    //     std::cout << "} appeared " << val << " times.\n";
-	// 	total_kN += val;
-	// 	unique_key ++;
-	// }
+//     // int total_kN = 0;
+// 	// int unique_key =0;
+// 	// for (const auto&[key,val]: counts){
+// 	// 	std::cout << "Vector { ";
+//     //     for (int x : key) std::cout << x << " ";
+//     //     std::cout << "} appeared " << val << " times.\n";
+// 	// 	total_kN += val;
+// 	// 	unique_key ++;
+// 	// }
 
-	// std::cout << " The size of KN:" << kN <<" \n Recovered size " << total_kN << std::endl;
-	// std::cout << " The size of unique keys: " << unique_key;
+// 	// std::cout << " The size of KN:" << kN <<" \n Recovered size " << total_kN << std::endl;
+// 	// std::cout << " The size of unique keys: " << unique_key;
 	
 
 	
+
+// 	MPI_Finalize();
+
+	
+// }
 
 
 
@@ -432,11 +437,6 @@ int main(int argc, char** argv){
 		
 		
 	
-
-	MPI_Finalize();
-
-	
-}
 
 
 

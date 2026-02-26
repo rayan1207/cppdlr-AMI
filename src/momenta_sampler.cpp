@@ -57,6 +57,7 @@ inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(double kx_ext,double k
     return val;
 }
 
+
 std::vector<int> mDLR::compute_momenta_ind_each_GF(double kx_ext,double ky_ext, int k_ith )
 {
 
@@ -401,6 +402,7 @@ wedge_bz_info mDLR::generate_wedge_info() {
 	auto reduced_kgrid = nda::array<double,1> (n);
 	for (int i =0;i <n ;i++) reduced_kgrid(i) = dk*static_cast<double>(i);
     wedge_bz_obj.wedge_qext.resize(n*(n+1)/2);
+	 wedge_bz_obj.wedge_qext_indices.resize(n*(n+1)/2);
 	wedge_bz_obj.wedge_map_list.resize(n*(n+1)/2);
 	wedge_bz_obj.key_num.resize(n*(n+1)/2);
 	int it=0;
@@ -409,14 +411,15 @@ wedge_bz_info mDLR::generate_wedge_info() {
 			double qx = reduced_kgrid(i);
 			double qy = reduced_kgrid(j);
 			wedge_bz_obj.wedge_qext[it]= std::make_pair(qx,qy);
+			wedge_bz_obj.wedge_qext_indices[it]= std::make_pair(i,j);
 			auto &counts = wedge_bz_obj.wedge_map_list[it];
-            // std::cout << " kx: " << qx << " ky: " << qy << std::endl;
+            if (MPI_obj.rank ==0) std::cout << " kx: " << qx << " ky: " << qy << std::endl;
 				for (int i =0;i < kN; i++) {
 				auto tmp = compute_momenta_ind_each_GF(qx,qy, i );
 				//maprint1d(tmp);
 				counts[tmp]++;
 				}
-			it++;
+			
 			int total_kN = 0;
 			int unique_key =0;
 
@@ -425,9 +428,10 @@ wedge_bz_info mDLR::generate_wedge_info() {
 				unique_key ++;
 			}
 			wedge_bz_obj.key_num[it]= unique_key;
-
-			// std::cout << " The size of KN:" << kN <<"  Recovered size " << total_kN << std::endl;
-			// std::cout << " The size of unique keys:  " << unique_key  << " Perecentange reduced :" << (double) total_kN/unique_key << "\n\n";
+			it++;
+			if (MPI_obj.rank ==0){
+			std::cout << " The size of KN:" << kN <<"  Recovered size " << total_kN << std::endl;
+			std::cout << " The size of unique keys:  " << unique_key  << " Perecentange reduced :" << (double) total_kN/unique_key << "\n\n";}
 
 		   }
 
@@ -444,10 +448,71 @@ wedge_bz_info mDLR::generate_wedge_info() {
 
 
 
+    
+inline nda::dcomplex mDLR::compute_momenta_one_kCN_kernel(std::vector<int> &combo,const std::vector<int> &unique_key, int multiple)
+{
+    nda::dcomplex val(1.0, 0.0);
+    
+    for (int i = 0; i < N; ++i) {
 
+		auto id = unique_key[i];
+		int idx1 = id % red_kl;  
+        int idx2 = id / red_kl;  
+        const auto& wlist =  multiple_dlr_structs[i].dlrW_in_square[idx1][idx2];
+        val *=   wlist[ combo[i] ];
+    }
+
+    return  static_cast<double> (multiple)*val;
+}
 
 
     
+ nda::array<nda::dcomplex,1> mDLR::compute_momenta_kernel_qext(const wedge_map &counts)
+{
+    nda::array<nda::dcomplex,1> kernel = nda::zeros<nda::dcomplex>(CN);
 
+    for (int c = 0; c < CN; c++) {
+        // const int* combo_ptr = cartesian_combo_list[c].data();
+		auto combo = generate_single_CN(c);
+        auto sum = nda::dcomplex(0,0);
+       for (const auto&[key,val]: counts){
+		 sum += compute_momenta_one_kCN_kernel( combo, key, val );
+	   }
+        kernel(c) = sum;
+    }
+
+    return kernel;
+}
+
+Bz_container mDLR::compute_momenta_kernel_bz_red(){
+	int n = kl/2+1;
+	if (MPI_obj.rank == 0){std::cout<< "Computing momenta kernel \n" ;}
+
+	
+   
+	Bz_container M( n,std::vector<nda::array<dcomplex,1>>( n));
+	auto t0 = std::chrono::high_resolution_clock::now();
+	for (int i =0; i < momenta_info.data_num; i++){
+			double qx = momenta_info.wedge_qext[i].first;
+			double qy =  momenta_info.wedge_qext[i].second;
+			int x  = momenta_info.wedge_qext_indices[i].first;
+			int y  = momenta_info.wedge_qext_indices[i].second;
+			if (MPI_obj.rank == 0){
+			std::cout<< "Computing -> " <<  i+1  <<"/" << momenta_info.data_num << " data point ";}
+			auto const &counts =momenta_info.wedge_map_list[i];
+			auto momenta_kernel = mDLR::compute_momenta_kernel_qext(counts);
+			if (MPI_obj.rank == 0){std::cout<< "(computed) \n" ;}
+			M[x][y] = momenta_kernel;
+			
+		}		
+	
+	auto t1 = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(t1 - t0);
+	if (MPI_obj.rank==0){std::cout << " computation of momenta kernel took: " <<duration.count() << " ms \n";}
+	triangle_to_square(M); 
+	
+	return data_to_full_bz(M);
+	 
+}
 
 
